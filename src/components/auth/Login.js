@@ -1,31 +1,38 @@
-import React, { useRef } from "react"
+import React, { useState, useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./Auth.css"
+import authData from '../utils/authData'
 
 
 export const Login = () => {
-    const email = useRef()
-    const password = useRef()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const invalidDialog = useRef()
     const history = useHistory()
+
+    const setEmailEvent = (e) => {
+        e.preventDefault();
+        setEmail(e.target.value)
+    };
+
+    const setPasswordEvent = (e) => {
+        e.preventDefault();
+        setPassword(e.target.value)
+    };
 
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch("http://127.0.0.1:8088/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                username: email.current.value,
-                password: password.current.value
-            })
-        })
-            .then(res => res.json())
+        const user = {
+            email: email,
+            password: password
+        }
+        console.log(user)
+
+        return authData.validateUserLogin(user)
             .then(res => {
-                if ("valid" in res && res.valid) {
+                console.log(res)
+                if (true === res.data.response) {
                     localStorage.setItem("rare_user_id", res.token )
                     history.push("/")
                 }
@@ -33,6 +40,7 @@ export const Login = () => {
                     invalidDialog.current.showModal()
                 }
             })
+            .catch((err) => console.error(err))
     }
 
     return (
@@ -47,11 +55,25 @@ export const Login = () => {
                     <h2>Please sign in</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email address </label>
-                        <input ref={email} type="email" id="email" className="form-control" defaultValue="me@me.com" placeholder="Email address" required autoFocus />
+                        <input 
+                            type="email"
+                            id="email" 
+                            className="form-control" 
+                            value={email} 
+                            placeholder="Email address" 
+                            onChange={setEmailEvent}
+                            required autoFocus />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" defaultValue="me" placeholder="Password" required />
+                        <input  
+                        type="password" 
+                        id="password" 
+                        className="form-control" 
+                        value={password}
+                        onChange={setPasswordEvent}
+                        placeholder="Password" 
+                        required />
                     </fieldset>
                     <fieldset style={{
                         textAlign:"center"
