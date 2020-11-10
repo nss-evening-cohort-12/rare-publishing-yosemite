@@ -5,6 +5,7 @@ import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Categories }  from "./categories/Categories"
+import { UpdateCategory} from "./categories/UpdateCategory"
 
 import { Tags } from "./tags/Tags"
 import { AddTag } from "./tags/AddTag"
@@ -37,10 +38,17 @@ export const Rare = () => (
                 return <Register />
             }
         }} />
-        
+
         <Route path="/categories" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Categories />      
+            } else {
+                return <Redirect to ="/" />
+            }
+        }} />
+        <Route path="/updateCategory/:categoryId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <UpdateCategory {...props}/>
             } else {
                 return <Redirect to ="/" />
             }

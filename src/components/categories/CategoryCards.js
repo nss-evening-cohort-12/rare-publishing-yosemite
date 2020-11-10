@@ -18,12 +18,12 @@ export const CategoryCards = (props) => {
     e.preventDefault();
     deleteCategory(category.id)
   };
-
+  const updateLink = `/updateCategory/${category.id}`
   return (
     <div className="cat-card">
       <div className="cat-card-body">
         <h5 className="cat-card-title">{category.name}</h5>
-        <button className="btn btn-secondary">Update Category</button>
+        <Link to={updateLink} className="btn btn-secondary">Update Category</Link>
         <div>
       <Button color="danger" onClick={toggle}>Delete</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>

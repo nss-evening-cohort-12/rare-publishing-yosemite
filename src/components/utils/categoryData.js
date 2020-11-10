@@ -8,4 +8,13 @@ const deleteCat = (catId) => axios.delete(`${baseUrl}/categories/${catId}`)
 
 const createCat = (newCat) => axios.post(`${baseUrl}/categories`, newCat)
 
-export default { getAllCats, deleteCat, createCat }
+const updateCat = (id, newCat) => axios.put(`${baseUrl}/categories/${id}`, newCat)
+
+const getSingleCat = (catId) => axios.get(`${baseUrl}/categories/${catId}`)
+
+export default { 
+  getAllCats,
+  deleteCat,
+  createCat,
+  updateCat,
+  getSingleCat }
