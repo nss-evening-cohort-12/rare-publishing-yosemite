@@ -13,12 +13,14 @@ export const AddTag = (props) => {
   };
 
   const submitTagEvent = (e) => {
+    e.preventDefault();
+    
     const newTag = {
       name
     }
 
     tagData.createTag(newTag)
-      .then((res) => {history.push('/tags')})
+      .then((res) => history.push('/tags'))
       .catch((err) => console.error(err))
   };
 
