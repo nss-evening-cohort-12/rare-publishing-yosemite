@@ -4,7 +4,7 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
-import Categories  from './categories/Categories'
+import { Categories }  from './categories/Categories'
 
 
 export const Rare = () => (
