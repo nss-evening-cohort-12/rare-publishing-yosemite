@@ -13,10 +13,18 @@ export const Posts = props => {
 
   useEffect(getPosts, []);
 
-  const postCards = posts.map((post) => <PostsCards key={post.id} post={post} />);
+  const deletePost = (postId) => {
+    postsData.deletePost(postId)
+      .then((res) => {
+        getPosts();
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const postCards = posts.map((post) => <PostsCards key={post.id} post={post} deletePost={deletePost}/>);
 
   return (
-    <div className="posts-container">
+    <div className="posts-container card-deck text-center">
       {postCards}
     </div>
   );
