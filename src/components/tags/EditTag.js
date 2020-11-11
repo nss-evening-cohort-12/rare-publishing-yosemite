@@ -20,13 +20,19 @@ export const EditTag = (props) => {
   const editNameEvent = (e) => {
     e.preventDefault();
     const name = e.target.value;
-    setTag( tag, name)
+    const { tagId } = props.match.params;
+    const newTag = {
+      "id": tagId,
+      "name": name
+    }
+    setTag(newTag)
   };
 
   const updateTagEvent = (e) => {
     e.preventDefault();
     const newTag = tag;
-    const { tagId } = props.match.params;
+    const tagId = newTag.id
+    console.log(newTag, tagId)
     tagData.updateTag(tagId, newTag)
       .then((res) => history.push('/tags'))
       .catch((err) => console.error(err));
@@ -43,7 +49,7 @@ export const EditTag = (props) => {
           type="text"
           className="form-control"
           id="tagName"
-          value={tag.name}
+          defaultValue={tag.name}
           onChange={editNameEvent}
           />
         </div>
