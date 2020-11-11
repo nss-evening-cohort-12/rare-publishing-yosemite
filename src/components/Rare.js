@@ -12,7 +12,7 @@ import { Posts } from "./posts/Posts"
 export const Rare = () => (
     <>
         <Route render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <>
                     <NavBar />
                     <ApplicationViews />
@@ -23,7 +23,7 @@ export const Rare = () => (
         }} />
 
         <Route path="/login" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <Redirect to="/" />
             } else {
                 return <Login />
@@ -31,35 +31,35 @@ export const Rare = () => (
         }} />
 
         <Route path="/register" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <Redirect to="/" />
             } else {
                 return <Register />
             }
         }} />
         <Route path="/tags" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <Tags />
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/addTag" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <AddTag />
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/editTag/:tagId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <EditTag {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/posts" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <Posts />
             } else {
                 return <Redirect to ="/" />

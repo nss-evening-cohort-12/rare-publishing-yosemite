@@ -8,7 +8,7 @@ export const ProfileProvider = (props) => {
     const getProfile = () => {
         return fetch("http://localhost:8000/profile", {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+                "Authorization": `Token ${localStorage.getItem("user_id")}`
             }
         })
             .then(response => response.json())
