@@ -4,4 +4,6 @@ const baseUrl = 'http://localhost:8088'
 
 const createUser = (new_user) => axios.post(`${baseUrl}/users`, new_user)
 
-export default { createUser }
+const getUserById = (id) => axios.get(`${baseUrl}/users/${id}`)
+
+export default { createUser, getUserById }
