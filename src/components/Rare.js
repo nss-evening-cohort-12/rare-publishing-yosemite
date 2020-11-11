@@ -8,6 +8,7 @@ import { Tags } from "./tags/Tags"
 import { AddTag } from "./tags/AddTag"
 import { EditTag } from "./tags/EditTag"
 import { Posts } from "./posts/Posts"
+import { NewPost } from "./posts/NewPost"
 
 export const Rare = () => (
     <>
@@ -61,6 +62,13 @@ export const Rare = () => (
         <Route path="/posts" render={() => {
             if (localStorage.getItem("user_id")) {
                 return <Posts />
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/addPost" render={() => {
+            if (localStorage.getItem("user_id")) {
+                return <NewPost />
             } else {
                 return <Redirect to ="/" />
             }
