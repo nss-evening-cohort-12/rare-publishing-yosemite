@@ -18,11 +18,11 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/tags">Manage Tags</Link>
             </li>
             {
-                (localStorage.getItem("rare_user_id") !== null) ?
+                (localStorage.getItem("user_id") !== null) ?
                     <li className="nav-item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
-                                localStorage.removeItem("rare_user_id")
+                                localStorage.removeItem("user_id")
                                 history.push({ pathname: "/" })
                             }}
                         >Logout</button>
