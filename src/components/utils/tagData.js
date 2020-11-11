@@ -8,4 +8,13 @@ const deleteTag = (tagId) => axios.delete(`${baseUrl}/tags/${tagId}`)
 
 const createTag = (newTag) => axios.post(`${baseUrl}/tags`, newTag)
 
-export default { getAllTags, deleteTag, createTag }
+const updateTag = (id, newTag) => axios.put(`${baseUrl}/tags/${id}`, newTag)
+
+const getSingleTag = (tagId) => axios.get(`${baseUrl}/tags/${tagId}`)
+
+export default { 
+  getAllTags,
+  deleteTag,
+  createTag,
+  updateTag,
+  getSingleTag }

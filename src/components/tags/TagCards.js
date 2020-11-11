@@ -9,11 +9,13 @@ export const TagCards = (props) => {
     deleteTag(tag.id)
   };
 
+  const editLink = `/editTag/${tag.id}`
+
   return (
     <div className="card">
       <div className="card-body">
         <h5 className="card-title">{tag.name}</h5>
-        <button className="btn btn-secondary">Update Tag</button>
+        <Link to={editLink} className="btn btn-secondary">Update Tag</Link>
         <button className="btn btn-danger" onClick={deleteEvent}>Delete Tag</button>
       </div>
     </div>

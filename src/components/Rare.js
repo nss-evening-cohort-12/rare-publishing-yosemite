@@ -6,6 +6,7 @@ import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Tags } from "./tags/Tags"
 import { AddTag } from "./tags/AddTag"
+import { EditTag } from "./tags/EditTag"
 
 export const Rare = () => (
     <>
@@ -45,6 +46,13 @@ export const Rare = () => (
         <Route path="/addTag" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <AddTag />
+            } else {
+                return <Redirect to ="/" />
+            }
+        }} />
+        <Route path="/editTag/:tagId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <EditTag {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
