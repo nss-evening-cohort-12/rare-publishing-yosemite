@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { PostsCards } from "./PostsCards"
 import postsData from '../utils/postsData';
+import { Link } from "react-router-dom"
 
 export const Posts = props => {
   const [posts, setPosts] = useState([]);
@@ -25,6 +26,7 @@ export const Posts = props => {
 
   return (
     <div className="posts-container card-deck text-center">
+      <Link to="/addPost" className="btn btn-info">Add New Post</Link>
       {postCards}
     </div>
   );
