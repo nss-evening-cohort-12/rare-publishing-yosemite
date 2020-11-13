@@ -9,9 +9,7 @@ export const EditTag = (props) => {
   const history = useHistory()
   
   useEffect(() => {
-    console.log(props)
     const { tagId } = props.match.params;
-    console.log(tagId)
     tagData.getSingleTag(tagId)
       .then((res) => setTag(res.data))
       .catch((err) => console.error(err))
