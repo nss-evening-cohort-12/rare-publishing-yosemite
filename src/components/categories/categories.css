@@ -1,0 +1,11 @@
+.cat-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
