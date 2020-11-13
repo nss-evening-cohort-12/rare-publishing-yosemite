@@ -10,9 +10,12 @@ const deleteComment = (commentId) => axios.delete(`${baseUrl}/comments/${comment
 
 const getSingleComment = (id) => axios.get(`${baseUrl}/comments/${id}`)
 
+const getCommentsByPostId = (postId) => axios.get(`${baseUrl}/comments?post_id=${postId}`)
+
 export default {
   createComment, 
   updateComment,
   deleteComment,
-  getSingleComment
+  getSingleComment,
+  getCommentsByPostId
 }
