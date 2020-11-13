@@ -8,8 +8,11 @@ const updateComment = (id, newComment) => axios.put(`${baseUrl}/comments/${id}`,
 
 const deleteComment = (commentId) => axios.delete(`${baseUrl}/comments/${commentId}`)
 
+const getSingleComment = (id) => axios.get(`${baseUrl}/comments/${id}`)
+
 export default {
   createComment, 
   updateComment,
-  deleteComment
+  deleteComment,
+  getSingleComment
 }
