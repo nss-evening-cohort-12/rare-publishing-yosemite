@@ -29,7 +29,7 @@ export const Register = (props) => {
                 .then(res => {
                     console.log(res)
                     if (res.statusText === "Created") {
-                        localStorage.setItem("rare_user_id", res.token)
+                        localStorage.setItem("user_id", res.token)
                         history.push("/login")
                     }
                 })
