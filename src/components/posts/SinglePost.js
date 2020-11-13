@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import postsData from '../utils/postsData'
+import commentData from '../utils/commentData'
 
 
 
 export const SinglePost = (props) => {
   const [post, setPost ] = useState({})
+  const [comments, setComments] = useState([])
+
 
   const getPost = () => {
     console.error(props)
@@ -13,7 +16,11 @@ export const SinglePost = (props) => {
     postsData.getSinglePost(postId)
       .then((res) => {
         setPost(res.data[0])
-        console.error(res)
+        
+        commentData.getCommentsByPostId(postId)
+          .then((res) => console.log(res))
+          .catch((err) => console.error(err))
+        
       })
       .catch((err) => console.error(err));
   };
