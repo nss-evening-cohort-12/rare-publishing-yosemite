@@ -93,9 +93,9 @@ export const Rare = () => (
                 return <Redirect to ="/" />
             }
         }}/>
-        <Route path="/posts/:postId" render={() => {
+        <Route path="/post/:postId" render={(props) => {
             if (localStorage.getItem("user_id")) {
-                return <SinglePost />
+                return <SinglePost {...props}/>
             } else {
                 return <Redirect to ="/" />
             }

@@ -9,7 +9,7 @@ export const PostsCards = props => {
     deletePost(post.id)
   };
 
-  const singlePost = `/posts/${post.id}`
+  const singlePost = `/post/${post.id}`
 
   return (
     <div className="card">
