@@ -10,15 +10,13 @@ export const SinglePost = (props) => {
 
 
   const getPost = () => {
-    console.error(props)
     const { postId } = props.match.params
-    console.error(postId, "id")
     postsData.getSinglePost(postId)
       .then((res) => {
         setPost(res.data[0])
         
         commentData.getCommentsByPostId(postId)
-          .then((res) => console.log(res))
+          .then((res) => setComments(res.data))
           .catch((err) => console.error(err))
         
       })
