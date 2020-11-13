@@ -38,7 +38,7 @@ export const CreateComment = (props) => {
     }
 
     commentData.CreateComment(newComment)
-      .then(history.pushState('/posts'))
+      .then(history.push(`posts/${post_id}`))
       .catch((err) => console.error(err))
   }
 

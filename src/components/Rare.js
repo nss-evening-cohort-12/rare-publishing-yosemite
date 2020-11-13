@@ -4,6 +4,9 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
+import { Categories }  from "./categories/Categories"
+import { UpdateCategory} from "./categories/UpdateCategory"
+
 import { Tags } from "./tags/Tags"
 import { AddTag } from "./tags/AddTag"
 import { EditTag } from "./tags/EditTag"
@@ -37,6 +40,22 @@ export const Rare = () => (
                 return <Redirect to="/" />
             } else {
                 return <Register />
+            }
+        }} />
+
+        <Route path="/categories" render={() => {
+            if (localStorage.getItem("user_id")) {
+                return <Categories />      
+            } else {
+                return <Redirect to ="/" />
+            }
+        }} />
+
+        <Route path="/updateCategory/:categoryId" render={(props) => {
+            if (localStorage.getItem("user_id")) {
+                return <UpdateCategory {...props}/>
+            } else {
+                return <Redirect to ="/" />
             }
         }} />
         <Route path="/tags" render={() => {
@@ -82,4 +101,5 @@ export const Rare = () => (
             }
         }}/>
     </>
+
 )
