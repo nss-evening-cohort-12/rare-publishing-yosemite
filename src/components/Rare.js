@@ -43,14 +43,15 @@ export const Rare = () => (
         }} />
 
         <Route path="/categories" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <Categories />      
             } else {
                 return <Redirect to ="/" />
             }
         }} />
+
         <Route path="/updateCategory/:categoryId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("user_id")) {
                 return <UpdateCategory {...props}/>
             } else {
                 return <Redirect to ="/" />
