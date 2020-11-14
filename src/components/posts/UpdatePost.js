@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import postsData from '../utils/postsData'
+import categoryData from '../utils/categoryData'
 
 export const UpdatePost = props => {
   // const [title, setTitle] = useState('')
@@ -9,6 +10,7 @@ export const UpdatePost = props => {
   // const [header_img, setHeader_img] = useState('')
   // const [tags, setTags] = useState([])
   const [post, setPost] = useState ({});
+  const [categories, setCategories] = useState([])
   const history = useHistory()
 
   useEffect(() => {
@@ -17,6 +19,12 @@ export const UpdatePost = props => {
       .then((res) => setPost(res.data))
       .catch((err) => console.error(err))
   }, []);
+
+  useEffect(() => {
+    categoryData.getAllCats()
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.error(err));
+  })
 
   const editTitleEvent = (e) => {
     e.preventDefault();
@@ -59,6 +67,8 @@ export const UpdatePost = props => {
       .catch((err) => console.error(err));
   };
 
+  const categorySelect = categories.map((category) => { return <option value={category.id} key={category.id}>{category.name}</option> })
+
   return (
     <div className="text-center">
       <h1>Edit Post</h1>
@@ -86,15 +96,14 @@ export const UpdatePost = props => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor ="postCategory">Category</label>
-            <input
-            type="text"
+            <label htmlFor ="category_id">Category</label>
+            <select
             className="form-control"
-            id="postCategory"
-            defaultValue={post.category_id}
-            placeholder="Select Category"
+            id="category_id"
             onChange={editCategoryEvent}
-            />
+            >
+              {categorySelect}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor ="headerImg">Header Image</label>
