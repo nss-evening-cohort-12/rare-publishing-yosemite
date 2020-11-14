@@ -10,6 +10,7 @@ export const PostsCards = props => {
   };
 
   const singlePost = `/post/${post.id}`
+  const updatePost = `/editPost/${post.id}`
 
   return (
     <div className="card">
@@ -20,6 +21,7 @@ export const PostsCards = props => {
         <p className="card-content post-content">{post.content}</p>
         <button className="btn btn-danger" onClick={deleteEvent}>Delete Post</button>
         <Link className="btn btn-primary single-post" to={singlePost}>View Post</Link>
+        <Link className="btn btn-primary update-post" to={updatePost}>Edit Post</Link>
       </div>
     </div>
   );

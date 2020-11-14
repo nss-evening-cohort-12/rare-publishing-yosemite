@@ -6,7 +6,7 @@ import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Categories }  from "./categories/Categories"
 import { UpdateCategory} from "./categories/UpdateCategory"
-
+import { UserPosts } from './posts/UserPosts'
 import { Tags } from "./tags/Tags"
 import { AddTag } from "./tags/AddTag"
 import { EditTag } from "./tags/EditTag"
@@ -15,6 +15,8 @@ import { NewPost } from "./posts/NewPost"
 import { SinglePost } from "./posts/SinglePost"
 import { CreateComment } from "./comments/CreateComment"
 import { EditComment } from "./comments/EditComment"
+
+import { UpdatePost } from './posts/UpdatePost'
 
 export const Rare = () => (
     <>
@@ -105,6 +107,13 @@ export const Rare = () => (
         <Route path="/addComment/:postId" render={(props) => {
             if (localStorage.getItem("user_id")) {
                 return <CreateComment {...props}/>
+             } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/myPosts" render={() => {
+            if (localStorage.getItem("user_id")) {
+                return <UserPosts />
             } else {
                 return <Redirect to ="/" />
             }
@@ -112,6 +121,13 @@ export const Rare = () => (
         <Route path="/editComment/:commentId" render={(props) => {
             if (localStorage.getItem("user_id")) {
                 return <EditComment {...props}/>
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/editPost/:postId" render={(props) => {
+            if (localStorage.getItem("user_id")) {
+                return <UpdatePost {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
