@@ -27,7 +27,12 @@ export const SinglePost = (props) => {
 
   useEffect(getPost, [])
 
-  const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} />)
+  const deleteComment = (commentId) => {
+    commentData.deleteComment(commentId)
+      .then((res) => getPost())
+      .catch((err) => console.error(err))
+  };
+  const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
 
   const createCommentLink = `/addComment/${post.id}`
 

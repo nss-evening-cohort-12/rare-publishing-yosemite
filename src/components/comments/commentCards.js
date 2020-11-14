@@ -2,9 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const CommentCards = (props) => {
-  const { comment } = props
+  const { comment, deleteComment } = props
 
   const editLink = `/editComment/${comment.id}`
+
+  const deleteEvent = (e) => {
+    e.preventDefault();
+    deleteComment(comment.id)
+  };
 
   return (
     <div className="card mt-3">
@@ -15,6 +20,7 @@ export const CommentCards = (props) => {
         <p className="card-text">{comment.creation_date}</p>        
       </div>
       <Link to={editLink} className="btn btn-secondary">Edit this comment</Link>
+      <button className="btn btn-danger" onClick={deleteEvent}>Delete Comment</button>
     </div>
   );
 };
