@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
 import { CommentCards } from '../comments/CommentCards'
+import { Link } from 'react-router-dom'
 
 
 
@@ -28,6 +29,8 @@ export const SinglePost = (props) => {
 
   const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} />)
 
+  const createCommentLink = `/addComment/${post.id}`
+
   return (
     <div className="container text-center">
       <div className="posts-container text-center card">
@@ -39,6 +42,7 @@ export const SinglePost = (props) => {
       <div className="comment-container card-deck text-center">
         {commentCards}
       </div>
+      <Link to={createCommentLink} className="btn btn-primary">Add a comment</Link>
     </div>
 
   )

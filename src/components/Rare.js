@@ -13,6 +13,7 @@ import { EditTag } from "./tags/EditTag"
 import { Posts } from "./posts/Posts"
 import { NewPost } from "./posts/NewPost"
 import { SinglePost } from "./posts/SinglePost"
+import { CreateComment } from "./comments/CreateComment"
 
 export const Rare = () => (
     <>
@@ -96,6 +97,13 @@ export const Rare = () => (
         <Route path="/post/:postId" render={(props) => {
             if (localStorage.getItem("user_id")) {
                 return <SinglePost {...props}/>
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/addComment/:postId" render={(props) => {
+            if (localStorage.getItem("user_id")) {
+                return <CreateComment {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
