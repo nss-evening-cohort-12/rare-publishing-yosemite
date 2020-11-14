@@ -107,7 +107,7 @@ export const Rare = () => (
         <Route path="/addComment/:postId" render={(props) => {
             if (localStorage.getItem("user_id")) {
                 return <CreateComment {...props}/>
-             } else {
+            } else {
                 return <Redirect to ="/" />
             }
         }}/>
