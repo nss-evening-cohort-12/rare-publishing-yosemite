@@ -29,7 +29,7 @@ export const Categories = (props) => {
     <div className="container-fluid text-center">
     <h1>Category Management </h1>
     <div className="add">
-      <Link to="/addCat" className="btn btn-info">Add New Category</Link>
+      <Link to="/newCategory" className="btn btn-info">Add New Category</Link>
     </div>
     <div className="card-deck text-center">
       {catCards}

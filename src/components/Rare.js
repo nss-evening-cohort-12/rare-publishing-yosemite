@@ -14,6 +14,7 @@ import { Posts } from "./posts/Posts"
 import { NewPost } from "./posts/NewPost"
 import { SinglePost } from "./posts/SinglePost"
 import { UpdatePost } from './posts/UpdatePost'
+import { NewCategory } from "./categories/NewCategory"
 
 export const Rare = () => (
     <>
@@ -111,6 +112,13 @@ export const Rare = () => (
         <Route path="/editPost/:postId" render={(props) => {
             if (localStorage.getItem("user_id")) {
                 return <UpdatePost {...props}/>
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/newCategory" render={() => {
+            if (localStorage.getItem("user_id")) {
+                return <NewCategory />
             } else {
                 return <Redirect to ="/" />
             }
