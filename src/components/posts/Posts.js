@@ -25,9 +25,12 @@ export const Posts = props => {
   const postCards = posts.map((post) => <PostsCards key={post.id} post={post} deletePost={deletePost}/>);
 
   return (
-    <div className="posts-container card-deck text-center">
+    <div className="container">
       <Link to="/addPost" className="btn btn-info">Add New Post</Link>
-      {postCards}
+      <Link to="/myPosts" className="btn btn-primary">View My Posts</Link>
+      <div className="posts-container card-deck text-center">
+        {postCards}
+      </div>
     </div>
   );
 };
