@@ -10,7 +10,7 @@ const deletePost = (postId) => axios.delete(`${baseUrl}/posts/${postId}`)
 
 const createPost = (newPost) => axios.post(`${baseUrl}/posts`, newPost)
 
-const updatePost = (postId, editedPost) => axios.put(`${baseUrl}/posts/${postId}.json`, editedPost);
+const updatePost = (postId, editedPost) => axios.put(`${baseUrl}/posts/${postId}`, editedPost);
 
 const getUsersPosts = (userId) => axios.get(`${baseUrl}/posts?user_id=${userId}`)
 

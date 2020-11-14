@@ -13,6 +13,7 @@ import { EditTag } from "./tags/EditTag"
 import { Posts } from "./posts/Posts"
 import { NewPost } from "./posts/NewPost"
 import { SinglePost } from "./posts/SinglePost"
+import { UpdatePost } from './posts/UpdatePost'
 
 export const Rare = () => (
     <>
@@ -103,6 +104,13 @@ export const Rare = () => (
         <Route path="/myPosts" render={() => {
             if (localStorage.getItem("user_id")) {
                 return <UserPosts />
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/editPost/:postId" render={(props) => {
+            if (localStorage.getItem("user_id")) {
+                return <UpdatePost {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
