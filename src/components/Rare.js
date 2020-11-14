@@ -6,7 +6,7 @@ import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Categories }  from "./categories/Categories"
 import { UpdateCategory} from "./categories/UpdateCategory"
-
+import { UserPosts } from './posts/UserPosts'
 import { Tags } from "./tags/Tags"
 import { AddTag } from "./tags/AddTag"
 import { EditTag } from "./tags/EditTag"
@@ -96,6 +96,13 @@ export const Rare = () => (
         <Route path="/post/:postId" render={(props) => {
             if (localStorage.getItem("user_id")) {
                 return <SinglePost {...props}/>
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/myPost" render={() => {
+            if (localStorage.getItem("user_id")) {
+                return <UserPosts />
             } else {
                 return <Redirect to ="/" />
             }
