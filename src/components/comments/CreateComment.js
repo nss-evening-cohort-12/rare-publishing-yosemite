@@ -7,8 +7,6 @@ import usersData from '../utils/usersData'
 export const CreateComment = (props) => {
   const [subject, setSubject] = useState('')
   const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [post_id, setPost_id] = useState('')
   const history = useHistory()
 
   const setSubjectEvent = (e) => {
@@ -20,31 +18,36 @@ export const CreateComment = (props) => {
     setContent(e.target.value)
   };
 
-  const submitCommentEvent = (e) => {
+  const submitCommentEvent = async (e) => {
     e.preventDefault();
-    const postId = props.match.params
-    setPost_id(postId)
-
+    let { postId }= props.match.params
+    
     const authorId = localStorage.getItem('user_id')
-    usersData.getUserById(authorId)
-      .then((res) => setAuthor(res.data))
-      .catch((err) => console.error(err))
+
+    const res = await usersData.getUserById(authorId)
+      const author = res.data.name
+
+    createComment(postId, author)
+  }
+
+  const createComment = (postId, author) => {
 
     const newComment = {
       subject,
       content,
       author,
-      post_id
+      "post_id": postId
     }
+    console.log(newComment)
 
-    commentData.CreateComment(newComment)
-      .then(history.push(`posts/${post_id}`))
+    commentData.createComment(newComment)
+      .then(history.push(`/post/${postId}`))
       .catch((err) => console.error(err))
-  }
+  };
 
   return (
-    <div>
-      <h1>Add a comment!</h1>
+    <div className="text-center">
+      <h1 className="text-center">Add a comment!</h1>
       <form className="col-6 offset-3">
           <div className="form-group">
             <label htmlFor ="subject">Subject</label>
