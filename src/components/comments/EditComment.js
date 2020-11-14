@@ -10,7 +10,9 @@ export const EditComment = (props) => {
   useEffect(() => {
     const { commentId } = props.match.params
     commentData.getSingleComment(commentId)
-      .then((res) => setComment(res.data))
+      .then((res) => {
+        setComment(res.data[0])
+      })
       .catch((err) => console.error(err))
 
   }, [])
@@ -32,8 +34,9 @@ export const EditComment = (props) => {
     const newComment = comment
     const postId = comment.post_id
     const commentId = comment.id
+    console.log(newComment, postId, commentId)
     commentData.updateComment(commentId, newComment)
-      .then((res) => history.push(`/posts/${postId}`))
+      .then((res) => history.push(`/post/${postId}`))
       .catch((err) => console.error(err))
   };
 

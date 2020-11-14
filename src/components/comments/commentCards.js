@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 export const CommentCards = (props) => {
   const { comment } = props
 
+  const editLink = `/editComment/${comment.id}`
+
   return (
     <div className="card mt-3">
       <div className="card-body">
@@ -12,6 +14,7 @@ export const CommentCards = (props) => {
         <p className="card-text">{comment.content}</p>
         <p className="card-text">{comment.creation_date}</p>        
       </div>
+      <Link to={editLink} className="btn btn-secondary">Edit this comment</Link>
     </div>
   );
 };
