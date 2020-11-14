@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
+import { CommentCards } from '../comments/CommentCards'
 
 
 
@@ -25,12 +26,20 @@ export const SinglePost = (props) => {
 
   useEffect(getPost, [])
 
+  const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} />)
+
   return (
-    <div className="posts-container text-center">
-      <img className="card-img-top header-img" src={post.header_img} alt="Album Cover" />
-      <h3>{post.title}</h3>
-      <h6>{post.publish_date}</h6>
-      <p>{post.content}</p>
+    <div className="container text-center">
+      <div className="posts-container text-center card">
+        <img className="card-img-top header-img" src={post.header_img} alt="Album Cover" />
+        <h3 className="card-title">{post.title}</h3>
+        <h6 className="card-title">{post.publish_date}</h6>
+        <p className="card-text">{post.content}</p>
+      </div>
+      <div className="comment-container card-deck text-center">
+        {commentCards}
+      </div>
     </div>
+
   )
 }
