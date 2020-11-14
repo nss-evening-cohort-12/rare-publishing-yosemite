@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import postsData from '../utils/postsData'
+import categoryData from '../utils/categoryData'
 
 export const NewPost = props => {
   const [title, setTitle] = useState('')
@@ -8,7 +9,20 @@ export const NewPost = props => {
   const [category_id, setCategory_id] = useState(0)
   const [header_img, setHeader_img] = useState('')
   const [tags, setTags] = useState([])
+  const [categories, setCategories] = useState([])
   const history = useHistory()
+
+  // const getCategories = () => {
+  //   categoryData.getAllCats()
+  //     .then((res) => setCategories(res.data))
+  //     .catch((err) => console.error(err));
+  // };
+
+  useEffect(() => {
+    categoryData.getAllCats()
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.error(err));
+  })
 
   const setTitleEvent = (e) => {
     e.preventDefault();
@@ -52,6 +66,8 @@ export const NewPost = props => {
       .catch((err) => console.error(err));
   };
 
+  const categorySelect = categories.map((category) => { return <option value={category.id} key={category.id}>{category.name}</option> })
+
   return (
     <div className="text-center">
       <h1>New Post</h1>
@@ -79,15 +95,14 @@ export const NewPost = props => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor ="postCategory">Category</label>
-            <input
-            type="text"
+            <label htmlFor ="category_id">Category</label>
+            <select
             className="form-control"
-            id="postCategory"
-            value={category_id}
-            placeholder="Select Category"
+            id="category_id"
             onChange={setCategoryEvent}
-            />
+            >
+              {categorySelect}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor ="headerImg">Header Image</label>
