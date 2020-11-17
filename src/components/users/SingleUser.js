@@ -1,11 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import usersData from '../utils/usersData'
 
+export const SingleUser = props => {
+  const [user, setUser] = useState({})
 
-export const UserCards = props => {
-  const { user } = props;
+  const getSingleUser = () => {
+    const { userId } = props.match.params
+    usersData.getUserById(userId)
+      .then((res) => setUser(res.data))
+      .catch((err) => console.error(err))
+  }
 
-  const singleUser = `/singleUser/${user.id}`
+  useEffect(getSingleUser, [])
 
   return (
     <div className="card">
@@ -16,8 +22,7 @@ export const UserCards = props => {
         <p className="card-content post-content">{user.email}</p>
         <p className="card-content post-content">{user.user_type}</p>
         <p className="card-content post-content">{user.creation_date}</p>
-        <Link to={singleUser} className="btn btn-secondary">View User</Link>
       </div>
     </div>
-  );
-};
+  )
+}
