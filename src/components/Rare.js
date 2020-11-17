@@ -18,6 +18,7 @@ import { EditComment } from "./comments/EditComment"
 import { UserProfiles } from "./users/UserProfiles"
 import { UpdatePost } from './posts/UpdatePost'
 import { NewCategory } from "./categories/NewCategory"
+import { SingleUser } from './users/SingleUser'
 
 export const Rare = () => (
     <>
@@ -143,6 +144,13 @@ export const Rare = () => (
         <Route path="/profiles" render={() => {
             if (localStorage.getItem("user_id")) {
                 return <UserProfiles />
+            } else {
+                return <Redirect to ="/" />
+            }
+        }}/>
+        <Route path="/singleUser/:userId" render={(props) => {
+            if (localStorage.getItem("user_id")) {
+                return <SingleUser {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
