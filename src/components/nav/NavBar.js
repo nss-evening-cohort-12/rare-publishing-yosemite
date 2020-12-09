@@ -1,18 +1,16 @@
 import React from "react"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
 
-export const NavBar = () => {
-    const history = useHistory()
-
+export const NavBar = props => {
     return (
         <ul className="navbar">
             <li className="navbar__item">
                 <img className="navbar__logo" src={Logo} alt="navbar-logo"/>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/profiles">profiles</Link>
+                <Link className="navbar__link" to="/profiles">Profiles</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/categories">Category Management</Link>
@@ -24,12 +22,12 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/tags">Manage Tags</Link>
             </li>
             {
-                (localStorage.getItem("user_id") !== null) ?
+                (localStorage.getItem("r_token") !== null) ?
                     <li className="nav-item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
-                                localStorage.removeItem("user_id")
-                                history.push({ pathname: "/" })
+                                localStorage.removeItem("r_token")
+                                props.history.push({ pathname: "/" })
                             }}
                         >Logout</button>
                     </li> :

@@ -3,12 +3,15 @@ import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
 import { CommentCards } from '../comments/CommentCards'
 import { Link } from 'react-router-dom'
+import tagData from '../utils/tagData'
+import { TagCards } from '../tags/TagCards'
 
 
 
 export const SinglePost = (props) => {
   const [post, setPost ] = useState({})
   const [comments, setComments] = useState([])
+  const [tags, setTags] = useState([])
 
 
   const getPost = () => {
@@ -16,7 +19,6 @@ export const SinglePost = (props) => {
     postsData.getSinglePost(postId)
       .then((res) => {
         setPost(res.data[0])
-        
         commentData.getCommentsByPostId(postId)
           .then((res) => setComments(res.data))
           .catch((err) => console.error(err))
@@ -27,13 +29,21 @@ export const SinglePost = (props) => {
 
   useEffect(getPost, [])
 
+  console.log(post.tags)
+
+  // const getTags = () => {
+  //   tagData.getAllTags
+  // };
+
   const deleteComment = (commentId) => {
     commentData.deleteComment(commentId)
       .then((res) => getPost())
       .catch((err) => console.error(err))
   };
-  const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
+  
 
+  const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
+  // const tagCards = tags.map((tag) => <TagCards key={tag.id} />)
   const createCommentLink = `/addComment/${post.id}`
 
   return (
@@ -43,6 +53,10 @@ export const SinglePost = (props) => {
         <h3 className="card-title">{post.title}</h3>
         <h6 className="card-title">{post.publish_date}</h6>
         <p className="card-text">{post.content}</p>
+        <Link className="btn btn-secondary" to='/tags'>Manage tags</Link>
+      </div>
+      <div className="tags">
+        {/* {tags} */}
       </div>
       <div className="comment-container card-deck text-center">
         {commentCards}
