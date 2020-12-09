@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import tagData from '../utils/tagData'
+// import tagData from '../utils/tagData'
 
-export const AddTag = (props) => {
+export const TagForm = (props) => {
   const [name, setName] = useState('')
   const history = useHistory()
 
@@ -12,17 +12,17 @@ export const AddTag = (props) => {
     setName(e.target.value)
   };
 
-  const submitTagEvent = (e) => {
-    e.preventDefault();
+  // const submitTagEvent = (e) => {
+  //   e.preventDefault();
     
-    const newTag = {
-      name
-    }
+  //   const newTag = {
+  //     name
+  //   }
 
-    tagData.createTag(newTag)
-      .then((res) => history.push('/tags'))
-      .catch((err) => console.error(err))
-  };
+  // //   tagData.createTag(newTag)
+  // //     .then((res) => history.push('/tags'))
+  // //     .catch((err) => console.error(err))
+  // };
 
   return (
     <div className="text-center">
@@ -39,8 +39,8 @@ export const AddTag = (props) => {
             onChange={setNameEvent}
             />
           </div>
-          <button className="btn button btn-danger" type="submit" onClick={submitTagEvent}>Submit</button>
+          <button className="btn button btn-danger" type="submit">Submit</button>
       </form>
     </div>
   )
-};
+}

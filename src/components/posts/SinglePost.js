@@ -3,8 +3,8 @@ import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
 import { CommentCards } from '../comments/CommentCards'
 import { Link } from 'react-router-dom'
-import tagData from '../utils/tagData'
-import { TagCards } from '../tags/TagCards'
+// import tagData from '../utils/tagData'
+// import { TagCards } from '../tags/TagCards'
 
 
 
