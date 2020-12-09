@@ -12,7 +12,7 @@ export const NavBar = () => {
                 <img className="navbar__logo" src={Logo} alt="navbar-logo"/>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/profiles">profiles</Link>
+                <Link className="navbar__link" to="/profiles">Profiles</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/categories">Category Management</Link>
@@ -24,11 +24,11 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/tags">Manage Tags</Link>
             </li>
             {
-                (localStorage.getItem("user_id") !== null) ?
+                (localStorage.getItem("r_token") !== null) ?
                     <li className="nav-item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
-                                localStorage.removeItem("user_id")
+                                localStorage.removeItem("r_token")
                                 history.push({ pathname: "/" })
                             }}
                         >Logout</button>
