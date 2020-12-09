@@ -36,7 +36,7 @@ export const Rare = () => (
         <Route path="/login" render={Login} />
         <Route path="/register" render={Register} />
 
-        <Route path="/categories" render={() => {
+        {/* <Route path="/categories" render={() => {
             if (localStorage.getItem("r_token")) {
                 return <Categories />      
             } else {
@@ -141,7 +141,7 @@ export const Rare = () => (
             } else {
                 return <Redirect to ="/" />
             }
-        }}/>
+        }}/> */}
     </>
 
 )
