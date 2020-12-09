@@ -12,6 +12,7 @@ export const PostsCards = props => {
   const singlePost = `/post/${post.id}`
   const updatePost = `/editPost/${post.id}`
 
+
   return (
     <div className="card">
       <img className="card-img-top header-img" src={post.header_img} alt="Album Cover" />

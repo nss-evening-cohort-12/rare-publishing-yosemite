@@ -8,7 +8,9 @@ export const Posts = props => {
   
   const getPosts = () => {
     postsData.getAllPosts()
-      .then((res) => setPosts(res.data))
+      .then((res) => {
+        console.log(res)
+        setPosts(res.data)})
       .catch((err) => console.error(err));
   };
 

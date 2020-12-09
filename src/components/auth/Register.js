@@ -1,41 +1,48 @@
-import React, { useRef } from "react"
+import React from "react"
+import { createRef } from "react"
 import { Link } from "react-router-dom"
-import { useHistory } from 'react-router-dom'
 import "./Auth.css"
-import usersData from '../utils/usersData'
-
 export const Register = (props) => {
-    const name = useRef()
-    const email = useRef()
-    const password = useRef()
-    const verifyPassword = useRef()
-    const passwordDialog = useRef()
-    const history = useHistory()
+    const first_name = React.createRef()
+    const last_name = React.createRef()
+    const email = React.createRef()
+    const bio = React.createRef()
+    const password = createRef()
+    const verifyPassword = createRef()
+    const passwordDialog = createRef()
 
     const handleRegister = (e) => {
         e.preventDefault()
 
         if (password.current.value === verifyPassword.current.value) {
             const newUser = {
-                "name": name.current.value,
-                "avatar": '',
-                "display_name": email.current.value,
+                "username": email.current.value,
+                "first_name": first_name.current.value,
+                "last_name": last_name.current.value,
+                "bio": bio.current.value,
                 "email": email.current.value,
-                "user_type": 'admin',
-                "password": password.current.value
+                "password": password.current.value,
+                "profile_image": ""
             }
 
-            return usersData.createUser(newUser)
+            return fetch("http://127.0.0.1:8000/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(newUser)
+            })
+                .then(res => res.json())
                 .then(res => {
-                    console.log(res)
-                    if (res.statusText === "Created") {
-                        localStorage.setItem("user_id", res.token)
-                        history.push("/login")
+                    if ("token" in res) {
+                        localStorage.setItem("r_token", res.token)
+                        props.history.push("/")
                     }
-                })
-        } else {
-            passwordDialog.current.showModal()
-        }
+                })  
+            } else {
+                passwordDialog.current.showModal()
+            }
     }
 
     return (
@@ -49,8 +56,12 @@ export const Register = (props) => {
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
                 <fieldset>
-                    <label htmlFor="firstName"> Name </label>
-                    <input ref={name} type="text" name="name" className="form-control" placeholder="name" required autoFocus />
+                    <label htmlFor="first_name"> First Name </label>
+                    <input ref={first_name} type="text" name="name" className="form-control" placeholder="First Name" required autoFocus />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="last_name"> Last Name </label>
+                    <input ref={last_name} type="text" name="name" className="form-control" placeholder="Last Name" required autoFocus />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>
@@ -63,6 +74,10 @@ export const Register = (props) => {
                 <fieldset>
                     <label htmlFor="verifyPassword"> Verify Password </label>
                     <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="bio"> Bio </label>
+                    <input ref={bio} type="bio" name="bio" className="form-control" placeholder="Bio" required />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"
