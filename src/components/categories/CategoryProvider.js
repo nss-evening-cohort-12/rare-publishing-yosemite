@@ -40,9 +40,14 @@ export const CategoryProvider = (props) => {
       .then(getCategories)
   }
 
+  const getCategoryById = (id) => {
+    return fetch(`http://localhost:8088/categories/${id}`)
+    .then(res => res.json())
+}
+
   return (
     <CategoryContext.Provider value={{
-      categories, getCategories, createCategory, updateCategory, deleteCategory
+      categories, getCategories, createCategory, updateCategory, deleteCategory, getCategoryById
     }}>
       {props.children}
     </CategoryContext.Provider>
