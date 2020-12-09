@@ -1,48 +1,37 @@
-import React, { useState, useRef } from "react"
-import { Link, useHistory } from "react-router-dom"
+import React from "react"
+import { Link } from "react-router-dom"
 import "./Auth.css"
-import authData from '../utils/authData'
 
+export const Login = props => {
+    const email = React.createRef()
+    const password = React.createRef()
+    const invalidDialog = React.createRef()
 
-export const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const invalidDialog = useRef()
-    const history = useHistory()
-
-    const setEmailEvent = (e) => {
-        e.preventDefault();
-        setEmail(e.target.value)
-    };
-
-    const setPasswordEvent = (e) => {
-        e.preventDefault();
-        setPassword(e.target.value)
-    };
 
     const handleLogin = (e) => {
         e.preventDefault()
 
-        const user = {
-            email: email,
-            password: password
-        }
-        console.log(user)
-
-        return authData.validateUserLogin(user)
+        return fetch("http://127.0.0.1:8000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                username: email.current.value,
+                password: password.current.value
+            })
+        })
+            .then(res => res.json())
             .then(res => {
-                console.log(res)
-                if (true === res.data.response) {
-                    localStorage.setItem("user_id", res.data.user_id )
-                    console.log(localStorage)
-                    console.log(res)
-                    history.push("/")
+                if ("valid" in res && res.valid && "token" in res) {
+                    localStorage.setItem("r_token", res.token)
+                    props.history.push("/")
                 }
                 else {
                     invalidDialog.current.showModal()
                 }
             })
-            .catch((err) => console.error(err))
     }
 
     return (
@@ -53,27 +42,25 @@ export const Login = () => {
             </dialog>
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>Level Up</h1>
+                    <h1>Rare</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email address </label>
                         <input 
+                            ref={email} 
                             type="email"
                             id="email" 
                             className="form-control" 
-                            value={email} 
                             placeholder="Email address" 
-                            onChange={setEmailEvent}
                             required autoFocus />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
                         <input  
+                        ref={password}
                         type="password" 
                         id="password" 
                         className="form-control" 
-                        value={password}
-                        onChange={setPasswordEvent}
                         placeholder="Password" 
                         required />
                     </fieldset>

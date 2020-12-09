@@ -23,34 +23,21 @@ import { SingleUser } from './users/SingleUser'
 export const Rare = () => (
     <>
         <Route render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <>
-                    <NavBar />
-                    <ApplicationViews />
+                    <Route render={NavBar} />
+                    <Route render={props => <ApplicationViews { ...props } />} />
                 </>
             } else {
                 return <Redirect to="/login" />
             }
         }} />
 
-        <Route path="/login" render={() => {
-            if (localStorage.getItem("user_id")) {
-                return <Redirect to="/" />
-            } else {
-                return <Login />
-            }
-        }} />
-
-        <Route path="/register" render={() => {
-            if (localStorage.getItem("user_id")) {
-                return <Redirect to="/" />
-            } else {
-                return <Register />
-            }
-        }} />
+        <Route path="/login" render={Login} />
+        <Route path="/register" render={Register} />
 
         <Route path="/categories" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <Categories />      
             } else {
                 return <Redirect to ="/" />
@@ -58,98 +45,98 @@ export const Rare = () => (
         }} />
 
         <Route path="/updateCategory/:categoryId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <UpdateCategory {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/tags" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <Tags />
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/addTag" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <AddTag />
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/editTag/:tagId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <EditTag {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }} />
         <Route path="/posts" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <Posts />
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/addPost" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <NewPost />
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/post/:postId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <SinglePost {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/addComment/:postId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <CreateComment {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/myPosts" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <UserPosts />
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/editComment/:commentId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <EditComment {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/editPost/:postId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <UpdatePost {...props}/>
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/newCategory" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <NewCategory />
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/profiles" render={() => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <UserProfiles />
             } else {
                 return <Redirect to ="/" />
             }
         }}/>
         <Route path="/singleUser/:userId" render={(props) => {
-            if (localStorage.getItem("user_id")) {
+            if (localStorage.getItem("r_token")) {
                 return <SingleUser {...props}/>
             } else {
                 return <Redirect to ="/" />
