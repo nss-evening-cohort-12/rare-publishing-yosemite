@@ -1,14 +1,25 @@
 .navbar {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: left;
+    flex-wrap: wrap;
+    justify-content: flex-start !important;
+}
+.nav__button {
+    margin-left: 0 auto !important;
 }
 
+
 .navbar__item {
-    flex-basis: 20%;
     list-style-type: none;
+    border: 2px solid blue;
+    border-radius: 5px;
+    margin-left: 20px;
+    padding: 10px;
 }
 
 .navbar__logo {
     max-height: 6rem;
+}
+
+.navbar__link {
+    text-decoration: none !important;
 }

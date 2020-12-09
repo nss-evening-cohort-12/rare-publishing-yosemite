@@ -6,7 +6,7 @@ import Logo from "./rare.jpeg"
 export const NavBar = props => {
     return (
         <ul className="navbar">
-            <li className="navbar__item">
+            <li className="navbar__logo">
                 <img className="navbar__logo" src={Logo} alt="navbar-logo"/>
             </li>
             <li className="navbar__item">
@@ -15,7 +15,7 @@ export const NavBar = props => {
             <li className="navbar__item">
                 <Link className="navbar__link" to="/categories">Category Management</Link>
             </li>
-            <li className="navbar_item">
+            <li className="navbar__item">
                 <Link className="navbar__link" to="/posts">Posts</Link>
             </li>
             <li className="navbar__item">
@@ -23,8 +23,8 @@ export const NavBar = props => {
             </li>
             {
                 (localStorage.getItem("r_token") !== null) ?
-                    <li className="nav-item">
-                        <button className="nav-link fakeLink"
+                    <li className="nav-item navbar__item">
+                        <button className="nav__button"
                             onClick={() => {
                                 localStorage.removeItem("r_token")
                                 props.history.push({ pathname: "/" })
@@ -32,11 +32,11 @@ export const NavBar = props => {
                         >Logout</button>
                     </li> :
                     <>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/login">Login</Link>
+                        <li className="navbar__item">
+                            <Link className="nav__button navbar__item" to="/login">Login</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/register">Register</Link>
+                        <li className="navbar__item">
+                            <Link className="nav__button" to="/register">Register</Link>
                         </li>
                     </>
             }        </ul>
