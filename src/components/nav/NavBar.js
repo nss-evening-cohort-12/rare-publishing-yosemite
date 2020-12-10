@@ -10,21 +10,21 @@ export const NavBar = props => {
                 <img className="navbar__logo" src={Logo} alt="navbar-logo"/>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/profiles">Profiles</Link>
+                <Link className="navbar__link" to="/allposts">All Posts</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/categories">Category Management</Link>
+                <Link className="navbar__link" to="/myposts">My Posts</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/posts">Posts</Link>
+                <Link className="navbar__link" to="/categories">Category Manager</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/tags">Manage Tags</Link>
+                <Link className="navbar__link" to="/tags">Tag Manager</Link>
             </li>
             {
                 (localStorage.getItem("r_token") !== null) ?
                     <li className="nav-item navbar__item">
-                        <button className="nav__button"
+                        <button className=" btn btn-outline-primary nav__button"
                             onClick={() => {
                                 localStorage.removeItem("r_token")
                                 props.history.push({ pathname: "/" })

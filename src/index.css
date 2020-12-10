@@ -49,7 +49,7 @@ code {
 	background: none;
 	cursor: pointer;
     padding: 0.35rem 1.5rem;
-    box-shadow: 0.25rem 0.25rem 0.7rem #90969b;
+    /* box-shadow: 0.25rem 0.25rem 0.7rem #90969b; */
 	display: inline-block;
 	margin: 0.5rem 0.75rem;
 	text-transform: uppercase;
