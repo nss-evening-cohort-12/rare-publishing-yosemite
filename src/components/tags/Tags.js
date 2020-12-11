@@ -10,7 +10,7 @@ export const Tags = (props) => {
   }, [])
   
   
-  const tagCards = tags && tags.results ? tags.results.map((tag) => <TagCards key={tag.id} tag={tag} deleteTag={deleteTag} editTag={editTag}/>) : ''
+  const tagCards = tags && tags.results ? tags.results.map((tag) => <TagCards {...props} key={tag.id} tag={tag} deleteTag={deleteTag}/>) : ''
 
 
   return (
