@@ -1,27 +1,33 @@
 import React, { useContext, useEffect } from 'react'
 import { CategoryContext } from './CategoryProvider.js'
+import { CategoryCards } from './CategoryCards';
 
 export const CategoryList = (props) => {
-    const { categories, getCategories } = useContext(CategoryContext)
+    const { categories, getCategories, deleteCategory } = useContext(CategoryContext)
 
     useEffect(() => {
       getCategories()
     }, [])
 
+    const categoryCards = categories && categories.results ? categories.results.map((category) => <CategoryCards key={category.id} deleteCategory={deleteCategory} category={category} />) : ''
     return (
-      <article className="categoriess">
-      <button className="btn btn-2 btn-sep icon-create"
+      <article className="categories">
+        <div className="cat-new">
+        <button className="btn btn-primary "
           onClick={() => {
           props.history.push({ pathname: "/categories/new" })
           }}
       >Create New Category</button>
-      {
-          categories.map(category => {
-              return <section key={`category--${category.id}`} className="category">
+        </div>
+      
+        {categoryCards}
+      {/* {
+          categories.results.map(category => {
+              return <section key={category.id} className="category">
                   <div className="category__title">{category.label}</div>
               </section>
           })
-      }
+      } */}
   </article>
     )
 }

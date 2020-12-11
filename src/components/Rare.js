@@ -51,27 +51,6 @@ export const Rare = () => (
                 return <Redirect to ="/" />
             }
         }} />
-        <Route path="/tags" render={() => {
-            if (localStorage.getItem("r_token")) {
-                return <Tags />
-            } else {
-                return <Redirect to ="/" />
-            }
-        }} />
-        <Route path="/addTag" render={() => {
-            if (localStorage.getItem("r_token")) {
-                return <AddTag />
-            } else {
-                return <Redirect to ="/" />
-            }
-        }} />
-        <Route path="/editTag/:tagId" render={(props) => {
-            if (localStorage.getItem("r_token")) {
-                return <EditTag {...props}/>
-            } else {
-                return <Redirect to ="/" />
-            }
-        }} />
         <Route path="/posts" render={() => {
             if (localStorage.getItem("r_token")) {
                 return <Posts />
