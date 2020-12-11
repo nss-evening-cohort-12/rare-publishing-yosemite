@@ -6,10 +6,7 @@ import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Categories }  from "./categories/Categories"
 import { UpdateCategory} from "./categories/UpdateCategory"
-import { UserPosts } from './posts/UserPosts'
-import { Tags } from "./tags/Tags"
-import { AddTag } from "./tags/AddTag"
-import { EditTag } from "./tags/EditTag"
+import { UserPosts } from './posts/UserPosts' 
 import { Posts } from "./posts/Posts"
 import { NewPost } from "./posts/NewPost"
 import { SinglePost } from "./posts/SinglePost"
@@ -47,27 +44,6 @@ export const Rare = () => (
         <Route path="/updateCategory/:categoryId" render={(props) => {
             if (localStorage.getItem("r_token")) {
                 return <UpdateCategory {...props}/>
-            } else {
-                return <Redirect to ="/" />
-            }
-        }} />
-        <Route path="/tags" render={() => {
-            if (localStorage.getItem("r_token")) {
-                return <Tags />
-            } else {
-                return <Redirect to ="/" />
-            }
-        }} />
-        <Route path="/addTag" render={() => {
-            if (localStorage.getItem("r_token")) {
-                return <AddTag />
-            } else {
-                return <Redirect to ="/" />
-            }
-        }} />
-        <Route path="/editTag/:tagId" render={(props) => {
-            if (localStorage.getItem("r_token")) {
-                return <EditTag {...props}/>
             } else {
                 return <Redirect to ="/" />
             }

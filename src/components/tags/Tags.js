@@ -1,38 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom'
-
-import tagData from '../utils/tagData'
+import React, { useContext, useEffect } from 'react';
+import { TagContext } from './TagProvider'
 import { TagCards } from './TagCards';
 
 export const Tags = (props) => {
-  const [tags, setTags] = useState([]);
-
-  const getTags = () => {
-    tagData.getAllTags()
-      .then((res) => {
-        setTags(res.data)})
-      .catch((err) => console.error(err))
-  };
+  const { tags, getTags, editTag, deleteTag } = useContext(TagContext)
   
-  useEffect(getTags, [])
-
-  const deleteTag = (tagId) => {
-    tagData.deleteTag(tagId)
-      .then((res) => {
-        getTags();
-      })
-      .catch((err) => console.error(err))
-  };
+  useEffect(() => {
+    getTags()
+  }, [])
   
-  const tagCards = tags.map((tag) => <TagCards key={tag.id} tag={tag} deleteTag={deleteTag}/>)
+  
+  const tagCards = tags && tags.results ? tags.results.map((tag) => <TagCards key={tag.id} tag={tag} deleteTag={deleteTag} editTag={editTag}/>) : ''
 
 
   return (
     <div className="container-fluid text-center">
       <h1>Manage Tags!</h1>
       <div className="add">
-        <Link to="/addTag" className="btn btn-info">Add New Tag</Link>
+        <button className="btn btn-2" onClick={e => {props.history.push({pathname: "/tags/new"})}}>Add New Tag</button>
       </div>
       <div className="card-deck text-center">
         {tagCards}
