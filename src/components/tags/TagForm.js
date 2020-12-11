@@ -1,45 +1,43 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { TagContext } from './TagProvider'
 
 // import tagData from '../utils/tagData'
 
 export const TagForm = (props) => {
-  const [name, setName] = useState('')
-  const history = useHistory()
+  const { createTag } = useContext(TagContext)
 
-  const setNameEvent = (e) => {
-    e.preventDefault();
-    setName(e.target.value)
-  };
+  const [ currentTag, setCurrentTag ] = useState({
+    label: '',
+  })
 
-  // const submitTagEvent = (e) => {
-  //   e.preventDefault();
-    
-  //   const newTag = {
-  //     name
-  //   }
-
-  // //   tagData.createTag(newTag)
-  // //     .then((res) => history.push('/tags'))
-  // //     .catch((err) => console.error(err))
-  // };
+  const handleControlledInputChange = e => {
+    currentTag[e.target.name] = e.target.value
+    setCurrentTag(currentTag)
+  }
 
   return (
     <div className="text-center">
       <h1>Add A Tag!</h1>
       <form className="col-6 offset-3">
           <div className="form-group">
-            <label htmlFor ="tagName">Tag Name</label>
+            <label htmlFor ="label">Tag Label</label>
             <input
             type="text"
+            name="label"
             className="form-control"
-            id="artistName"
-            value={name}
-            placeholder="Enter Tag Name"
-            onChange={setNameEvent}
+            defaultValue={currentTag.label}
+            placeholder="Enter Tag label"
+            onChange={handleControlledInputChange}
             />
           </div>
-          <button className="btn button btn-danger" type="submit">Submit</button>
+          <button className="btn button btn-danger" type="submit" onClick={e => {
+            e.preventDefault();
+            const tag = {
+              label: currentTag.label
+            }
+            createTag(tag)
+              .then(props.history.push({pathname: "/tags"}))
+          }}>Create</button>
       </form>
     </div>
   )
