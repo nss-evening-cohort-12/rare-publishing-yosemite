@@ -38,8 +38,8 @@ export const TagProvider = props => {
     return fetch(`http://localhost:8000/tags/${tag.id}`, {
       method: "PUT",
       headers: {
-        "Authorization": `Token ${localStorage.getItem('r_token')}`,
-        "Content_Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem('r_token')}`
       },
       body: JSON.stringify(tag)
     })

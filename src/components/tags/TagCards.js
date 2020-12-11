@@ -1,21 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-export const TagCards = (props) => {
-  const { tag, deleteTag, editTag } = props
+export const TagCards = props => {
+  const { tag, deleteTag } = props
 
   const deleteEvent = (e) => {
     e.preventDefault();
     deleteTag(tag.id)
   };
 
-  const editLink = `/editTag/${tag.id}`
-
   return (
     <div className="card">
       <div className="card-body">
         <h5 className="card-title">{tag.label}</h5>
-        <Link to={editLink} className="btn btn-secondary">Update Tag</Link>
+        <button className="btn btn-secondary" onClick={e => props.history.push({pathname:`/tags/${tag.id}/edit`})}>Edit</button>
         <button className="btn btn-danger" onClick={deleteEvent}>Delete Tag</button>
       </div>
     </div>
