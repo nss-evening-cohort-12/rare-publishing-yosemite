@@ -4,21 +4,21 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
-import { Categories }  from "./categories/Categories"
-import { UpdateCategory} from "./categories/UpdateCategory"
-import { UserPosts } from './posts/UserPosts'
-import { Tags } from "./tags/Tags"
-import { AddTag } from "./tags/AddTag"
-import { EditTag } from "./tags/EditTag"
-import { Posts } from "./posts/Posts"
-import { NewPost } from "./posts/NewPost"
-import { SinglePost } from "./posts/SinglePost"
-import { CreateComment } from "./comments/CreateComment"
-import { EditComment } from "./comments/EditComment"
-import { UserProfiles } from "./users/UserProfiles"
-import { UpdatePost } from './posts/UpdatePost'
-import { NewCategory } from "./categories/NewCategory"
-import { SingleUser } from './users/SingleUser'
+// import { Categories }  from "./categories/Categories"
+// import { UpdateCategory} from "./categories/UpdateCategory"
+// import { UserPosts } from './posts/UserPosts'
+// import { Tags } from "./tags/Tags"
+// import { AddTag } from "./tags/AddTag"
+// import { EditTag } from "./tags/EditTag"
+// import { Posts } from "./posts/Posts"
+// import { NewPost } from "./posts/NewPost"
+// import { SinglePost } from "./posts/SinglePost"
+// import { CreateComment } from "./comments/CreateComment"
+// import { EditComment } from "./comments/EditComment"
+// import { UserProfiles } from "./users/UserProfiles"
+// import { UpdatePost } from './posts/UpdatePost'
+// import { NewCategory } from "./categories/NewCategory"
+// import { SingleUser } from './users/SingleUser'
 
 export const Rare = () => (
     <>
