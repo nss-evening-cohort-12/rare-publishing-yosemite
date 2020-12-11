@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const TagCards = (props) => {
-  const { tag, deleteTag } = props
+  const { tag, deleteTag, editTag } = props
 
   const deleteEvent = (e) => {
     e.preventDefault();
@@ -14,7 +14,7 @@ export const TagCards = (props) => {
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">{tag.name}</h5>
+        <h5 className="card-title">{tag.label}</h5>
         <Link to={editLink} className="btn btn-secondary">Update Tag</Link>
         <button className="btn btn-danger" onClick={deleteEvent}>Delete Tag</button>
       </div>
