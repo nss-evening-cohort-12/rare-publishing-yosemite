@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { PostsCards } from "./PostsCards"
-import postsData from '../utils/postsData';
 import { Link } from "react-router-dom"
+import { PostContext } from "./PostProvider";
 
 export const Posts = props => {
-  const [posts, setPosts] = useState([]);
-  
-  const getPosts = () => {
-    postsData.getAllPosts()
-      .then((res) => {
-        console.log(res)
-        setPosts(res.data)})
-      .catch((err) => console.error(err));
-  };
+  const { posts, getPosts, deletePost } = useContext(PostContext)
 
-  useEffect(getPosts, []);
+  useEffect(() => {
+    getPosts()
+  }, []);
 
-  const deletePost = (postId) => {
-    postsData.deletePost(postId)
-      .then((res) => {
-        getPosts();
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const postCards = posts.map((post) => <PostsCards key={post.id} post={post} deletePost={deletePost}/>);
+  const postCards = posts && posts.results ? posts.results.map((post) => <PostsCards {...props} key={post.id} post={post} deletePost={deletePost}/>) :''
 
   return (
     <div className="container">
