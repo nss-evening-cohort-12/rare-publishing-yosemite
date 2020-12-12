@@ -9,6 +9,7 @@ import { TagForm } from './tags/TagForm'
 
 import { PostProvider } from './posts/PostProvider'
 import { Posts } from './posts/Posts'
+import { NewPost } from './posts/NewPost'
 
 export const ApplicationViews = () => {
     return <>
@@ -16,16 +17,17 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            <PostProvider>
-                <Route exact path="/allposts" render={props => <Posts {...props} />}/>
-            </PostProvider>
-            <CategoryProvider>
-                <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
-            </CategoryProvider>
             <TagProvider>
-                <Route exact path="/tags" render={props => <Tags {...props} />} />
-                <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
-                <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
+                <CategoryProvider>
+                    <PostProvider>
+                        <Route exact path="/allposts" render={props => <Posts {...props} />}/>
+                        <Route exact path="/addPost" render={props => <NewPost {...props} />}/>
+                        <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
+                        <Route exact path="/tags" render={props => <Tags {...props} />} />
+                        <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
+                        <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
+                    </PostProvider>
+                </CategoryProvider>
             </TagProvider>
         </main>
     </>
