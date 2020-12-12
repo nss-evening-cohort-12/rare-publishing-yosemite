@@ -18,7 +18,7 @@ export const NewPost = props => {
     category: 0,
     publication_date: "",
     header_img_url: "",
-    tags: 0
+    tags: []
   })
   const history = useHistory()
 
@@ -81,13 +81,24 @@ export const NewPost = props => {
 
   const handleControlledInputChange = (event) => {
     const newPostState = Object.assign({}, currentPost)
-    newPostState[event.target.name] = event.target.value
+    const checkedTags = []
+    if (event.target.type !== "checkbox") {
+      newPostState[event.target.name] = event.target.value
+    } else {
+      const checkeds = document.getElementsByTagName("input")
+      for (let i = 0 ; i < checkeds.length; i++) {
+        if (checkeds[i].checked) {
+          checkedTags.push(checkeds[i].value)
+        }
+      }
+      newPostState["tags"] = checkedTags
+    }
     setCurrentPost(newPostState)
   }
 
   const categorySelect = categories && categories.results ? categories.results.map((category) => { return <option value={category.id} key={category.id}>{category.label}</option> }) :''
 
-  const tagSelect = tags && tags.results ? tags.results.map((tag) =>  <div key={tag.id} className="form-group"><input type="checkbox" name="tags" id={tag.label} onChange={handleControlledInputChange}/><label className="ml-2" htmlFor={tag.label}>{tag.label}</label></div>) :''
+  const tagSelect = tags && tags.results ? tags.results.map((tag) =>  <div key={tag.id} className="form-group"><input type="checkbox" name="tags" value={tag.id} id={tag.label} onChange={handleControlledInputChange}/><label className="ml-2" htmlFor={tag.label}>{tag.label}</label></div>) :''
 
   return (
     <div className="text-center">
@@ -172,7 +183,7 @@ export const NewPost = props => {
                 category: parseInt(currentPost.category),
                 publication_date: currentPost.publication_date,
                 header_img_url: currentPost.header_img_url,
-                tags: parseInt(currentPost.tags)
+                tags: currentPost.tags.map(tag => parseInt(tag))
               })
             }
           }
