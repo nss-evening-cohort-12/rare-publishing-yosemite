@@ -18,13 +18,11 @@ export const CategoryCards = (props) => {
     e.preventDefault();
     deleteCategory(category.id)
   };
-  const updateLink = `/categories/${category.id}`
+  const updateLink = `/categories/${category.id}/edit`
   return (
     <div className="cat-card">
       <div className="cat-card-body">
       <Link to={updateLink} className="btn"><i class="fas fa-cog"></i></Link>
-      <button className="btn btn-secondary" onClick={e => props.history.push({pathname:`/categories/${category.id}/edit`})}>Edit</button>
-
         <div>
       <button className="btn" onClick={toggle}><i class="fas fa-trash-alt"></i></button>
       <Modal isOpen={modal} toggle={toggle} className={className}>

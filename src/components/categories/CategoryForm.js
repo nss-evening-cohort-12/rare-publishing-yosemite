@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { CategoryContext } from './CategoryProvider'
 
 export const CategoryForm = (props) => {
-  const { getCategory, updateCategory} = useContext(CategoryContext)
+  const { getCategoryById, updateCategory} = useContext(CategoryContext)
 
   const [ currentCategory, setCurrentCategory ] = useState({
     label:'',
@@ -16,7 +16,7 @@ export const CategoryForm = (props) => {
 
   useEffect(() => {
     if ("categoryId" in props.match.params) {
-      getCategory(props.match.params.categoryId)
+      getCategoryById(props.match.params.categoryId)
       .then( category => {
         setCurrentCategory({
           label: category.label
@@ -27,43 +27,29 @@ export const CategoryForm = (props) => {
 
   return (
     <div className="text-center">
-      {/* {
-        ("CategoryId" in props.match.params)
-        ? <h1>Edit Category</h1>
-        : <h1>Add A Tag</h1>
-      } */}
+      <h1>Edit Category</h1>
       <form className="col-6 offset-3">
           <div className="form-group">
-            <label htmlFor ="label">Tag Label</label>
+            <label  htmlFor ="label">Category Label</label>
             <input
             type="text"
             name="label"
-            className="form-control"
+            className="text-center form-control"
             defaultValue={currentCategory.label}
-            placeholder="Enter Tag label"
+            placeholder="Enter Categorylabel"
             onChange={handleControlledInputChange}
             />
           </div>
-          {
-            ("categoryId" in props.match.params)
-            ? <button className="btn btn-primary" type="submit" onClick={e => {
+
+            <button className="btn btn-primary" type="submit" onClick={e => {
               e.preventDefault();
               const category = {
-                id: parseInt(props.match.params.tagId),
+                id: parseInt(props.match.params.categoryId),
                 label: currentCategory.label
               }
               updateCategory(category)
                 .then(() => props.history.push({pathname: "/categories"}))
-            }}>Edit</button>
-            :  <button className="btn button btn-danger" type="submit" onClick={e => {
-                e.preventDefault();
-                const tag = {
-                  label: currentCategory.label
-                }
-                updateCategory(tag)
-                  .then(props.history.push({pathname: "/tags"}))
-              }}>Create</button>
-          }
+            }}>Save</button>
       </form>
     </div>
   )
