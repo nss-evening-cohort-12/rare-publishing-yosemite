@@ -7,12 +7,18 @@ import { TagProvider } from './tags/TagProvider'
 import { Tags } from "./tags/Tags"
 import { TagForm } from './tags/TagForm'
 
+import { PostProvider } from './posts/PostProvider'
+import { Posts } from './posts/Posts'
+
 export const ApplicationViews = () => {
     return <>
         <main style={{
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
+            <PostProvider>
+                <Route exact path="/allposts" render={props => <Posts {...props} />}/>
+            </PostProvider>
             <CategoryProvider>
                 <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
             </CategoryProvider>
