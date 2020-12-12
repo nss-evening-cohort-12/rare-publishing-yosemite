@@ -2,6 +2,7 @@ import React from "react"
 import { Route } from "react-router-dom"
 import { CategoryList } from './categories/CategoriesList'
 import { CategoryProvider } from './categories/CategoryProvider'
+import { CategoryForm } from './categories/CategoryForm'
 
 import { TagProvider } from './tags/TagProvider'
 import { Tags } from "./tags/Tags"
@@ -23,6 +24,7 @@ export const ApplicationViews = () => {
             </PostProvider>
             <CategoryProvider>
                 <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
+                <Route exact path="/categories/:categoryId(\d+)/edit" render={props => <CategoryForm {...props} />}/>
             </CategoryProvider>
             <TagProvider>
                 <Route exact path="/tags" render={props => <Tags {...props} />} />
