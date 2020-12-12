@@ -47,3 +47,7 @@
   text-align: right;
   color: red;
 }
+
+.author-name {
+  font-style: italic;
+}
