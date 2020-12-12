@@ -22,18 +22,6 @@ export const PostComments = props => {
     setCurrentComment(newCommentState)
 }
 
-
-  // showOptions = () => {
-  //   const { post } = this.state
-  //   const user_id = localStorage.getItem("rare_user_id")
-  //   const editLink = `/editpost/${post.id}`
-  //   if(post.user_id == user_id) {
-  //     return <div><Link to={editLink}><i className="fas fa-edit mr-1"></i></Link><i className="fas fa-trash-alt mr-3" onClick={this.submit}></i></div>
-  //   } else {
-  //     return ''
-  //   }
-  // }
-
   return (
     <div className="main-container">
         <h1 className="comment-header">Post Titles Comments</h1>
@@ -44,6 +32,7 @@ export const PostComments = props => {
                     evt.preventDefault()
                     const { postId } = props.match.params
                     const author_id = localStorage.getItem("user_id")
+                    console.error(author_id)
                     const timeElapsed = Date.now();
                     const today = moment(timeElapsed).format('YYYY-MM-DD HH:mm:ss');
                     const comment = {
@@ -58,12 +47,23 @@ export const PostComments = props => {
             className="btn btn-outline-primary nav__button comment-btn">Submit</button>
         </div>
         <div className="comment-container">
-          {
+        {
             comments.results && comments.results.map(comment => {
                const user_id = localStorage.getItem("user_id")
-               return <div className="comment-child" key={comment.id}>
-                          <p>{comment.content}</p>
-                      </div>
+                if(comment.author_id == user_id) {
+                    return  <div className="comment-child">
+                              <div>
+                                <div className="comment-options">
+                                  <i className="fas fa-edit mr-1"></i><i className="fas fa-trash-alt mr-3"></i>
+                                </div>
+                                <p>{comment.content}</p>
+                              </div>
+                           </div>
+                } else {
+                  return <div className="comment-child" key={comment.id}>
+                            <p>{comment.content}</p>
+                         </div>
+                }
             })
           }
         </div>

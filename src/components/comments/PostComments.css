@@ -42,3 +42,8 @@
   margin: 5px;
   padding: 5px;
 }
+
+.comment-options {
+  text-align: right;
+  color: red;
+}
