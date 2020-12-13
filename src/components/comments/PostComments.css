@@ -52,6 +52,6 @@
   font-style: italic;
 }
 
-.fa-trash-alt {
+.fa-trash-alt, .fa-edit {
   cursor: pointer;
 }

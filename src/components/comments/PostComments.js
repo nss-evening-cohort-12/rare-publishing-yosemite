@@ -6,7 +6,7 @@ import { CommentCards } from "./CommentCards"
 import "./PostComments.css"
 
 export const PostComments = props => {
-  const { comments, getCommentsByPostId, createComment, deleteComment } = useContext(CommentContext)
+  const { comments, getCommentsByPostId, createComment, deleteComment, editComment } = useContext(CommentContext)
   const [ currentComment, setCurrentComment ] = useState({
     comment: "",
     subject: "default"
@@ -22,7 +22,7 @@ export const PostComments = props => {
     newCommentState[event.target.name] = event.target.value
     setCurrentComment(newCommentState)
 }
-  const commentCards = comments && comments.results ? comments.results.map((comment) => <CommentCards {...props} key={comment.id} comment={comment} deleteComment={deleteComment} />) : ''
+  const commentCards = comments && comments.results ? comments.results.map((comment) => <CommentCards {...props} key={comment.id} comment={comment} deleteComment={deleteComment} editComment={editComment} />) : ''
 
   return (
     <div className="main-container">

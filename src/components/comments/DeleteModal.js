@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 
 export const DeleteModal = props => {
     return (
-      <Modal show={props.show} onHide={props.handleClose}>
+      <Modal show={props.deleteShow} onHide={props.handleDeleteClose}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Comment?</Modal.Title>
         </Modal.Header>
@@ -13,7 +13,7 @@ export const DeleteModal = props => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={props.deleteEvent}>Yes</Button>
-          <Button variant="secondary" onClick={props.handleClose}>No</Button>
+          <Button variant="secondary" onClick={props.handleDeleteClose}>No</Button>
         </Modal.Footer>
       </Modal>
     )
