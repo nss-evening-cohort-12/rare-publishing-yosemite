@@ -18,7 +18,7 @@ export const CategoryCards = (props) => {
     e.preventDefault();
     deleteCategory(category.id)
   };
-  const updateLink = `/updateCategory/${category.id}`
+  const updateLink = `/categories/${category.id}/edit`
   return (
     <div className="cat-card">
       <div className="cat-card-body">

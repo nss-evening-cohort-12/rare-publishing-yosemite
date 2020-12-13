@@ -16,6 +16,17 @@
   flex-direction: row;
 }
 
-.cat-new {
+/* .cat-new {
   float: right;
+  
+} */
+.categories{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+.cat-header{
+  display: flex;
+  justify-content: center;
 }
