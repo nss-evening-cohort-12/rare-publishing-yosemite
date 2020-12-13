@@ -51,3 +51,7 @@
 .author-name {
   font-style: italic;
 }
+
+.fa-trash-alt {
+  cursor: pointer;
+}

@@ -1,11 +1,21 @@
 import moment from 'moment'
 import React, { useContext, useEffect, useState } from 'react'
 import { CommentContext } from "./CommentProvider"
+import { DeleteModal } from "./DeleteModal"
 
 import "./PostComments.css"
 
 export const CommentCards = props => {
   const { comment, deleteComment } = props
+  const [show, setShow ] = useState(false)
+
+  const handleSave = () => {
+    setShow(false)
+    console.log("Submitted")
+  }
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const deleteEvent = (e) => {
     e.preventDefault();
@@ -16,7 +26,7 @@ export const CommentCards = props => {
   const showOptions = () => {
      const user_id = localStorage.getItem("user_id")
      if (user_id == comment.author.id) {
-       return <div className="comment-options"><i className="fas fa-edit mr-1"></i><i className="fas fa-trash-alt mr-3" onClick={deleteEvent}></i></div>
+       return <div className="comment-options"><i className="fas fa-edit mr-1"></i><i className="fas fa-trash-alt mr-3" onClick={handleShow}></i></div>
      } else {
        return ''
      }
@@ -27,6 +37,7 @@ export const CommentCards = props => {
           {showOptions()}
           <p>{comment.content}</p>
           <p  className="author-name">-{comment.author.user.first_name} {comment.author.user.last_name}</p>
+          <DeleteModal handleClose={handleClose} handleSave={handleSave} show={show} deleteEvent={deleteEvent}/>
         </div>
     )
   }
