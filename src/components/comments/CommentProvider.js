@@ -17,7 +17,7 @@ export const CommentProvider = (props) => {
     }
 
     const getCommentsByPostId = (id) => {
-        return fetch(`http://localhost:8000/comments?post_id_id=${id}`, {
+        return fetch(`http://localhost:8000/comments?post_id=${id}`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("r_token")}`
             }
