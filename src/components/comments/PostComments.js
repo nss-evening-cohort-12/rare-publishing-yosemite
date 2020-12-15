@@ -1,11 +1,12 @@
 import moment from 'moment'
 import React, { useContext, useEffect, useState } from 'react'
 import { CommentContext } from "./CommentProvider"
+import { CommentCards } from "./CommentCards"
 
 import "./PostComments.css"
 
 export const PostComments = props => {
-  const { comments, getCommentsByPostId, createComment } = useContext(CommentContext)
+  const { comments, getCommentsByPostId, createComment, deleteComment, editComment } = useContext(CommentContext)
   const [ currentComment, setCurrentComment ] = useState({
     comment: "",
     subject: "default"
@@ -21,6 +22,7 @@ export const PostComments = props => {
     newCommentState[event.target.name] = event.target.value
     setCurrentComment(newCommentState)
 }
+  const commentCards = comments && comments.results ? comments.results.map((comment) => <CommentCards {...props} key={comment.id} comment={comment} deleteComment={deleteComment} editComment={editComment} />) : ''
 
   return (
     <div className="main-container">
@@ -32,12 +34,11 @@ export const PostComments = props => {
                     evt.preventDefault()
                     const { postId } = props.match.params
                     const author_id = localStorage.getItem("user_id")
-                    console.error(author_id)
                     const timeElapsed = Date.now();
                     const today = moment(timeElapsed).format('YYYY-MM-DD HH:mm:ss');
                     const comment = {
-                      post_id: `${postId}`,
-                      author_id: `${author_id}`,
+                      post: `${postId}`,
+                      author: `${author_id}`,
                       content: currentComment.comment,
                       subject: currentComment.subject,
                       created_on: `${today}`
@@ -47,25 +48,7 @@ export const PostComments = props => {
             className="btn btn-outline-primary nav__button comment-btn">Submit</button>
         </div>
         <div className="comment-container">
-        {
-            comments.results && comments.results.map(comment => {
-               const user_id = localStorage.getItem("user_id")
-                if(comment.author_id == user_id) {
-                    return  <div className="comment-child">
-                              <div>
-                                <div className="comment-options">
-                                  <i className="fas fa-edit mr-1"></i><i className="fas fa-trash-alt mr-3"></i>
-                                </div>
-                                <p>{comment.content}</p>
-                              </div>
-                           </div>
-                } else {
-                  return <div className="comment-child" key={comment.id}>
-                            <p>{comment.content}</p>
-                         </div>
-                }
-            })
-          }
+          {commentCards}
         </div>
     </div>
   )

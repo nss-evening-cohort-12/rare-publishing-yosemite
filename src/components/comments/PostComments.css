@@ -47,3 +47,11 @@
   text-align: right;
   color: red;
 }
+
+.author-name {
+  font-style: italic;
+}
+
+.fa-trash-alt, .fa-edit {
+  cursor: pointer;
+}
