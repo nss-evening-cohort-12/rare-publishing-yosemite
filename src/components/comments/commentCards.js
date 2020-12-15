@@ -41,7 +41,7 @@ export const CommentCards = props => {
   const showOptions = () => {
      const user_id = localStorage.getItem("user_id")
      if (user_id == comment.author.id) {
-       return <div className="comment-options"><i className="fas fa-edit mr-1" onClick={handleEditShow}></i><i className="fas fa-trash-alt mr-3" onClick={handleDeleteShow}></i></div>
+       return <div className="comment-options"><i className="fas fa-cog mr-1" onClick={handleEditShow}></i><i className="fas fa-trash-alt mr-3" onClick={handleDeleteShow}></i></div>
      } else {
        return ''
      }
