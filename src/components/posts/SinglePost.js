@@ -1,48 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
-import { CommentCards } from '../comments/CommentCards'
+import { CommentCards } from '../comments/commentCards'
 import { Link } from 'react-router-dom'
+import { PostContext } from './PostProvider'
 // import tagData from '../utils/tagData'
 // import { TagCards } from '../tags/TagCards'
 
 
 
 export const SinglePost = (props) => {
-  const [post, setPost ] = useState({})
+  const { post, getPostById } = useContext(PostContext)
   const [comments, setComments] = useState([])
   const [tags, setTags] = useState([])
 
-
-  const getPost = () => {
-    const { postId } = props.match.params
-    postsData.getSinglePost(postId)
-      .then((res) => {
-        setPost(res.data[0])
-        commentData.getCommentsByPostId(postId)
-          .then((res) => setComments(res.data))
-          .catch((err) => console.error(err))
-        
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(getPost, [])
-
   console.log(post.tags)
+
+  useEffect(() => {
+    const { postId } = props.match.params
+    getPostById(postId)
+  }, [props.match.params.postId])
 
   // const getTags = () => {
   //   tagData.getAllTags
   // };
 
-  const deleteComment = (commentId) => {
-    commentData.deleteComment(commentId)
-      .then((res) => getPost())
-      .catch((err) => console.error(err))
-  };
+  // const deleteComment = (commentId) => {
+  //   commentData.deleteComment(commentId)
+  //     .then((res) => getPost())
+  //     .catch((err) => console.error(err))
+  // };
   
 
-  const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
+  // const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
   // const tagCards = tags.map((tag) => <TagCards key={tag.id} />)
   const createCommentLink = `/addComment/${post.id}`
 
@@ -59,7 +49,7 @@ export const SinglePost = (props) => {
         {/* {tags} */}
       </div>
       <div className="comment-container card-deck text-center">
-        {commentCards}
+        {/* {commentCards} */}
       </div>
       <Link to={createCommentLink} className="btn btn-primary">Add a comment</Link>
     </div>
