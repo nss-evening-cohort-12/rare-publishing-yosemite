@@ -12,7 +12,7 @@ import { PostComments } from "./comments/PostComments"
 
 import { PostProvider } from './posts/PostProvider'
 import { Posts } from './posts/Posts'
-import { NewPost } from './posts/NewPost'
+import { PostForm } from './posts/PostForm'
 
 export const ApplicationViews = () => {
     return <>
@@ -20,16 +20,14 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            <CategoryProvider>
-                <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
-                <Route exact path="/categories/:categoryId(\d+)/edit" render={props => <CategoryForm {...props} />}/>
-            </CategoryProvider>
             <TagProvider>
                 <CategoryProvider>
                     <PostProvider>
                         <Route exact path="/allposts" render={props => <Posts {...props} />}/>
-                        <Route exact path="/addPost" render={props => <NewPost {...props} />}/>
+                        <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
+                        <Route exact path="/editPost/:postId" render={props => <PostForm {...props} />}/>
                         <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
+                        <Route exact path="/categories/:categoryId(\d+)/edit" render={props => <CategoryForm {...props} />}/>
                         <Route exact path="/tags" render={props => <Tags {...props} />} />
                         <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
                         <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />

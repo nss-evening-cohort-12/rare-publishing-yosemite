@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom'
 import { TagContext } from '../tags/TagProvider';
 import { PostContext } from './PostProvider';
 
-export const NewPost = props => {
+export const PostForm = props => {
   // const [title, setTitle] = useState('')
   // const [content, setContent] = useState('')
   // const [category_id, setCategory_id] = useState(0)
   // const [header_img, setHeader_img] = useState('')
   // const [tags, setTags] = useState([])
   // const [ setCategories ] = useState([])
-  const { createPost, categories, getCategories } = useContext(PostContext)
+  const { createPost, categories, getCategories, getPostById, updatePost } = useContext(PostContext)
   const { getTags, tags } = useContext(TagContext)
   const [currentPost, setCurrentPost] = useState({
     title: "",
@@ -36,47 +36,20 @@ export const NewPost = props => {
     getTags()
   }, [])
 
-  // const setTitleEvent = (e) => {
-  //   e.preventDefault();
-  //   setTitle(e.target.value)
-  // };
-
-  // const setContentEvent = (e) => {
-  //   e.preventDefault();
-  //   setContent(e.target.value)
-  // };
-
-  // const setCategoryEvent = (e) => {
-  //   e.preventDefault();
-  //   setCategory_id(e.target.value)
-  // };
-
-  // const setHeaderImgEvent = (e) => {
-  //   e.preventDefault();
-  //   setHeader_img(e.target.value)
-  // };
-
-  // const setTagEvent = (e) => {
-  //   e.preventDefault();
-  //   setTags(e.target.value)
-  // };
-
-  // const submitNewPost = (e) => {
-  //   e.preventDefault()
-
-  //   const newPost = {
-  //     title,
-  //     content,
-  //     category_id,
-  //     header_img,
-  //     "user_id": localStorage.getItem("user_id"),
-  //     tags
-  //   }
-
-  //   createPost(newPost)
-  //     .then((res) => history.push('/posts'))
-  //     .catch((err) => console.error(err));
-  // };
+ useEffect(() => {
+   if ("postId" in props.match.params) {
+     getPostById(props.match.params.postId).then(post => {
+       setCurrentPost({
+          title: currentPost.title,
+          content: currentPost.content,
+          category: currentPost.category,
+          publication_date: currentPost.publication_date,
+          header_img_url: currentPost.header_img_url,
+          tags: currentPost.tags
+       })
+     })
+   }
+ }, [props.match.params.postId])
 
 
   const handleControlledInputChange = (event) => {
@@ -165,16 +138,8 @@ export const NewPost = props => {
           </div>
           <div className="form-group">
             {tagSelect}
-            {/* <input
-            type="text"
-            className="form-control"
-            id="postTag"
-            defaultValue={currentPost.tags}
-            placeholder="Select Tag"
-            onChange={handleControlledInputChange}
-            /> */}
           </div>
-          <button className="btn button btn-danger" type="submit" onClick={
+          {/* <button className="btn button btn-danger" type="submit" onClick={
             evt => {
               evt.preventDefault()
               createPost({
@@ -187,7 +152,39 @@ export const NewPost = props => {
               })
             }
           }
-          >Submit</button>
+          >Submit</button> */}
+          {
+            ("postId" in props.match.params)
+              ? <button
+                onClick={evt => {
+                  evt.preventDefault()
+                  updatePost ({
+                    id: props.match.params.postId,
+                    title: currentPost.title,
+                    content: currentPost.content,
+                    category: parseInt(currentPost.category),
+                    publication_date: currentPost.publication_date,
+                    header_img_url: currentPost.header_img_url,
+                    tags: currentPost.tags.map(tag => parseInt(tag))
+                  })
+                    .then(() => props.history.push("/allposts"))
+                }}
+                className="btn btn-danger">Edit</button>
+              : <button className="btn button btn-danger" type="submit" onClick={
+                evt => {
+                  evt.preventDefault()
+                  createPost({
+                    title: currentPost.title,
+                    content: currentPost.content,
+                    category: parseInt(currentPost.category),
+                    publication_date: currentPost.publication_date,
+                    header_img_url: currentPost.header_img_url,
+                    tags: currentPost.tags.map(tag => parseInt(tag))
+                  })
+                }
+              }
+              >Submit</button>
+          }
       </form>
     </div>
   );
