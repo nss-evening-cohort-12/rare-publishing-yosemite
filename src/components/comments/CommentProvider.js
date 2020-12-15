@@ -16,6 +16,16 @@ export const CommentProvider = (props) => {
         .then(setComments)
     }
 
+    const getCommentsByPostId = (id) => {
+        return fetch(`http://localhost:8000/comments?post_id=${id}`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("r_token")}`
+            }
+        })
+        .then(response => response.json())
+        .then(setComments)
+    }
+
     const createComment = (comment) => {
         return fetch("http://localhost:8000/comments", {
             method: "POST",
@@ -29,8 +39,30 @@ export const CommentProvider = (props) => {
         .then(setComment)
     }
 
+    const deleteComment = id => {
+        return fetch(`http://localhost:8000/comments/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Token ${localStorage.getItem("r_token")}`
+          }
+        })
+          .then(getComments)
+      }
+
+      const editComment = comment => {
+        return fetch(`http://localhost:8000/comments/${comment.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('r_token')}`
+          },
+          body: JSON.stringify(comment)
+        })
+          .then(getComments)
+      }
+
     return (
-        <CommentContext.Provider value={{ comments, comment, getComments, createComment }} >
+        <CommentContext.Provider value={{ comments, comment, getComments, createComment, getCommentsByPostId, deleteComment , editComment }} >
             { props.children }
         </CommentContext.Provider>
     )
