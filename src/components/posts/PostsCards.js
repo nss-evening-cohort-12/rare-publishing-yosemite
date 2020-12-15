@@ -20,6 +20,12 @@ export const PostsCards = props => {
         <h3 className="card-title text-left">{post.title}</h3>
         <h4 className="card-title post-date text-left">{post.publish_date}</h4>
         <p className="card-content post-content">{post.content}</p>
+        <h4 className="text-left">Tags:</h4>
+        {
+          post.tags 
+          ? post.tags.map((tag) => <p>{tag.label}</p>)
+          : <p>No tags</p>
+        }
         <button className="btn btn-danger" onClick={deleteEvent}>Delete Post</button>
         <Link className="btn btn-primary single-post" to={singlePost}>View Post</Link>
         <Link className="btn btn-primary update-post" to={updatePost}>Edit Post</Link>
