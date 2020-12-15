@@ -6,7 +6,8 @@ import { CommentCards } from "./commentCards"
 import "./PostComments.css"
 
 export const PostComments = props => {
-  const { comments, getCommentsByPostId, createComment, deleteComment, editComment } = useContext(CommentContext)
+  const { comments, getCommentsByPostId, createComment, deleteComment, editComment, getPostById, post } = useContext(CommentContext)
+
   const [ currentComment, setCurrentComment ] = useState({
     comment: "",
     subject: "default"
@@ -17,16 +18,21 @@ export const PostComments = props => {
     getCommentsByPostId(postId)
   }, [])
 
+  useEffect(() => {
+    const { postId } = props.match.params
+    getPostById(postId)
+  }, [])
+
   const handleControlledInputChange = (event) => {
     const newCommentState = Object.assign({}, currentComment)
     newCommentState[event.target.name] = event.target.value
     setCurrentComment(newCommentState)
 }
-  const commentCards = comments && comments.results ? comments.results.map((comment) => <CommentCards {...props} key={comment.id} comment={comment} deleteComment={deleteComment} editComment={editComment} />) : ''
+  const commentCards = comments && comments.length > 0 ? comments.map((comment) => <CommentCards {...props} key={comment.id} comment={comment} deleteComment={deleteComment} editComment={editComment} />) : ''
 
   return (
     <div className="main-container">
-        <h1 className="comment-header">Post Titles Comments</h1>
+        <h1 className="comment-header">{post && post.title}'s Comments</h1>
         <div className="form-container">
             <textarea rows="5" name="comment" required autoFocus className="text-area" placeholder="Type your comment here.." onChange={handleControlledInputChange}></textarea>
             <button type="submit" 
