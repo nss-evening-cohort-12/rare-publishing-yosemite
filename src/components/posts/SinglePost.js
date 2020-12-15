@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
-import { CommentCards } from '../comments/commentCards'
+import { CommentCards } from '../comments/CommentCards'
 import { Link } from 'react-router-dom'
 import { PostContext } from './PostProvider'
 // import tagData from '../utils/tagData'
