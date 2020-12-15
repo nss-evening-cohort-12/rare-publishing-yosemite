@@ -12,7 +12,8 @@ import { PostComments } from "./comments/PostComments"
 
 import { PostProvider } from './posts/PostProvider'
 import { Posts } from './posts/Posts'
-import { NewPost } from './posts/NewPost'
+import { PostForm } from './posts/PostForm'
+import { SinglePost } from './posts/SinglePost'
 
 export const ApplicationViews = () => {
     return <>
@@ -28,7 +29,8 @@ export const ApplicationViews = () => {
                 <CategoryProvider>
                     <PostProvider>
                         <Route exact path="/allposts" render={props => <Posts {...props} />}/>
-                        <Route exact path="/addPost" render={props => <NewPost {...props} />}/>
+                        <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
+                        <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
                         <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
                         <Route exact path="/tags" render={props => <Tags {...props} />} />
                         <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
