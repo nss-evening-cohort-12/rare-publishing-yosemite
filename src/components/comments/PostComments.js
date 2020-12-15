@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React, { useContext, useEffect, useState } from 'react'
 import { CommentContext } from "./CommentProvider"
-import { CommentCards } from "./commentCards"
+import { CommentCards } from "./CommentCards"
 
 import "./PostComments.css"
 

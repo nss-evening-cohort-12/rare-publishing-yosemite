@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import { TagContext } from '../tags/TagProvider';
 import { PostContext } from './PostProvider';
 
 export const NewPost = props => {
-  // const [title, setTitle] = useState('')
-  // const [content, setContent] = useState('')
-  // const [category_id, setCategory_id] = useState(0)
-  // const [header_img, setHeader_img] = useState('')
-  // const [tags, setTags] = useState([])
-  // const [ setCategories ] = useState([])
   const { createPost, categories, getCategories } = useContext(PostContext)
   const { getTags, tags } = useContext(TagContext)
   const [currentPost, setCurrentPost] = useState({
@@ -20,13 +13,6 @@ export const NewPost = props => {
     header_img_url: "",
     tags: []
   })
-  const history = useHistory()
-
-  // const getCategories = () => {
-  //   categoryData.getAllCats()
-  //     .then((res) => setCategories(res.data))
-  //     .catch((err) => console.error(err));
-  // };
 
   useEffect(() => {
     getCategories()
@@ -35,49 +21,6 @@ export const NewPost = props => {
   useEffect(() => {
     getTags()
   }, [])
-
-  // const setTitleEvent = (e) => {
-  //   e.preventDefault();
-  //   setTitle(e.target.value)
-  // };
-
-  // const setContentEvent = (e) => {
-  //   e.preventDefault();
-  //   setContent(e.target.value)
-  // };
-
-  // const setCategoryEvent = (e) => {
-  //   e.preventDefault();
-  //   setCategory_id(e.target.value)
-  // };
-
-  // const setHeaderImgEvent = (e) => {
-  //   e.preventDefault();
-  //   setHeader_img(e.target.value)
-  // };
-
-  // const setTagEvent = (e) => {
-  //   e.preventDefault();
-  //   setTags(e.target.value)
-  // };
-
-  // const submitNewPost = (e) => {
-  //   e.preventDefault()
-
-  //   const newPost = {
-  //     title,
-  //     content,
-  //     category_id,
-  //     header_img,
-  //     "user_id": localStorage.getItem("user_id"),
-  //     tags
-  //   }
-
-  //   createPost(newPost)
-  //     .then((res) => history.push('/posts'))
-  //     .catch((err) => console.error(err));
-  // };
-
 
   const handleControlledInputChange = (event) => {
     const newPostState = Object.assign({}, currentPost)
@@ -185,6 +128,7 @@ export const NewPost = props => {
                 header_img_url: currentPost.header_img_url,
                 tags: currentPost.tags.map(tag => parseInt(tag))
               })
+                .then(props.history.push({pathname: "/allposts"}))
             }
           }
           >Submit</button>
