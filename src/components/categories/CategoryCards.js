@@ -1,45 +1,43 @@
-import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, {useState} from 'react';
 import './categories.css'
 import { DeleteCatModal } from './DeleteCatModal'
 
-export const CategoryCards = (props) => {
-  const { category, deleteCategory } = props
+import { EditCatModal } from './EditCatModal'
 
-  const {
-    buttonLabel,
-    className
-  } = props;
+export const CategoryCards = (props) => {
+  const { category, deleteCategory, updateCategory } = props
+
   const [ deleteShow, setDeleteShow ] = useState(false)
+  const [editShow, setEditShow ] = useState(false)
   
+  const handleSave = (label) => {
+    setEditShow(false)
+    const updatedCategory = {
+      id: `${category.id}`,
+      label: label
+    }
+      updateCategory(updatedCategory)
+  }
   const handleDeleteClose = () => setDeleteShow(false);
   const handleDeleteShow = () => setDeleteShow(true);
-  // const [modal, setModal] = useState(false);
-
-  // const toggle = () => setModal(!modal);
+  const handleEditClose = () => setEditShow(false);
+  const handleEditShow = () => setEditShow(true);
 
   const deleteCategoryEvent = (e) => {
     e.preventDefault();
     deleteCategory(category.id)
   };
-  const updateLink = `/categories/${category.id}/edit`
+ 
   return (
     <div className="cat-card">
       <div className="cat-card-body">
-      <Link to={updateLink} className="btn"><i class="fas fa-cog"></i></Link>
-        <div>
-      {/* <button className="btn" onClick={toggle}><i class="fas fa-trash-alt"></i></button> */}
-      {/* <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>
-          <button className="btn btn-danger" onClick={deleteCategoryEvent}>Confirm Delete</button>
-          < CategoryForm />  */}
-        {/* </ModalHeader>
-      </Modal> */}
+      <i className="fas fa-cog mr-3" onClick={handleEditShow}></i>
       <i className="fas fa-trash-alt mr-3" onClick={handleDeleteShow}></i>
-      <DeleteCatModal handleDeleteClose={handleDeleteClose} deleteShow={deleteShow} deleteCategoryEvent={deleteCategoryEvent}/>
-    </div>
-        <h5 className="cat-card-title">{category.label}</h5>
+      <h5 className="cat-card-title">{category.label}</h5>
+        <div>
+        <DeleteCatModal handleDeleteClose={handleDeleteClose} deleteShow={deleteShow} deleteCategoryEvent={deleteCategoryEvent}/>
+        <EditCatModal handleEditClose={handleEditClose} handleSave={handleSave} editShow={editShow} label={props.category.label} />
+        </div>     
       </div>
       
     </div>
