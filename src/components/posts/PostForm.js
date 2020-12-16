@@ -14,13 +14,6 @@ export const PostForm = props => {
     header_img_url: "",
     tags: []
   })
-  const history = useHistory()
-
-  // const getCategories = () => {
-  //   categoryData.getAllCats()
-  //     .then((res) => setCategories(res.data))
-  //     .catch((err) => console.error(err));
-  // };
 
   useEffect(() => {
     getCategories()
@@ -30,20 +23,21 @@ export const PostForm = props => {
     getTags()
   }, [])
 
- useEffect(() => {
-   if ("postId" in props.match.params) {
-     getPostById(props.match.params.postId).then(post => {
-       setCurrentPost({
-          title: currentPost.title,
-          content: currentPost.content,
-          category: currentPost.category,
-          publication_date: currentPost.publication_date,
-          header_img_url: currentPost.header_img_url,
-          tags: currentPost.tags
-       })
-     })
-   }
- }, [props.match.params.postId])
+  useEffect(() => {
+    if ("postId" in props.match.params) {
+      getPostById(props.match.params.postId)
+      .then(post => {
+        setCurrentPost({
+          title: post.title,
+          content: post.content,
+          category: post.category,
+          publication_date: post.publication_date,
+          header_img_url: post.header_img_url,
+          tags: post.tags
+        })
+      })
+    }
+  } , [props.match.params.postId])
 
 
   const handleControlledInputChange = (event) => {
@@ -65,11 +59,24 @@ export const PostForm = props => {
 
   const categorySelect = categories && categories.results ? categories.results.map((category) => { return <option value={category.id} key={category.id}>{category.label}</option> }) :''
 
-  const tagSelect = tags && tags.results ? tags.results.map((tag) =>  <div key={tag.id} className="form-group"><input type="checkbox" name="tags" value={tag.id} id={tag.label} onChange={handleControlledInputChange}/><label className="ml-2" htmlFor={tag.label}>{tag.label}</label></div>) :''
+  const tagSelect = tags && tags.results ? tags.results.map(tag => {
+    return currentPost.tags.some(t => t.id === tag.id)
+    ? <div key={tag.id}>
+      <input type="checkbox" checked={true} name="tags" value={tag.id} id={tag.label} onChange={handleControlledInputChange}/><label className="ml-2" htmlFor={tag.label}>{tag.label}</label>
+      </div>
+    : <div key={tag.id}>
+    <input type="checkbox" name="tags" defaultValue={tag.id} id={tag.label} onChange={handleControlledInputChange}/><label className="ml-2" htmlFor={tag.label}>{tag.label}</label>
+    </div>
+  }) : ''
+
 
   return (
     <div className="text-center">
-      <h1>New Post</h1>
+      {
+        ("postId" in props.match.params)
+        ? <h1>Edit Post</h1>
+        : <h1>New Post</h1>
+      }
       <form className="col-6 offset-3">
           <div className="form-group">
             <label htmlFor ="postTitle">Title</label>
@@ -103,6 +110,11 @@ export const PostForm = props => {
             name="category"
             onChange={handleControlledInputChange}
             >
+              {
+                ("postId" in props.match.params)
+                ? <option value={currentPost.category.id} >{currentPost.category.label}</option> 
+                : ''
+              }
               {categorySelect}
             </select>
           </div>
@@ -125,28 +137,14 @@ export const PostForm = props => {
             className="form-control"
             id="headerImg"
             name="header_img_url"
-            defaultValue={currentPost.header_img}
+            defaultValue={currentPost.header_img_url}
             placeholder="Select Image"
             onChange={handleControlledInputChange}
             />
           </div>
           <div className="form-group">
-            {tagSelect}
+              {tagSelect}
           </div>
-          {/* <button className="btn button btn-danger" type="submit" onClick={
-            evt => {
-              evt.preventDefault()
-              createPost({
-                title: currentPost.title,
-                content: currentPost.content,
-                category: parseInt(currentPost.category),
-                publication_date: currentPost.publication_date,
-                header_img_url: currentPost.header_img_url,
-                tags: currentPost.tags.map(tag => parseInt(tag))
-              })
-            }
-          }
-          >Submit</button> */}
           {
             ("postId" in props.match.params)
               ? <button
@@ -163,8 +161,8 @@ export const PostForm = props => {
                   })
                     .then(() => props.history.push("/allposts"))
                 }}
-                className="btn btn-danger">Edit</button>
-              : <button className="btn button btn-danger" type="submit" onClick={
+                className="btn btn-primary">Edit</button>
+              : <button className="btn button btn-primary" type="submit" onClick={
                 evt => {
                   evt.preventDefault()
                   createPost({

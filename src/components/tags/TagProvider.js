@@ -21,7 +21,7 @@ export const TagProvider = props => {
         "Authorization": `Token ${localStorage.getItem("r_token")}`
       }
     })
-      .then(res => res.json)
+      .then(res => res.json())
   }
 
   const deleteTag = id => {
