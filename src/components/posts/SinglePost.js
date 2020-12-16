@@ -10,7 +10,8 @@ import { PostContext } from './PostProvider'
 
 
 export const SinglePost = (props) => {
-  const { post, getPostById } = useContext(PostContext)
+  const { getPostById } = useContext(PostContext)
+  const [post, setPost] = useState([])
   const [comments, setComments] = useState([])
   const [tags, setTags] = useState([])
 
@@ -18,7 +19,9 @@ export const SinglePost = (props) => {
 
   useEffect(() => {
     const { postId } = props.match.params
-    getPostById(postId)
+    getPostById(postId).then(post => {
+      setPost(post)
+    })
   }, [props.match.params.postId])
 
   // const getTags = () => {
