@@ -31,6 +31,7 @@ export const ApplicationViews = () => {
                         <Route exact path="/allposts" render={props => <Posts {...props} />}/>
                         <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
                         <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
+                        <Route exact path="/posts/:postId(/d+)/edit" render={props => <PostForm {...props} />}/>
                         <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
                         <Route exact path="/tags" render={props => <Tags {...props} />} />
                         <Route exact path="/tags/new" render={props => <TagForm {...props} />} />

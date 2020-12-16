@@ -32,9 +32,9 @@ export const Posts = props => {
             ? posts.results.map((post) => 
             <tr key={post.id}>
               <th scope="row">
-                <button className="btn btn-primary mr-0"><i className="far fa-edit"></i></button>
+                <button className="btn btn-primary mr-0" onClick={e => props.history.push({pathname: `/posts/${post.id}/edit`})}><i className="far fa-edit"></i></button>
                 <button className="btn btn-warning  ml-1 mr-0" onClick={e => props.history.push({pathname: `posts/${post.id}`})}><i className="fas fa-search-plus"></i></button>
-                <button className="btn btn-danger mt-0" onClick={e => {
+                <button className="btn btn-danger ml-1" onClick={e => {
                   e.preventDefault();
                   deletePost(post.id)}}><i className="fas fa-trash-alt"></i></button>
               </th>
