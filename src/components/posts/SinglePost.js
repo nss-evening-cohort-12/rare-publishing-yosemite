@@ -42,11 +42,11 @@ export const SinglePost = (props) => {
   return (
     <div className="container text-center">
       <div className="posts-container text-center card">
-        <img className="card-img-top header-img" src={post.header_img} alt="Album Cover" />
+        <img className="card-img-top header-img" src={post.header_img_url} alt="Album Cover" />
         <h3 className="card-title">{post.title}</h3>
         <h6 className="card-title">{post.publish_date}</h6>
         <p className="card-text">{post.content}</p>
-        <Link className="btn btn-secondary" to='/tags'>Manage tags</Link>
+        <button className="btn btn-secondary" onClick={e => props.history.push({pathname: `/comments/${post.id}`})}>Comments</button>
       </div>
       <div className="tags">
         {/* {tags} */}
