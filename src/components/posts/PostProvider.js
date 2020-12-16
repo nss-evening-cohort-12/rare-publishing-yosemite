@@ -51,7 +51,6 @@ export const PostProvider = props => {
     const getPostById = (id) => {
         return fetch(`http://localhost:8000/posts/${id}`)
             .then(res => res.json())
-            .then(setPost)
     }
 
     const getCategories = () => {
