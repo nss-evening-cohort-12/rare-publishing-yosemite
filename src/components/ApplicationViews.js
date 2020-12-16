@@ -22,9 +22,6 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            {/* <CategoryProvider>
-                <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
-            </CategoryProvider> */}
             <TagProvider>
                 <CategoryProvider>
                     <PostProvider>
