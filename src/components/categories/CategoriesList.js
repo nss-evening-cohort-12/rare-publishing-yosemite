@@ -3,7 +3,7 @@ import { CategoryContext } from './CategoryProvider.js'
 import { CategoryCards } from './CategoryCards';
 
 export const CategoryList = (props) => {
-    const { categories, getCategories, deleteCategory, createCategory } = useContext(CategoryContext)
+    const { categories, getCategories, deleteCategory, createCategory, updateCategory } = useContext(CategoryContext)
 
     const [ currentCategory, setCurrentCategory ] = useState({
       label:'',
@@ -20,7 +20,7 @@ export const CategoryList = (props) => {
 
     
 
-    const categoryCards = categories && categories.results ? categories.results.map((category) => <CategoryCards key={category.id} deleteCategory={deleteCategory} category={category} />) : ''
+    const categoryCards = categories && categories.results ? categories.results.map((category) => <CategoryCards key={category.id} deleteCategory={deleteCategory} category={category} updateCategory={updateCategory}/>) : ''
     return (
       
       <article>

@@ -1,37 +1,43 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './categories.css'
+import { DeleteCatModal } from './DeleteCatModal'
+
+import { EditCatModal } from './EditCatModal'
 
 export const CategoryCards = (props) => {
-  const { category, deleteCategory } = props
-  const {
-    buttonLabel,
-    className
-  } = props;
+  const { category, deleteCategory, updateCategory } = props
 
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal);
+  const [ deleteShow, setDeleteShow ] = useState(false)
+  const [editShow, setEditShow ] = useState(false)
+  
+  const handleSave = (label) => {
+    setEditShow(false)
+    const updatedCategory = {
+      id: `${category.id}`,
+      label: label
+    }
+      updateCategory(updatedCategory)
+  }
+  const handleDeleteClose = () => setDeleteShow(false);
+  const handleDeleteShow = () => setDeleteShow(true);
+  const handleEditClose = () => setEditShow(false);
+  const handleEditShow = () => setEditShow(true);
 
   const deleteCategoryEvent = (e) => {
     e.preventDefault();
     deleteCategory(category.id)
   };
-  const updateLink = `/categories/${category.id}/edit`
+ 
   return (
     <div className="cat-card">
       <div className="cat-card-body">
-      <Link to={updateLink} className="btn"><i class="fas fa-cog"></i></Link>
+      <i className="fas fa-cog mr-3" onClick={handleEditShow}></i>
+      <i className="fas fa-trash-alt mr-3" onClick={handleDeleteShow}></i>
+      <h5 className="cat-card-title">{category.label}</h5>
         <div>
-      <button className="btn" onClick={toggle}><i class="fas fa-trash-alt"></i></button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>
-          <button className="btn btn-danger" onClick={deleteCategoryEvent}>Confirm Delete</button>
-        </ModalHeader>
-      </Modal>
-    </div>
-        <h5 className="cat-card-title">{category.label}</h5>
+        <DeleteCatModal handleDeleteClose={handleDeleteClose} deleteShow={deleteShow} deleteCategoryEvent={deleteCategoryEvent}/>
+        <EditCatModal handleEditClose={handleEditClose} handleSave={handleSave} editShow={editShow} label={props.category.label} />
+        </div>     
       </div>
       
     </div>
