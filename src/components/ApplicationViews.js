@@ -15,6 +15,8 @@ import { Posts } from './posts/Posts'
 import { PostForm } from './posts/PostForm'
 import { SinglePost } from './posts/SinglePost'
 
+import { Home } from './home/Home'
+
 export const ApplicationViews = () => {
     return <>
         <main style={{
@@ -35,6 +37,7 @@ export const ApplicationViews = () => {
                         <Route exact path="/tags" render={props => <Tags {...props} />} />
                         <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
                         <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
+                        <Route exact path="/" render={props => <Home {...props} />}/>
                     </PostProvider>
                 </CategoryProvider>
             </TagProvider>
