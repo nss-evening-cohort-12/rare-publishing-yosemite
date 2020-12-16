@@ -21,10 +21,9 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            <CategoryProvider>
+            {/* <CategoryProvider>
                 <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
-                <Route exact path="/categories/:categoryId(\d+)/edit" render={props => <CategoryForm {...props} />}/>
-            </CategoryProvider>
+            </CategoryProvider> */}
             <TagProvider>
                 <CategoryProvider>
                     <PostProvider>
@@ -32,6 +31,7 @@ export const ApplicationViews = () => {
                         <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
                         <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
                         <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
+                        <Route exact path="/categories/:categoryId(\d+)/edit" render={props => <CategoryForm {...props} />}/>
                         <Route exact path="/tags" render={props => <Tags {...props} />} />
                         <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
                         <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
