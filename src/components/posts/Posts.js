@@ -2,19 +2,45 @@ import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { PostContext } from "./PostProvider";
 import { Table } from 'react-bootstrap'
+import { CategoryContext } from "../categories/CategoryProvider";
 
 export const Posts = props => {
-  const { posts, getPosts, deletePost } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat } = useContext(PostContext)
+  const { categories, getCategories } = useContext(CategoryContext)
 
   useEffect(() => {
     getPosts()
   }, []);
+
+  useEffect(() => {
+    getCategories()
+  }, []);
+
+  const sortByCategory = (e) => {
+    e.preventDefault();
+    const catId = e.target.value
+    getPostsByCat(catId)
+    props.history.push({pathname: `/posts?category=${catId}`})
+  };
 
 
   return (
     <div className="container">
       <Link to="/addPost" className="btn btn-info">Add New Post</Link>
       <Link to="/myPosts" className="btn btn-primary">View My Posts</Link>
+      <h3>Sort By: </h3>
+      <select
+      id="category_id"
+      name="category"
+      onChange={sortByCategory}
+      >
+        {
+          categories && categories.results
+          ? categories.results.map((cat) => { return <option value={cat.id} key={cat.id}>{cat.label}</option> }) 
+          : ''
+        }
+        {/* <option onChange={props.history.push({pathname: "/allposts"})}>All</option> */}
+      </select>
       <Table bordered striped hover>
         <thead className="table-dark">
           <tr>

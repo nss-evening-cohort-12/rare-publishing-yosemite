@@ -4,6 +4,7 @@ import commentData from '../utils/commentData'
 import { CommentCards } from '../comments/CommentCards'
 import { Link } from 'react-router-dom'
 import { PostContext } from './PostProvider'
+import { TagContext } from '../tags/TagProvider'
 // import tagData from '../utils/tagData'
 // import { TagCards } from '../tags/TagCards'
 
@@ -11,11 +12,9 @@ import { PostContext } from './PostProvider'
 
 export const SinglePost = (props) => {
   const { getPostById } = useContext(PostContext)
-  const [post, setPost] = useState([])
-  const [comments, setComments] = useState([])
-  const [tags, setTags] = useState([])
+  const { getTags, tags } = useContext(TagContext)
+  const [post, setPost] = useState({})
 
-  console.log(post.tags)
 
   useEffect(() => {
     const { postId } = props.match.params
@@ -24,23 +23,18 @@ export const SinglePost = (props) => {
     })
   }, [props.match.params.postId])
 
-  // const getTags = () => {
-  //   tagData.getAllTags
-  // };
+  useEffect(() => {
+    getTags()
+  })
 
-  // const deleteComment = (commentId) => {
-  //   commentData.deleteComment(commentId)
-  //     .then((res) => getPost())
-  //     .catch((err) => console.error(err))
-  // };
-  
-
-  // const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
-  // const tagCards = tags.map((tag) => <TagCards key={tag.id} />)
-  const createCommentLink = `/addComment/${post.id}`
+  // const tagCards = tags && tags.results ? tags.results.map(tag => {
+  //   return post.tags.some(t => t.id === tag.id)
+  //   ? <p>{tag.label}</p>
+  //   : ''
+  // }) : ''
 
   return (
-    <div className="container text-center">
+    <div className="container text-center col-6 offset-3">
       <div className="posts-container text-center card">
         <img className="card-img-top header-img" src={post.header_img_url} alt="Album Cover" />
         <h3 className="card-title">{post.title}</h3>
@@ -48,13 +42,12 @@ export const SinglePost = (props) => {
         <p className="card-text">{post.content}</p>
         <button className="btn btn-secondary" onClick={e => props.history.push({pathname: `/comments/${post.id}`})}>Comments</button>
       </div>
-      <div className="tags">
-        {/* {tags} */}
+      <div className="tags container">
+        {/* {tagCards} */}
       </div>
       <div className="comment-container card-deck text-center">
         {/* {commentCards} */}
       </div>
-      <Link to={createCommentLink} className="btn btn-primary">Add a comment</Link>
     </div>
 
   )
