@@ -1,0 +1,14 @@
+.user-footer {
+  display: flex;
+  height: 90px;
+  align-items: flex-end;
+  padding: 10px;
+  justify-content: space-between;
+  text-decoration: none;
+ 
+}
+
+.fa-cog {
+  cursor: pointer;
+  color: black !important;
+}
