@@ -12,7 +12,7 @@ export const Home = props => {
     getPosts()
   }, []);
 
-  const postCards = posts && posts.results ? posts.results.map((post) => <HomePostCard {...props} key={post.id} post={post} />) : ''
+  const postCards = posts ? posts.map((post) => <HomePostCard {...props} key={post.id} post={post} />) : ''
 
     return (
       <div className="home-container">

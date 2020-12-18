@@ -69,6 +69,16 @@ export const PostProvider = props => {
             .then(setPosts)
     }
 
+    const getPostsByUserId = (id) => {
+        return fetch(`http://localhost:8000/posts?user=${id}`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("r_token")}`
+            }
+        })
+        .then(response => response.json())
+        .then(setPosts)
+    }
+
     return (
         <PostContext.Provider value={{
             posts,
@@ -80,7 +90,8 @@ export const PostProvider = props => {
             getPostById,
             categories,
             getCategories,
-            getPostsByCat
+            getPostsByCat,
+            getPostsByUserId
         }}>
             {props.children}
         </PostContext.Provider>
