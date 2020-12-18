@@ -28,8 +28,8 @@ export const Posts = props => {
         </thead>
         <tbody>
           {
-            posts && posts.results 
-            ? posts.results.map((post) => 
+            posts
+            ? posts.map((post) => 
             <tr key={post.id}>
               <th scope="row">
                 <button className="btn btn-primary mr-0" onClick={e => props.history.push({pathname: `/posts/${post.id}/edit`})}><i className="far fa-edit"></i></button>

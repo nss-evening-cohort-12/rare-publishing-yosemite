@@ -4,6 +4,8 @@ import "./NavBar.css"
 import Logo from "./rare.jpeg"
 
 export const NavBar = props => {
+    const userId = localStorage.getItem("user_id")
+    const myPostsLink = `/myposts/${userId}`
     return (
         <ul className="navbar">
             <li className="navbar__logo">
@@ -13,7 +15,7 @@ export const NavBar = props => {
                 <Link className="navbar__link" to="/allposts">All Posts</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/myposts">My Posts</Link>
+                <Link className="navbar__link" to={myPostsLink}>My Posts</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/categories">Category Manager</Link>
