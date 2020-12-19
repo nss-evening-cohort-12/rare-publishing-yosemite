@@ -29,6 +29,7 @@ export const NavBar = props => {
                         <button className=" btn btn-outline-primary nav__button"
                             onClick={() => {
                                 localStorage.removeItem("r_token")
+                                localStorage.removeItem("user_id")
                                 props.history.push({ pathname: "/" })
                             }}
                         >Logout</button>
