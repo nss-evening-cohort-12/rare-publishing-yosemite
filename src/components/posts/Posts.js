@@ -1,13 +1,20 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { PostContext } from "./PostProvider";
 import { Table } from 'react-bootstrap'
 import { CategoryContext } from "../categories/CategoryProvider";
+import { DeletePostModal } from "./DeletePostModal"
 import './Posts.css'
+
 
 export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
+  const [deleteShow, setDeleteShow ] = useState(false) 
+
+
+  const handleDeleteClose = () => setDeleteShow(false);
+  const handleDeleteShow = () => setDeleteShow(true);
 
   useEffect(() => {
     getPosts()
@@ -21,7 +28,6 @@ export const Posts = props => {
     e.preventDefault();
     const catId = e.target.value
     getPostsByCat(catId)
-    props.history.push({pathname: `/posts?category=${catId}`})
   };
 
   return (
@@ -34,6 +40,7 @@ export const Posts = props => {
         className="mb-2 text-center" 
         onChange={sortByCategory}
         >
+          <option value={''}>All</option>
           {
             categories && categories.results
             ? categories.results.map((cat) => { return <option value={cat.id} key={cat.id}>{cat.label}</option> }) 
@@ -46,7 +53,7 @@ export const Posts = props => {
       <Table bordered striped hover>
         <thead className="table-dark">
           <tr>
-            <th scope="col" className="text-center ">Actions</th>
+            <th scope="col" className="text-center actions-column">Actions</th>
             <th scope="col" className="text-center">#</th>
             <th scope="col" className="text-center">Title</th>
             <th scope="col" className="text-center">Date</th>
@@ -58,14 +65,19 @@ export const Posts = props => {
             posts && posts.results
             ? posts.results.map((post) => 
             <tr key={post.id}>
-              <th scope="row">
+              <th scope="row" className="actions-row">
                 <Link className=" ml-3 mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
                 <Link className="mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
-                <i className="fas fa-trash-alt mr-3 fa-lg" onClick={e => {
+                <i className="fas fa-trash-alt mr-3 fa-lg" onClick={(e) => {
                   e.preventDefault();
-                  deletePost(post.id)}}></i>
+                  deletePost(post.id)
+                }}></i>
+                {/* <DeletePostModal handleDeleteClose={handleDeleteClose} deleteShow={deleteShow} deleteEvent={(e) => {
+                  e.preventDefault();
+                  deletePost(post.id)
+                }}/> */}
               </th>
-              <th scope="row">{post.id}</th>
+              <td>{post.id}</td>
               <td>{post.title}</td>
               <td>{post.publication_date}</td>
               <td>{post.category.label}</td>

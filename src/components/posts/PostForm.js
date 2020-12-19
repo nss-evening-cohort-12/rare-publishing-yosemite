@@ -10,7 +10,7 @@ export const PostForm = props => {
     user: "",
     title: "",
     content: "",
-    category: 0,
+    category: 1,
     publication_date: "",
     header_img_url: "",
     tags: []
@@ -180,6 +180,7 @@ export const PostForm = props => {
                     header_img_url: currentPost.header_img_url,
                     tags: currentPost.tags.map(tag => parseInt(tag))
                   })
+                  .then(() => props.history.push("/allposts"))
                 }
               }
               >Submit</button>
