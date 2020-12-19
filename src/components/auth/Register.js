@@ -37,6 +37,7 @@ export const Register = (props) => {
                 .then(res => {
                     if ("token" in res) {
                         localStorage.setItem("r_token", res.token)
+                        localStorage.setItem("user_id", res.user_id)
                         props.history.push("/")
                     }
                 })  
