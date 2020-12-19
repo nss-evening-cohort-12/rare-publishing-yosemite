@@ -13,7 +13,7 @@ export const UserPosts = props => {
     getPostsByUserId(userId)
   }, [])
 
-  const myPosts = posts  ? posts.map((post) => <UserPostCard {...props} key={post.id} post={post} />) : <h1>You haven't written any posts.</h1>
+  const myPosts = posts && posts.results ? posts.results.map((post) => <UserPostCard {...props} key={post.id} post={post} />) : <h1>You haven't written any posts.</h1>
 
     return (
       <div className="home-container">
