@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react"
-import usersData from '../utils/usersData'
+import { UserContext } from './UserProvider.js'
 import { UserCards } from './UserCards'
+import { useContext } from "react"
+import './usercard.css'
 
 export const UserProfiles = props => {
-  const [users, setUsers] = useState([])
+  const {users, getUsers} = useContext(UserContext)
 
-  const getUsers = () => {
-    usersData.getAllUsers()
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.error(err))
-  }
+  useEffect(() =>{
+    getUsers()
+  }, [])
 
-  useEffect(getUsers, []);
+  
 
-  const userCard = users.map((user) => <UserCards key={user.id} user={user} />)
+  const userCards = users && users.results ?  users.results.map((user) => <UserCards key={user.id} user={user} />) : ''
 
   return (
-    <div className="user-container card-deck text-center">
-      {userCard}
+    <article className="users">
+      <h1>users</h1>
+      <div className="user-container">
+      {userCards}
     </div>
+    </article>
+    
   )
 }
