@@ -15,6 +15,9 @@ import { PostForm } from './posts/PostForm'
 import { SinglePost } from './posts/SinglePost'
 import { UserPosts } from './posts/UserPosts'
 
+import { UserProfiles } from './users/UserProfiles'
+import { UserProvider } from './users/UserProvider'
+
 import { Home } from './home/Home'
 
 export const ApplicationViews = () => {
@@ -46,6 +49,9 @@ export const ApplicationViews = () => {
             <CommentProvider>
                 <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
             </CommentProvider>
+            <UserProvider>
+                <Route exat path="/users" render={props => <UserProfiles {...props} />} />
+            </UserProvider>
         </main>
     </>
 }
