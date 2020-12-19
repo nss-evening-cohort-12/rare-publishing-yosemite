@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { PostContext } from "./PostProvider";
 import { Table } from 'react-bootstrap'
 import { CategoryContext } from "../categories/CategoryProvider";
+import './Posts.css'
 
 export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat } = useContext(PostContext)
@@ -23,24 +24,25 @@ export const Posts = props => {
     props.history.push({pathname: `/posts?category=${catId}`})
   };
 
-
   return (
-    <div className="container">
-      <Link to="/addPost" className="btn btn-info">Add New Post</Link>
-      <Link to="/myPosts" className="btn btn-primary">View My Posts</Link>
-      <h3>Sort By: </h3>
-      <select
-      id="category_id"
-      name="category"
-      onChange={sortByCategory}
-      >
-        {
-          categories && categories.results
-          ? categories.results.map((cat) => { return <option value={cat.id} key={cat.id}>{cat.label}</option> }) 
-          : ''
-        }
-        {/* <option onChange={props.history.push({pathname: "/allposts"})}>All</option> */}
-      </select>
+    <div className="container p-0">
+      <div className="sort-buttons row ml-1">
+        <h5 className="offset-0 mr-3">Sort By: </h5>
+        <select
+        id="category_id"
+        name="category"
+        className="mb-2 text-center" 
+        onChange={sortByCategory}
+        >
+          {
+            categories && categories.results
+            ? categories.results.map((cat) => { return <option value={cat.id} key={cat.id}>{cat.label}</option> }) 
+            : ''
+          }
+          {/* <option onChange={props.history.push({pathname: "/allposts"})}>All</option> */}
+        </select>
+        <Link to={'/addpost'} className="addLink offset-9">Add Post<i className="fas fa-plus fa-lg ml-2 mr-1"></i></Link>
+      </div>
       <Table bordered striped hover>
         <thead className="table-dark">
           <tr>
@@ -52,23 +54,22 @@ export const Posts = props => {
             <th scope="col" className="text-center">Tags</th>
           </tr>
         </thead>
-        <tbody>
-          {
+        <tbody>{
             posts && posts.results
             ? posts.results.map((post) => 
             <tr key={post.id}>
               <th scope="row">
-                <button className="btn btn-primary mr-0" onClick={e => props.history.push({pathname: `/posts/${post.id}/edit`})}><i className="far fa-edit"></i></button>
-                <button className="btn btn-warning  ml-1 mr-0" onClick={e => props.history.push({pathname: `posts/${post.id}`})}><i className="fas fa-search-plus"></i></button>
-                <button className="btn btn-danger ml-1" onClick={e => {
+                <Link className=" ml-3 mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
+                <Link className="mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
+                <i className="fas fa-trash-alt mr-3 fa-lg" onClick={e => {
                   e.preventDefault();
-                  deletePost(post.id)}}><i className="fas fa-trash-alt"></i></button>
+                  deletePost(post.id)}}></i>
               </th>
               <th scope="row">{post.id}</th>
               <td>{post.title}</td>
               <td>{post.publication_date}</td>
               <td>{post.category.label}</td>
-              <td><ul>{post.tags.map(tag => <li>{tag.label}</li>)}</ul></td>
+              <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
             </tr>
             ) 
             :''
