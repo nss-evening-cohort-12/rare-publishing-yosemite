@@ -7,6 +7,7 @@ export const PostForm = props => {
   const { createPost, categories, getCategories, getPostById, updatePost } = useContext(PostContext)
   const { getTags, tags } = useContext(TagContext)
   const [currentPost, setCurrentPost] = useState({
+    user: "",
     title: "",
     content: "",
     category: 0,
@@ -23,11 +24,15 @@ export const PostForm = props => {
     getTags()
   }, [])
 
+  const userId = localStorage.getItem("user_id")
+
+
   useEffect(() => {
     if ("postId" in props.match.params) {
       getPostById(props.match.params.postId)
       .then(post => {
         setCurrentPost({
+          user: userId,
           title: post.title,
           content: post.content,
           category: post.category,
@@ -152,6 +157,7 @@ export const PostForm = props => {
                   evt.preventDefault()
                   updatePost ({
                     id: props.match.params.postId,
+                    user: userId,
                     title: currentPost.title,
                     content: currentPost.content,
                     category: parseInt(currentPost.category),
@@ -166,6 +172,7 @@ export const PostForm = props => {
                 evt => {
                   evt.preventDefault()
                   createPost({
+                    user: userId,
                     title: currentPost.title,
                     content: currentPost.content,
                     category: parseInt(currentPost.category),
