@@ -55,13 +55,29 @@ export const PostProvider = props => {
 
     const getCategories = () => {
         return fetch('http://localhost:8000/categories',{
-          headers:{
+            headers:{
             "Authorization": `Token ${localStorage.getItem("r_token")}`
-          }
+            }
         })
-          .then(response => response.json())
-          .then(setCategories)
-      }
+            .then(response => response.json())
+            .then(setCategories)
+        }
+
+    const getPostsByCat = (catId) => {
+        return fetch(`http://localhost:8000/posts?category=${catId}`)
+            .then(res => res.json())
+            .then(setPosts)
+    }
+
+    const getPostsByUserId = (id) => {
+        return fetch(`http://localhost:8000/posts?user=${id}`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("r_token")}`
+            }
+        })
+        .then(response => response.json())
+        .then(setPosts)
+    }
 
     return (
         <PostContext.Provider value={{
@@ -73,7 +89,9 @@ export const PostProvider = props => {
             deletePost,
             getPostById,
             categories,
-            getCategories
+            getCategories,
+            getPostsByCat,
+            getPostsByUserId
         }}>
             {props.children}
         </PostContext.Provider>

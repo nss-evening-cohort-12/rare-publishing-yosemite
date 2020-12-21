@@ -1,35 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import postsData from '../utils/postsData'
-import { PostsCards } from './PostsCards';
+import React, { useContext, useEffect } from "react"
+import { Link } from "react-router-dom"
+import { PostContext } from "../posts/PostProvider";
+import { UserPostCard } from "./UserPostCard"
 
+import "../home/Home.css"
 
 export const UserPosts = props => {
-  const [posts, setPosts] = useState([])
-  
-  const getUserPosts = () => {
+  const { posts, getPostsByUserId} = useContext(PostContext)
+
+  useEffect(() => {
     const userId = localStorage.getItem("user_id")
+    getPostsByUserId(userId)
+  }, [])
 
-    postsData.getUsersPosts(userId)
-      .then((res) => setPosts(res.data))
-      .catch((err) => console.error(err))
-  };
+  const myPosts = posts && posts.results ? posts.results.map((post) => <UserPostCard {...props} key={post.id} post={post} />) : <h1>You haven't written any posts.</h1>
 
-  useEffect(getUserPosts, []);
-
-  const deletePost = (postId) => {
-    postsData.deletePost(postId)
-      .then((res) => {
-        getUserPosts();
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const postCards = posts.map((post) => <PostsCards key={post.id} post={post} deletePost={deletePost}/>)
-
-  return (
-    <div className="posts-container card-deck text-center">
-      {postCards}
-    </div>
-  )
-
+    return (
+      <div className="home-container">
+        <div className="preview-container">
+            {myPosts}
+        </div>
+      </div>
+    )
 }

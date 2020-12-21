@@ -13,6 +13,10 @@ import { PostProvider } from './posts/PostProvider'
 import { Posts } from './posts/Posts'
 import { PostForm } from './posts/PostForm'
 import { SinglePost } from './posts/SinglePost'
+import { UserPosts } from './posts/UserPosts'
+
+import { UserProfiles } from './users/UserProfiles'
+import { UserProvider } from './users/UserProvider'
 
 import { Home } from './home/Home'
 
@@ -31,11 +35,13 @@ export const ApplicationViews = () => {
                         <Route exact path="/allposts" render={props => <Posts {...props} />}/>
                         <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
                         <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
+                        <Route exact path="/posts?category=:categoryId(\d+)" render={props => <Posts {...props} />}/>
                         <Route exact path="/posts/:postId(\d+)/edit" render={props => <PostForm {...props} />}/>
                         <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
                         <Route exact path="/tags" render={props => <Tags {...props} />} />
                         <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
                         <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
+                        <Route exact path="/myposts/:userId(\d+)" render={props => <UserPosts {...props} />} />
                         <Route exact path="/" render={props => <Home {...props} />}/>
                     </PostProvider>
                 </CategoryProvider>
@@ -43,6 +49,9 @@ export const ApplicationViews = () => {
             <CommentProvider>
                 <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
             </CommentProvider>
+            <UserProvider>
+                <Route exat path="/users" render={props => <UserProfiles {...props} />} />
+            </UserProvider>
         </main>
     </>
 }

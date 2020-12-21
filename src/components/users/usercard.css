@@ -1,0 +1,12 @@
+h1{
+  text-align: center;
+}
+.user-container{
+  display: flex;
+  justify-content: center ;
+  flex-direction: column;
+}
+.user-card-body{
+  display: flex;
+  justify-content: space-around;
+}
