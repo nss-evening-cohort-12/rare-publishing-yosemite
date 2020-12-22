@@ -29,7 +29,12 @@ export const SinglePost = (props) => {
     getTagsByPostId(postId)
   }, [])
 
-  const tagCards = tags && tags.results ? tags.results.map((tag) => <h6 key={tag.id} className="tag-card">{tag.label}</h6>) : ''
+  const tagCards = tags && tags.results ? tags.results.map((tag) => {
+    return <div>
+      <h3 className="mt-3">Tags:</h3>
+      <h6 key={tag.id} className="tag-card">{tag.label}</h6>
+    </div>
+  }) : ''
 
   const updatePost = `/posts/${post.id}/edit`
   const commentLink = `/comments/${post.id}`
@@ -51,8 +56,10 @@ export const SinglePost = (props) => {
               <div className="single-title">
                 <h1>{post.title}</h1>
               </div>
-              <div className="single-category">
-                {post && post.category ? <p className="cat-label">{post.category.label}</p> : ''}
+              <div className="single-category mt-4">
+                {post && post.category 
+                ? <h6 className="cat-label">{post.category.label}</h6>
+                : ''}
               </div>
             </div>
             <div className="single-img-container">
@@ -70,7 +77,7 @@ export const SinglePost = (props) => {
               {post.content}
             </div>
         </div>
-        <div className="single-tag-container">
+        <div className="single-tag-container mt-0">
           {tagCards}
         </div>
     </div>
