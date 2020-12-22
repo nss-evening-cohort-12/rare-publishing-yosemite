@@ -5,8 +5,21 @@ h1{
   display: flex;
   justify-content: center ;
   flex-direction: column;
+  /* border: 1px solid black; */
 }
-.user-card-body{
+.user-card{
+  border: 1px solid black;
+}
+
+
+.col-box{
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  border-right: 1px solid black;
+}
+.user-header{
+  height: 10rem;
+}
+.table-headers{
+  text-align: center;
 }
