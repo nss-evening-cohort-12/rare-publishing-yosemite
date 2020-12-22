@@ -3,18 +3,15 @@ import { Link } from "react-router-dom"
 import { PostContext } from "./PostProvider";
 import { Table } from 'react-bootstrap'
 import { CategoryContext } from "../categories/CategoryProvider";
-import { DeletePostModal } from "./DeletePostModal"
 import './Posts.css'
+import { UserContext } from "../users/UserProvider";
 
 
 export const Posts = props => {
-  const { posts, getPosts, deletePost, getPostsByCat } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
-  const [deleteShow, setDeleteShow ] = useState(false) 
+  const { getUsers, users } = useContext(UserContext)
 
-
-  const handleDeleteClose = () => setDeleteShow(false);
-  const handleDeleteShow = () => setDeleteShow(true);
 
   useEffect(() => {
     getPosts()
@@ -24,16 +21,26 @@ export const Posts = props => {
     getCategories()
   }, []);
 
+  useEffect(() => {
+    getUsers()
+  }, [])
+
   const sortByCategory = (e) => {
     e.preventDefault();
     const catId = e.target.value
     getPostsByCat(catId)
   };
 
+  const sortByUser = (e) => {
+    e.preventDefault();
+    const uid = e.target.value
+    getPostsByUserId(uid)
+  };
+
   return (
     <div className="container p-0">
       <div className="sort-buttons row ml-1">
-        <h5 className="offset-0 mr-3">Sort By: </h5>
+        <h5 className="offset-0 mr-3">Sort By Category: </h5>
         <select
         id="category_id"
         name="category"
@@ -46,7 +53,20 @@ export const Posts = props => {
             ? categories.results.map((cat) => { return <option value={cat.id} key={cat.id}>{cat.label}</option> }) 
             : ''
           }
-          {/* <option onChange={props.history.push({pathname: "/allposts"})}>All</option> */}
+        </select>
+        <h5 className="offset-0 ml-3 mr-3">Sort By user: </h5>
+        <select
+        id="user_id"
+        name="user"
+        className="mb-2 text-center" 
+        onChange={sortByUser}
+        >
+          <option value={''}>All</option>
+          {
+            users && users.results
+            ? users.results.map((u) => { return <option value={u.user.id} key={u.user.id}>{u.user.first_name} {u.user.last_name}</option> }) 
+            : ''
+          }
         </select>
         <Link to={'/addpost'} className="addLink offset-9">Add Post<i className="fas fa-plus fa-lg ml-2 mr-1"></i></Link>
       </div>
