@@ -59,6 +59,17 @@ export const TagProvider = props => {
     .then(getTags)
   }
 
+  const getTagsByPostId = (id) => {
+    return fetch(`http://localhost:8000/tags?post=${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("r_token")}`
+        }
+    })
+    .then(response => response.json())
+    .then(setTags)
+}
+
+
   return (
     <TagContext.Provider value={{
       tags,
@@ -66,7 +77,8 @@ export const TagProvider = props => {
       getTag,
       createTag,
       editTag,
-      deleteTag
+      deleteTag,
+      getTagsByPostId
     }}>
       {props.children}
     </TagContext.Provider>

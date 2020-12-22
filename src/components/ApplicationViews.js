@@ -29,29 +29,29 @@ export const ApplicationViews = () => {
             {/* <CategoryProvider>
                 <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
             </CategoryProvider> */}
-            <TagProvider>
-                <CategoryProvider>
-                    <PostProvider>
-                        <Route exact path="/allposts" render={props => <Posts {...props} />}/>
-                        <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
-                        <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
-                        <Route exact path="/posts?category=:categoryId(\d+)" render={props => <Posts {...props} />}/>
-                        <Route exact path="/posts/:postId(\d+)/edit" render={props => <PostForm {...props} />}/>
-                        <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
-                        <Route exact path="/tags" render={props => <Tags {...props} />} />
-                        <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
-                        <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
-                        <Route exact path="/myposts/:userId(\d+)" render={props => <UserPosts {...props} />} />
-                        <Route exact path="/" render={props => <Home {...props} />}/>
-                    </PostProvider>
-                </CategoryProvider>
-            </TagProvider>
+            <UserProvider>
+                <TagProvider>
+                    <CategoryProvider>
+                        <PostProvider>
+                            <Route exact path="/allposts" render={props => <Posts {...props} />}/>
+                            <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
+                            <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
+                            <Route exact path="/posts?category=:categoryId(\d+)" render={props => <Posts {...props} />}/>
+                            <Route exact path="/posts/:postId(\d+)/edit" render={props => <PostForm {...props} />}/>
+                            <Route exact path="/categories" render={props => <CategoryList {...props} />}/>
+                            <Route exact path="/tags" render={props => <Tags {...props} />} />
+                            <Route exact path="/tags/new" render={props => <TagForm {...props} />} />
+                            <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
+                            <Route exact path="/myposts/:userId(\d+)" render={props => <UserPosts {...props} />} />
+                            <Route exact path="/" render={props => <Home {...props} />}/>
+                            <Route exat path="/users" render={props => <UserProfiles {...props} />} />
+                        </PostProvider>
+                    </CategoryProvider>
+                </TagProvider>
+            </UserProvider>
             <CommentProvider>
                 <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
             </CommentProvider>
-            <UserProvider>
-                <Route exat path="/users" render={props => <UserProfiles {...props} />} />
-            </UserProvider>
         </main>
     </>
 }
