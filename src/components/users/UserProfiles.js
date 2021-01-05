@@ -16,7 +16,7 @@ export const UserProfiles = props => {
 
   
 
-  const userCards = users && users.results ?  users.results.map((user) => <UserCards key={user.id} user={user} />) : ''
+  // const userCards = users && users.results ?  users.results.map((user) => <UserCards key={user.id} user={user} />) : ''
   
   return (
     <article className="users">
@@ -28,7 +28,17 @@ export const UserProfiles = props => {
           <div className="col"><h4 className="user-card-title col">UserName</h4></div>
           <div className="col"><h4 className="user-card-content col ">Staff</h4></div>
         </div>
-      {userCards}
+      {
+        users && users.results 
+        ?  users.results.map((user) => <div className="user-card row">
+        <div className="col col-box">
+          <h5 className="user-card-title col "> {user.user.first_name} {user.user.last_name}</h5>
+              {/* <Link to={singleUser} className="btn btn-secondary">View User</Link> */}
+        </div>
+        <div className="col col-box"><h5 className="user-card-title col">{user.user.username}</h5></div>
+        <div className="col"><p className="user-card-content col ">hello</p></div>
+      </div>) : ''
+      }
       
     </div>
     </article>

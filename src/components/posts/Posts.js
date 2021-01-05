@@ -12,7 +12,7 @@ export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users } = useContext(UserContext)
-  cosnt { getTags}
+  // cosnt { getTags}
 
 
   useEffect(() => {
@@ -44,12 +44,12 @@ export const Posts = props => {
       <div className="sort-buttons ml-1 ">
         <div className="d-inline-flex">
           <h5 className=" mr-3 mb-2">Search by Tag: </h5>
-          <input 
+          {/* <input 
           key="random1"
           value={keyword}
           placeholder={"search country"}
           onChange={(e) => setKeyword(e.target.value)}
-          />
+          /> */}
           <h5 className=" mr-3 mb-2">Sort By Category: </h5>
           <select
           id="category_id"
