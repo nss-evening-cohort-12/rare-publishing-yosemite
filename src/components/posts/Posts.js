@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { PostContext } from "./PostProvider";
 import { Table } from 'react-bootstrap'
 import { CategoryContext } from "../categories/CategoryProvider";
+import { TagContext } from "../tags/TagProvider";
 import './Posts.css'
 import { UserContext } from "../users/UserProvider";
 
@@ -11,6 +12,7 @@ export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users } = useContext(UserContext)
+  cosnt { getTags}
 
 
   useEffect(() => {
@@ -41,6 +43,13 @@ export const Posts = props => {
     <div className="container p-0">
       <div className="sort-buttons ml-1 ">
         <div className="d-inline-flex">
+          <h5 className=" mr-3 mb-2">Search by Tag: </h5>
+          <input 
+          key="random1"
+          value={keyword}
+          placeholder={"search country"}
+          onChange={(e) => setKeyword(e.target.value)}
+          />
           <h5 className=" mr-3 mb-2">Sort By Category: </h5>
           <select
           id="category_id"
