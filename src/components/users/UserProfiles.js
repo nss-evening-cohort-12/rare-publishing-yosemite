@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { UserContext } from './UserProvider.js'
 import { useContext } from "react"
 import { Table, Form} from 'react-bootstrap'
+import { UserTable } from './UserTable'	
 import './usercard.css'
 
 
@@ -14,41 +15,23 @@ export const UserProfiles = props => {
     getUsers()
   }, [])
 
-  const isActive = <input></input>
+  const toggleChecked = (e) => {
+    e.preventDefault()
+    if (e.target.checked === true) {
+      e.target.checked = false
+    } else {
+      e.target.checked = true
+    }
+  }
+
+  const UserEntries = users && users.results ?  users.results.map((user) => <UserTable key={user.id} user={user} />) : ''
 
   return (
     <article className="users">
       <h1>Users</h1>
       <Table bordered striped hover className="col-6 offset-3">
         <tbody>
-          {
-            users && users.results
-            ? users.results.map((user) =>
-              <tr key={user.user.id}>
-                <td>{user.user.username}</td>
-                <td>
-                  {
-                    <Form>
-                      <Form.Group>
-                        <Form.Check type="checkbox"  label="Is Active" checked={user.user.is_active} value={user.user.is_active} onChange={!user.user.is_active}/>
-                      </Form.Group>
-                    </Form>
-                  }
-                </td>
-                <td>
-                  { 
-                    <Form>
-                      <Form.Group>
-                        <Form.Check inline type="radio" label="Author" />
-                        <Form.Check inline type="radio" label="Admin" />
-                      </Form.Group>
-                    </Form>
-                  }
-                </td>
-              </tr>
-            )
-            : ''
-          }
+          {UserEntries}
         </tbody>
       </Table>
     </article>
