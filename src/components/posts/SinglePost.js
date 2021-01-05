@@ -4,18 +4,18 @@ import commentData from '../utils/commentData'
 import { CommentCards } from '../comments/CommentCards'
 import { Link } from 'react-router-dom'
 import { PostContext } from './PostProvider'
+import { TagContext } from '../tags/TagProvider'
 // import tagData from '../utils/tagData'
 // import { TagCards } from '../tags/TagCards'
 
+import "./SinglePost.css"
 
 
 export const SinglePost = (props) => {
   const { getPostById } = useContext(PostContext)
-  const [post, setPost] = useState([])
-  const [comments, setComments] = useState([])
-  const [tags, setTags] = useState([])
+  const { getTagsByPostId, tags } = useContext(TagContext)
+  const [post, setPost] = useState({})
 
-  console.log(post.tags)
 
   useEffect(() => {
     const { postId } = props.match.params
@@ -24,38 +24,62 @@ export const SinglePost = (props) => {
     })
   }, [props.match.params.postId])
 
-  // const getTags = () => {
-  //   tagData.getAllTags
-  // };
+  useEffect(() => {
+    const { postId } = props.match.params
+    getTagsByPostId(postId)
+  }, [])
 
-  // const deleteComment = (commentId) => {
-  //   commentData.deleteComment(commentId)
-  //     .then((res) => getPost())
-  //     .catch((err) => console.error(err))
-  // };
-  
+  const tagCards = tags && tags.results ? tags.results.map((tag) => {
+    return <div>
+      <h3 className="mt-3">Tags:</h3>
+      <h6 key={tag.id} className="tag-card">{tag.label}</h6>
+    </div>
+  }) : ''
 
-  // const commentCards = comments.map((comment) => <CommentCards key={comment.id} comment={comment} deleteComment={deleteComment}/>)
-  // const tagCards = tags.map((tag) => <TagCards key={tag.id} />)
-  const createCommentLink = `/addComment/${post.id}`
+  const updatePost = `/posts/${post.id}/edit`
+  const commentLink = `/comments/${post.id}`
+
+  const showOptions = () => {
+    const user_id = localStorage.getItem("user_id")
+    if (user_id == post.user.id) {
+      return <div className="single-options"><i className="fas fa-trash-alt mr-3"></i><Link to ={updatePost}><i className="fas fa-cog mr-3"></i></Link></div>
+    } else {
+      return <p></p>
+    }
+  }
 
   return (
-    <div className="container text-center">
-      <div className="posts-container text-center card">
-        <img className="card-img-top header-img" src={post.header_img_url} alt="Album Cover" />
-        <h3 className="card-title">{post.title}</h3>
-        <h6 className="card-title">{post.publish_date}</h6>
-        <p className="card-text">{post.content}</p>
-        <button className="btn btn-secondary" onClick={e => props.history.push({pathname: `/comments/${post.id}`})}>Comments</button>
-      </div>
-      <div className="tags">
-        {/* {tags} */}
-      </div>
-      <div className="comment-container card-deck text-center">
-        {/* {commentCards} */}
-      </div>
-      <Link to={createCommentLink} className="btn btn-primary">Add a comment</Link>
+    <div className="single-main-container">
+        <div className="single-post-container">
+            <div className="single-heading">
+              { post && post.user ? showOptions() : ''}
+              <div className="single-title">
+                <h1>{post.title}</h1>
+              </div>
+              <div className="single-category mt-4">
+                {post && post.category 
+                ? <h6 className="cat-label">{post.category.label}</h6>
+                : ''}
+              </div>
+            </div>
+            <div className="single-img-container">
+              <img className="single-img" src={post.header_img_url}></img>
+            </div>
+            <div className="sub-heading">
+              <div className="single-author">
+                {post && post.user ? <p>By: {post.user.user.first_name} {post.user.user.last_name}</p> : ''}
+              </div>
+              <div className="navbar__item">
+              <Link className="navbar__link com-link" to={commentLink}>Comments</Link>
+              </div>
+            </div>
+            <div className="post-content">
+              {post.content}
+            </div>
+        </div>
+        <div className="single-tag-container mt-0">
+          {tagCards}
+        </div>
     </div>
-
   )
 }

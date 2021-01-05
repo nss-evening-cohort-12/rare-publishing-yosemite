@@ -34,7 +34,7 @@ export const TagForm = (props) => {
         ? <h1>Edit Tag</h1>
         : <h1>Add A Tag</h1>
       }
-      <form className="col-6 offset-3">
+      <form className="col-4 offset-4">
           <div className="form-group">
             <label htmlFor ="label">Tag Label</label>
             <input

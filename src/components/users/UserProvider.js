@@ -3,26 +3,26 @@ import React, { useState } from 'react'
 export const UserContext = React.createContext()
 
 export const UserProvider = (props) => {
-  const [rareUsers, setRareUsers] = useState([])
+  const [users, setUsers] = useState([])
 
   const getUsers = () => {
-    return fetch('http://localhost:8000/rare_users',{
+    return fetch('http://localhost:8000/users',{
       headers:{
         "Authorization": `Token ${localStorage.getItem("r_token")}`
       }
     })
       .then(response => response.json())
-      .then(setRareUsers)
+      .then(setUsers)
   }
 
   const getSingleUser = (id) => {
-    return fetch(`http://localhost:8000/rare_users/${id}`)
+    return fetch(`http://localhost:8000/users/${id}`)
       .then(response => response.json())
   }
 
   return (
     <UserContext.Provider value={{
-      getUsers, rareUsers, getSingleUser
+      getUsers, users, getSingleUser
     }}>
       {props.children}
     </UserContext.Provider>

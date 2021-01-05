@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import './usercard.css'
+import { Table } from 'react-bootstrap'
 
 export const UserCards = props => {
   const { user } = props;
 
   const singleUser = `/singleUser/${user.id}`
-
+  const staff = user.user.is_staff ? 'Admin' : 'Author'
   return (
-    <div className="card">
-      <img className="card-img-top header-img" src={user.avatar} alt="Album Cover" />
-      <div className="card-body">
-        <h3 className="card-title text-left">{user.first_name}</h3>
-        <h4 className="card-title post-date text-left">{user.display_name}</h4>
-        <p className="card-content post-content">{user.user.email}</p>
-        <p className="card-content post-content">{user.user_type}</p>
-        <p className="card-content post-content">{user.creation_date}</p>
-        <Link to={singleUser} className="btn btn-secondary">View User</Link>
+    <div className="user-card row">
+      <div className="col col-box">
+        <h5 className="user-card-title col "> {user.user.first_name} {user.user.last_name}</h5>
+            {/* <Link to={singleUser} className="btn btn-secondary">View User</Link> */}
       </div>
+      <div className="col col-box"><h5 className="user-card-title col">{user.user.username}</h5></div>
+      <div className="col"><p className="user-card-content col ">{staff}</p></div>
     </div>
+    
   );
 };

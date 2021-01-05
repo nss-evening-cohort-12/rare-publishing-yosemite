@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import { TagContext } from './TagProvider'
+import './Tags.css'
 
 export const Tags = (props) => {
   const { tags, getTags, deleteTag } = useContext(TagContext)
@@ -10,22 +12,21 @@ export const Tags = (props) => {
 
   return (
     <div className="container">
-      <h1 className="text-center">Tags</h1>
+      <h1 className="text-Center">Tags</h1>
       <div className="add">
-        <button className="btn btn-warning offset-5" onClick={e => {props.history.push({pathname: "/tags/new"})}}>Create New Tag</button>
+        <Link className="offset-5 create" to={"/tags/new"}>Create New Tag<i className="fas fa-plus fa-lg ml-2"></i></Link>
       </div>
-      <div className="taglist-container container text-center col-6">
+      <div className="taglist-container container text-left col-6">
         <ul className="list-group">
           {
             tags && tags.results
             ? tags.results.map((tag) => 
             <li key={tag.id} className="list-group-item">
-              {tag.label}
-              <button className="btn btn-sm btn-secondary text-right text-nowrap" onClick={e => props.history.push({pathname:`/tags/${tag.id}/edit`})}><i className="far fa-edit"></i></button>
-              <button className="btn btn-sm btn-danger text-right text-nowrap" onClick={e => {
+              <Link className="text-nowrap mr-2" to={`/tags/${tag.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
+              <i className="fas fa-trash-alt mr-2 fa-lg" onClick={e => {
                 e.preventDefault()
-                deleteTag(tag.id)}}><i className="fas fa-trash-alt"></i>
-              </button>
+                deleteTag(tag.id)}}></i>
+            {tag.label}
             </li>
             )
             : ''
