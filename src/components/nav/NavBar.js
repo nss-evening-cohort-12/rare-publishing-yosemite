@@ -21,6 +21,9 @@ export const NavBar = props => {
             <li className="navbar__item">
                 <Link className="navbar__link" to="/tags">Tag Manager</Link>
             </li>
+            <li className="navbar__item">
+                <Link className="navbar__link" to="/user">All Users</Link>
+            </li>
             {
                 (localStorage.getItem("r_token") !== null) ?
                     <li className="nav-item navbar__item">

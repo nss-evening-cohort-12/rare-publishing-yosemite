@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import usersData from '../utils/usersData'
+import { UserContext } from './UserProvider'
 
 export const SingleUser = props => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState([])
+  const { getSingleUser } = useContext(UserContext)
 
-  const getSingleUser = () => {
+  
+
+  useEffect(() => {
     const { userId } = props.match.params
-    usersData.getUserById(userId)
-      .then((res) => setUser(res.data))
-      .catch((err) => console.error(err))
-  }
-
-  useEffect(getSingleUser, [])
+    getSingleUser(userId).then(user => {
+      setUser(user)
+    })
+  }, [props.match.params.userId])
 
   return (
     <div className="card">
