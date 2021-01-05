@@ -47,6 +47,7 @@ export const ApplicationViews = () => {
                             <Route exact path="/myposts/:userId(\d+)" render={props => <UserPosts {...props} />} />
                             <Route exact path="/" render={props => <Home {...props} />}/>
                             <Route exat path="/users" render={props => <UserProfiles {...props} />} />
+                            <Route exat path="/users/:userId(\d+)" render={props => <SingleUser {...props} />} />
                         </PostProvider>
                     </CategoryProvider>
                 </TagProvider>
