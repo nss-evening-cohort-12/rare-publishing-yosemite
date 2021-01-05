@@ -69,6 +69,12 @@ export const PostProvider = props => {
             .then(setPosts)
     }
 
+    const getPostsByTag = (tagId) => {
+      return fetch(`http://localhost:8000/posts?tags=${tagId}`)
+          .then(res => res.json())
+          .then(setPosts)
+  }
+
     const getPostsByUserId = (id) => {
         return fetch(`http://localhost:8000/posts?user=${id}`, {
             headers: {
@@ -91,7 +97,8 @@ export const PostProvider = props => {
             categories,
             getCategories,
             getPostsByCat,
-            getPostsByUserId
+            getPostsByUserId,
+            getPostsByTag
         }}>
             {props.children}
         </PostContext.Provider>

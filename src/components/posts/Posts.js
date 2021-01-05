@@ -9,10 +9,10 @@ import { UserContext } from "../users/UserProvider";
 
 
 export const Posts = props => {
-  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users } = useContext(UserContext)
-  // cosnt { getTags}
+  const { tags, getTags } = useContext(TagContext)
 
 
   useEffect(() => {
@@ -27,6 +27,15 @@ export const Posts = props => {
     getUsers()
   }, [])
 
+  useEffect(() => {
+    getTags()
+  }, [])
+
+  const searchByTag = (e) =>{
+    e.preventDefault();
+    const tagId = e.target.value
+    getPostsByTag(tagId)
+  }
   const sortByCategory = (e) => {
     e.preventDefault();
     const catId = e.target.value
@@ -43,13 +52,34 @@ export const Posts = props => {
     <div className="container p-0">
       <div className="sort-buttons ml-1 ">
         <div className="d-inline-flex">
-          <h5 className=" mr-3 mb-2">Search by Tag: </h5>
-          {/* <input 
-          key="random1"
-          value={keyword}
-          placeholder={"search country"}
-          onChange={(e) => setKeyword(e.target.value)}
-          /> */}
+        <h5 className=" mr-3 mb-2">Search by Tag: </h5>
+          <form>
+          <input 
+          type="search"
+          id="tag_id"
+          name="tag"
+          onChange={searchByTag}
+          />
+          
+          
+          </form>
+          {/* <select
+          id="tag_id"
+          name="tag"
+          className="mb-2" 
+          onChange={searchByTag}
+          >
+            <option value={''}>All</option>
+            {
+              tags && tags.results
+              ? tags.results.map((tag) => { return <option value={tag.id} key={tag.id}>{tag.label}</option> }) 
+              : ''
+            }
+          </select> */}
+        </div>
+        <div className="d-inline-flex">
+         
+          
           <h5 className=" mr-3 mb-2">Sort By Category: </h5>
           <select
           id="category_id"
