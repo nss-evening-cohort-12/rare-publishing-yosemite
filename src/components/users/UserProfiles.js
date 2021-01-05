@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { UserContext } from './UserProvider.js'
 import { useContext } from "react"
+import { Table, Form} from 'react-bootstrap'
 import './usercard.css'
 
 
@@ -13,31 +14,43 @@ export const UserProfiles = props => {
     getUsers()
   }, [])
 
+  const isActive = <input></input>
+
   return (
     <article className="users">
-    <div className="user-header"><h1 >User Information</h1></div>
-      <div className="user-container">
-        <div className="row table-headers">
-          <div className="user-card-body col"><h3 className="user-card-title col ">Full Name</h3></div>
-                {/* <Link to={singleUser} className="btn btn-secondary">View User</Link> */}      
-          <div className="col"><h4 className="user-card-title col">UserName</h4></div>
-          <div className="col"><h4 className="user-card-content col ">Staff</h4></div>
-        </div>
-        {
-          users && users.results
-          ? users.results.map((user) =>
-            <div className="user-card row">
-              <div className="col col-box">
-                <h5 className="user-card-title col "> {user.user.first_name} {user.user.last_name}</h5>
-                    {/* <Link to={singleUser} className="btn btn-secondary">View User</Link> */}
-              </div>
-              <div className="col col-box"><h5 className="user-card-title col">{user.user.username}</h5></div>
-              <div className="col"><p className="user-card-content col ">{user.user.is_staff ? 'Admin' : 'Author'}</p></div>
-            </div>
-          )
-          : ''
-        }      
-    </div>
+      <h1>Users</h1>
+      <Table bordered striped hover className="col-6 offset-3">
+        <tbody>
+          {
+            users && users.results
+            ? users.results.map((user) =>
+              <tr key={user.user.id}>
+                <td>{user.user.username}</td>
+                <td>
+                  {
+                    <Form>
+                      <Form.Group>
+                        <Form.Check type="checkbox"  label="Is Active" checked={user.user.is_active} value={user.user.is_active} onChange={!user.user.is_active}/>
+                      </Form.Group>
+                    </Form>
+                  }
+                </td>
+                <td>
+                  { 
+                    <Form>
+                      <Form.Group>
+                        <Form.Check inline type="radio" label="Author" />
+                        <Form.Check inline type="radio" label="Admin" />
+                      </Form.Group>
+                    </Form>
+                  }
+                </td>
+              </tr>
+            )
+            : ''
+          }
+        </tbody>
+      </Table>
     </article>
     
   )
