@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { UserContext } from './UserProvider.js'
 import { useContext } from "react"
+import { Link } from "react-router-dom"
 import './usercard.css'
 
 
@@ -31,7 +32,7 @@ export const UserProfiles = props => {
                 <h5 className="user-card-title col "> {user.user.first_name} {user.user.last_name}</h5>
                     {/* <Link to={singleUser} className="btn btn-secondary">View User</Link> */}
               </div>
-              <div className="col col-box"><h5 className="user-card-title col">{user.user.username}</h5></div>
+              <div className="col col-box"><Link to={`/users/${user.id}`}><h5 className="user-card-title col">{user.user.username}</h5></Link></div>
               <div className="col"><p className="user-card-content col ">{user.user.is_staff ? 'Admin' : 'Author'}</p></div>
             </div>
           )
