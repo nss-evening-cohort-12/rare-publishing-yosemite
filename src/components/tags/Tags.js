@@ -23,9 +23,9 @@ export const Tags = (props) => {
             ? tags.results.map((tag) => 
             <li key={tag.id} className="list-group-item">
               <Link className="text-nowrap mr-2" to={`/tags/${tag.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
-              <i className="fas fa-trash-alt mr-2 fa-lg" onClick={e => {
+              <li className="fas fa-trash-alt mr-2 fa-lg" onClick={e => {
                 e.preventDefault()
-                deleteTag(tag.id)}}></i>
+                deleteTag(tag.id)}}></li>
             {tag.label}
             </li>
             )
