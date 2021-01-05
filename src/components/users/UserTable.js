@@ -8,7 +8,7 @@ export const UserTable = props => {
   
   return (
           <tr key={user.user.id}>
-            <td>{user.user.username}</td>
+            <td><Link to={`/users/${user.id}`}>{user.user.username}</Link></td>
             <td>
               {
                 <Form>
