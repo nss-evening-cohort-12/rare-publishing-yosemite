@@ -98,10 +98,6 @@ export const Posts = props => {
                   e.preventDefault();
                   deletePost(post.id)
                 }}></i>
-                {/* <DeletePostModal handleDeleteClose={handleDeleteClose} deleteShow={deleteShow} deleteEvent={(e) => {
-                  e.preventDefault();
-                  deletePost(post.id)
-                }}/> */}
               </th>
               <td>{post.id}</td>
               <td>{post.title}</td>
