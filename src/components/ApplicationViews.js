@@ -46,8 +46,8 @@ export const ApplicationViews = () => {
                             <Route exact path="/tags/:tagId(\d+)/edit" render={props => <TagForm {...props} />} />
                             <Route exact path="/myposts/:userId(\d+)" render={props => <UserPosts {...props} />} />
                             <Route exact path="/" render={props => <Home {...props} />}/>
-                            <Route exat path="/users" render={props => <UserProfiles {...props} />} />
-                            <Route exat path="/users/:userId(\d+)" render={props => <SingleUser {...props} />} />
+                            <Route exact path="/users" render={props => <UserProfiles {...props} />} />
+                            <Route exact path="/users/:userId(\d+)" render={props => <SingleUser {...props} />} />
                         </PostProvider>
                     </CategoryProvider>
                 </TagProvider>
