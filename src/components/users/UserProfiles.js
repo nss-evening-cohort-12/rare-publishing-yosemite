@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { UserContext } from './UserProvider.js'
-import { UserCards } from './UserCards'
 import { useContext } from "react"
 import './usercard.css'
 
