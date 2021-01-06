@@ -4,7 +4,7 @@ export const PostContext = React.createContext()
 
 export const PostProvider = props => {
     const [ posts, setPosts ] = useState([])
-    const [ post, setPost ] = useState({})
+    const [ post ] = useState({})
     const [ categories, setCategories ] = useState([])
 
     const getPosts = () => {
@@ -69,6 +69,13 @@ export const PostProvider = props => {
             .then(setPosts)
     }
 
+    const getPostsByTag = (tagId) => {
+      const tagName = tagId.toLowerCase()
+      return fetch(`http://localhost:8000/posts?tags__label=${tagName}`)
+          .then(res => res.json())
+          .then(setPosts)
+  }
+
     const getPostsByUserId = (id) => {
         return fetch(`http://localhost:8000/posts?user=${id}`, {
             headers: {
@@ -91,7 +98,8 @@ export const PostProvider = props => {
             categories,
             getCategories,
             getPostsByCat,
-            getPostsByUserId
+            getPostsByUserId,
+            getPostsByTag
         }}>
             {props.children}
         </PostContext.Provider>

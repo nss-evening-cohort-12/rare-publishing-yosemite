@@ -23,3 +23,7 @@ h1{
 .table-headers{
   text-align: center;
 }
+
+.avy {
+  max-width: 200px;
+}
