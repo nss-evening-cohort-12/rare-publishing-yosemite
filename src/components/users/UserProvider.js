@@ -22,10 +22,27 @@ export const UserProvider = (props) => {
       .then(setUser)
   }
 
+  const updateUser = (user) => {
+    return fetch(`http://localhost:8000/users/${user.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(getUsers)
+  }
+
   return (
-    <UserContext.Provider value={{
-      getUsers, users, getSingleUser, user
-    }}>
+    <UserContext.Provider value={
+      {
+      getUsers,
+      users,
+      getSingleUser,
+      user,
+      updateUser
+    }
+    }>
       {props.children}
     </UserContext.Provider>
   )
