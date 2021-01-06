@@ -24,6 +24,40 @@ export const Posts = props => {
   const { getUsers, users } = useContext(UserContext)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [likes, setLikes] = useState(0)
+  const [dislikes, setDislikes] = useState(0)
+  const [laughs, setLaughs] = useState(0)
+  const [sad, setSad] = useState(0)
+  const [angry, setAngry] = useState(0)
+  const [love, setLove] = useState(0)
+
+  const handleLikes = (e) => {
+    e.preventDefault()
+
+    const addLike = likes + 1
+    setLikes(addLike)
+  };
+
+  const handleDislikes = () => {
+    
+  }
+
+  const handleLaughs = () => {
+    
+  }
+
+  const handleAngry = () => {
+    
+  }
+
+  const handleSad = () => {
+    
+  }
+
+  const handleLove = () => {
+    
+  }
+  
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -130,7 +164,7 @@ export const Posts = props => {
               <td>{post.category.label}</td>
               <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
               <td>
-                <button className="btn button-react"><Emoji symbol="👍" label="like"/></button>
+                <button className="btn button-react" onClick={handleLikes}><Emoji symbol="👍" label="like"/><p>{likes}</p></button>
                 <button className="btn button-react"><Emoji symbol="👎" label="dislike"/></button>
                 <button className="btn button-react"><Emoji symbol="🤣" label="laugh"/></button>
                 <button className="btn button-react"><Emoji symbol="💓" label="love"/></button>
