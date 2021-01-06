@@ -83,9 +83,9 @@ export const Register = (props) => {
                     <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
                 </fieldset>
                 <fieldset>
-                    <div className="form-group">
-                    <label htmlFor="avatarUrl">Image: </label>
-                    <input type="file" id="avatarUrl" onChange={createGameImageString} />
+                    <div className="form-group mt-2">
+                    <label htmlFor="avatarUrl" className="mr-2 mb-1">Upload Avatar:</label>
+                    <input type="file" id="avatarUrl" onChange={createGameImageString} required/>
                     </div>
                 </fieldset>
                 <fieldset>
