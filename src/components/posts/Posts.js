@@ -5,6 +5,13 @@ import { Table } from 'react-bootstrap'
 import { CategoryContext } from "../categories/CategoryProvider";
 import './Posts.css'
 import { UserContext } from "../users/UserProvider";
+import Emoji from 'a11y-react-emoji'
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 
 export const Posts = props => {
@@ -85,6 +92,7 @@ export const Posts = props => {
             <th scope="col" className="text-center">Date</th>
             <th scope="col" className="text-center">Category</th>
             <th scope="col" className="text-center">Tags</th>
+            <th scope="col" className="text-center">React</th>
           </tr>
         </thead>
         <tbody>{
@@ -104,6 +112,23 @@ export const Posts = props => {
               <td>{post.publication_date}</td>
               <td>{post.category.label}</td>
               <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
+              <td>
+                <Emoji symbol="👍" label="like"/>
+
+                <div>
+                  <p>Hello world!</p>
+                  <Menu>
+                    <MenuTrigger text='Select action' />
+                    <MenuOptions>
+                      <MenuOption onSelect={() => alert(`Save`)} text='Save' />
+                      <MenuOption onSelect={() => alert(`Delete`)} >
+
+                      </MenuOption>
+                      <MenuOption onSelect={() => alert(`Not called`)} disabled={true} text='Disabled' />
+                    </MenuOptions>
+                  </Menu>
+                </div>
+              </td>
             </tr>
             ) 
             :''
