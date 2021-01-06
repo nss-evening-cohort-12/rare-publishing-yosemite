@@ -16,3 +16,12 @@
   cursor: pointer;
   color: black !important;
 }
+
+.button-react {
+  border: none;
+  width: 10px;
+}
+
+.button-react:hover {
+  border: none;
+}

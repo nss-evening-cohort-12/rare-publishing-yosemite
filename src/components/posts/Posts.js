@@ -6,18 +6,35 @@ import { CategoryContext } from "../categories/CategoryProvider";
 import './Posts.css'
 import { UserContext } from "../users/UserProvider";
 import Emoji from 'a11y-react-emoji'
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
+import { Popover } from '@material-ui/core/Popover/Popover'
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
+
+const useStyles = makeStyles((theme) => ({
+  typography: {
+    padding: theme.spacing(2),
+  },
+}));
 
 export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users } = useContext(UserContext)
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
 
   useEffect(() => {
@@ -113,21 +130,12 @@ export const Posts = props => {
               <td>{post.category.label}</td>
               <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
               <td>
-                <Emoji symbol="👍" label="like"/>
-
-                <div>
-                  <p>Hello world!</p>
-                  <Menu>
-                    <MenuTrigger text='Select action' />
-                    <MenuOptions>
-                      <MenuOption onSelect={() => alert(`Save`)} text='Save' />
-                      <MenuOption onSelect={() => alert(`Delete`)} >
-
-                      </MenuOption>
-                      <MenuOption onSelect={() => alert(`Not called`)} disabled={true} text='Disabled' />
-                    </MenuOptions>
-                  </Menu>
-                </div>
+                <button className="btn button-react"><Emoji symbol="👍" label="like"/></button>
+                <button className="btn button-react"><Emoji symbol="👎" label="dislike"/></button>
+                <button className="btn button-react"><Emoji symbol="🤣" label="laugh"/></button>
+                <button className="btn button-react"><Emoji symbol="💓" label="love"/></button>
+                <button className="btn button-react"><Emoji symbol="😢" label="sad"/></button>
+                <button className="btn button-react"><Emoji symbol="😠" label="angry"/></button>
               </td>
             </tr>
             ) 
