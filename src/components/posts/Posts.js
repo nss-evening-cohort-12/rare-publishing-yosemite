@@ -8,6 +8,7 @@ import './Posts.css'
 import { UserContext } from "../users/UserProvider";
 
 
+
 export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
@@ -48,35 +49,25 @@ export const Posts = props => {
     getPostsByUserId(uid)
   };
 
+  const searchIcon = <i class="fas fa-search"></i>
   return (
     <div className="container p-0">
-      <div className="sort-buttons ml-1 ">
-        <div className="d-inline-flex">
-        <h5 className=" mr-3 mb-2">Search by Tag: </h5>
+      <div className="ml-1">
+      <div className="d-inline-flex mr-3 mb-2">
+      <h5><i className="fas fa-search mb-2"></i></h5>
           <form>
           <input 
-          type="search"
+          type="text"
           id="tag_id"
           name="tag"
+          className=" search mb-2"
+          placeholder= " search"
           onChange={searchByTag}
           />
-          
-          
           </form>
-          {/* <select
-          id="tag_id"
-          name="tag"
-          className="mb-2" 
-          onChange={searchByTag}
-          >
-            <option value={''}>All</option>
-            {
-              tags && tags.results
-              ? tags.results.map((tag) => { return <option value={tag.id} key={tag.id}>{tag.label}</option> }) 
-              : ''
-            }
-          </select> */}
+      </div>
         </div>
+      <div className="sort-buttons ml-1 ">
         <div className="d-inline-flex">
          
           
