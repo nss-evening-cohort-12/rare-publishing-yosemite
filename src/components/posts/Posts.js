@@ -3,14 +3,17 @@ import { Link } from "react-router-dom"
 import { PostContext } from "./PostProvider";
 import { Table } from 'react-bootstrap'
 import { CategoryContext } from "../categories/CategoryProvider";
+import { TagContext } from "../tags/TagProvider";
 import './Posts.css'
 import { UserContext } from "../users/UserProvider";
 
 
+
 export const Posts = props => {
-  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users } = useContext(UserContext)
+  const { tags, getTags } = useContext(TagContext)
 
 
   useEffect(() => {
@@ -25,6 +28,15 @@ export const Posts = props => {
     getUsers()
   }, [])
 
+  useEffect(() => {
+    getTags()
+  }, [])
+
+  const searchByTag = (e) =>{
+    e.preventDefault();
+    const tagId = e.target.value
+    getPostsByTag(tagId)
+  }
   const sortByCategory = (e) => {
     e.preventDefault();
     const catId = e.target.value
@@ -37,10 +49,28 @@ export const Posts = props => {
     getPostsByUserId(uid)
   };
 
+  const searchIcon = <i class="fas fa-search"></i>
   return (
     <div className="container p-0">
+      <div className="ml-1">
+      <div className="d-inline-flex mr-3 mb-2">
+      <h5><i className="fas fa-search mb-2"></i></h5>
+          <form>
+          <input 
+          type="text"
+          id="tag_id"
+          name="tag"
+          className=" search mb-2"
+          placeholder= " search"
+          onChange={searchByTag}
+          />
+          </form>
+      </div>
+        </div>
       <div className="sort-buttons ml-1 ">
         <div className="d-inline-flex">
+         
+          
           <h5 className=" mr-3 mb-2">Sort By Category: </h5>
           <select
           id="category_id"
@@ -98,10 +128,6 @@ export const Posts = props => {
                   e.preventDefault();
                   deletePost(post.id)
                 }}></i>
-                {/* <DeletePostModal handleDeleteClose={handleDeleteClose} deleteShow={deleteShow} deleteEvent={(e) => {
-                  e.preventDefault();
-                  deletePost(post.id)
-                }}/> */}
               </th>
               <td>{post.id}</td>
               <td>{post.title}</td>
