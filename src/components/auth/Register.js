@@ -1,5 +1,5 @@
-import React from "react"
-import { createRef } from "react"
+import React, {useState} from "react"
+import { createRef, useRef } from "react"
 import { Link } from "react-router-dom"
 import "./Auth.css"
 export const Register = (props) => {
@@ -10,6 +10,19 @@ export const Register = (props) => {
     const password = createRef()
     const verifyPassword = createRef()
     const passwordDialog = createRef()
+    const avatarUrl = React.createRef()
+
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+      }
+    
+      const createGameImageString = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            avatarUrl.current = base64ImageString
+        });
+      }
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -22,8 +35,9 @@ export const Register = (props) => {
                 "bio": bio.current.value,
                 "email": email.current.value,
                 "password": password.current.value,
-                "profile_image": ""
+                "avatar_url": avatarUrl.current
             }
+            console.log(avatarUrl)
 
             return fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
@@ -67,6 +81,12 @@ export const Register = (props) => {
                 <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>
                     <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
+                </fieldset>
+                <fieldset>
+                    <div className="form-group">
+                    <label htmlFor="avatarUrl">Image: </label>
+                    <input type="file" id="avatarUrl" onChange={createGameImageString} />
+                    </div>
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputPassword"> Password </label>
