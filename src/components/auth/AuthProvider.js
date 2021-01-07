@@ -15,9 +15,22 @@ export const ProfileProvider = (props) => {
             .then(setProfile)
     }
 
+    const createImage = (review) => {
+        return fetch("http://localhost:8000/image", {
+          method: "POST",
+          headers: {
+            "Authorization": `Token ${localStorage.getItem("r_token")}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(review)
+        })
+        .then(res => res.json())
+      .then(setProfile)
+    }
+
     return (
         <ProfileContext.Provider value={{
-            profile, getProfile
+            profile, getProfile, createImage
         }}>
             {props.children}
         </ProfileContext.Provider>

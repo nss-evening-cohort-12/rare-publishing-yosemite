@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from './UserProvider'
 
+import './usercard.css'
+
 export const SingleUser = props => {
   const { getSingleUser, user } = useContext(UserContext)
 
@@ -17,7 +19,7 @@ export const SingleUser = props => {
     <div className="container">
      { user.user ?
      <div className="card">
-        <img className="card-img-top header-img" src={user.profile_image} alt="Profile Pic" />
+        <img className="card-img-top header-img avy" src={user.profile_image} alt="Profile Pic" />
         <div className="card-body">
           <h3 className="card-title text-left">{user.user.first_name} {user.user.last_name}</h3>
           <h4 className="card-title post-date text-left">{user.user.username}</h4>
