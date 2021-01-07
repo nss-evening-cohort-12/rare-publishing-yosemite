@@ -29,11 +29,10 @@ export const UserProfiles = props => {
   return (
     <article className="users">
       <h1>Users</h1>
-      <Table bordered striped hover className="col-6 offset-3">
-        <tbody>
-          {UserEntries}
-        </tbody>
-      </Table>
+        <Table bordered striped hover className="col-6 offset-3">
+            {UserEntries}
+        </Table>
+  
     </article>
     
   )
