@@ -6,6 +6,7 @@ import { CategoryProvider } from './categories/CategoryProvider'
 import { TagProvider } from './tags/TagProvider'
 import { Tags } from "./tags/Tags"
 import { TagForm } from './tags/TagForm'
+
 import { CommentProvider } from "./comments/CommentProvider"
 import { PostComments } from "./comments/PostComments"
 
@@ -19,13 +20,14 @@ import { UserProfiles } from './users/UserProfiles'
 import { UserProvider } from './users/UserProvider'
 import { SingleUser } from './users/SingleUser'
 
+import { NavBar } from './nav/NavBar'
+
 
 import { Home } from './home/Home'
 
 export const ApplicationViews = () => {
     return <>
         <main style={{
-            margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
             {/* <CategoryProvider>
@@ -35,6 +37,7 @@ export const ApplicationViews = () => {
                 <TagProvider>
                     <CategoryProvider>
                         <PostProvider>
+                            <Route render={props => <NavBar {...props} />}/>
                             <Route exact path="/allposts" render={props => <Posts {...props} />}/>
                             <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
                             <Route exact path="/posts/:postId" render={props => <SinglePost {...props} />}/>
