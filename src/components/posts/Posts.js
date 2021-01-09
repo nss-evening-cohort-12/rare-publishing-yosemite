@@ -128,14 +128,14 @@ export const Posts = props => {
               user && user.user
               ?  user.user.is_staff || post.user.id === user.id
                   ? <th scope="row" className="actions-row">
-                      <Link className=" ml-3 mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
-                      <Link className="mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
+                      <Link className="ml-3 mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
+                      <Link className="mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
                       <i className="fas fa-trash-alt mr-3 fa-lg" onClick={(e) => {
                         e.preventDefault();
                         deletePost(post.id)
                       }}></i>
                     </th> 
-                  : <th></th>
+                  : <th><Link className="ml-3 mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link></th>
               : ''
             }
               <td>{post.id}</td>
