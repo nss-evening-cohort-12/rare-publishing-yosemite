@@ -5,6 +5,7 @@ import { CommentCards } from '../comments/CommentCards'
 import { Link } from 'react-router-dom'
 import { PostContext } from './PostProvider'
 import { TagContext } from '../tags/TagProvider'
+import { UserContext } from '../users/UserProvider'
 // import tagData from '../utils/tagData'
 // import { TagCards } from '../tags/TagCards'
 
@@ -12,22 +13,25 @@ import "./SinglePost.css"
 
 
 export const SinglePost = (props) => {
-  const { getPostById } = useContext(PostContext)
+  const { getPostById, post } = useContext(PostContext)
   const { getTagsByPostId, tags } = useContext(TagContext)
-  const [post, setPost] = useState({})
+  const { getSingleUser, user } = useContext(UserContext)
 
+  const user_id = localStorage.getItem("user_id")
 
   useEffect(() => {
     const { postId } = props.match.params
-    getPostById(postId).then(post => {
-      setPost(post)
-    })
+    getPostById(postId)
   }, [props.match.params.postId])
 
   useEffect(() => {
     const { postId } = props.match.params
     getTagsByPostId(postId)
   }, [])
+
+  useEffect(() => {
+    getSingleUser(user_id)
+  })
 
   const tagCards = tags && tags.results ? tags.results.map((tag) => {
     return <div>
@@ -40,13 +44,14 @@ export const SinglePost = (props) => {
   const commentLink = `/comments/${post.id}`
 
   const showOptions = () => {
-    const user_id = localStorage.getItem("user_id")
-    if (user_id == post.user.id) {
-      return <div className="single-options"><i className="fas fa-trash-alt mr-3"></i><Link to ={updatePost}><i className="fas fa-cog mr-3"></i></Link></div>
+    if (user && user.user) {
+      if (user.id === post.user.id || user.user.is_staff) {
+        return <div className="single-options"><i className="fas fa-trash-alt mr-3"></i><Link to ={updatePost}><i className="fas fa-cog mr-3"></i></Link></div>
+      }
     } else {
       return <p></p>
     }
-  }
+}
 
   return (
     <div className="single-main-container">
@@ -63,7 +68,7 @@ export const SinglePost = (props) => {
               </div>
             </div>
             <div className="single-img-container">
-              <img className="single-img" src={post.header_img_url}></img>
+              <img className="single-img" src={post.header_img_url} alt=''></img>
             </div>
             <div className="sub-heading">
               <div className="single-author">
