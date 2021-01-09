@@ -4,7 +4,7 @@ export const PostContext = React.createContext()
 
 export const PostProvider = props => {
     const [ posts, setPosts ] = useState([])
-    const [ post ] = useState({})
+    const [ post, setPost ] = useState({})
     const [ categories, setCategories ] = useState([])
 
     const getPosts = () => {
@@ -51,6 +51,7 @@ export const PostProvider = props => {
     const getPostById = (id) => {
         return fetch(`http://localhost:8000/posts/${id}`)
             .then(res => res.json())
+            .then(setPost)
     }
 
     const getCategories = () => {

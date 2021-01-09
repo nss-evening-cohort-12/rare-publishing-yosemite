@@ -25,7 +25,7 @@ export const Rare = () => (
         <Route render={() => {
             if (localStorage.getItem("r_token")) {
                 return <>
-                    <Route render={NavBar} />
+                    {/* <Route render={NavBar} /> */}
                     <Route render={props => <ApplicationViews { ...props } />} />
                 </>
             } else {
