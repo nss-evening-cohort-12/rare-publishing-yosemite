@@ -37,6 +37,7 @@ export const ApplicationViews = () => {
                 <TagProvider>
                     <CategoryProvider>
                         <PostProvider>
+                            <CommentProvider>   
                             <Route render={props => <NavBar {...props} />}/>
                             <Route exact path="/allposts" render={props => <Posts {...props} />}/>
                             <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
@@ -51,13 +52,12 @@ export const ApplicationViews = () => {
                             <Route exact path="/" render={props => <Home {...props} />}/>
                             <Route exact path="/users" render={props => <UserProfiles {...props} />} />
                             <Route exact path="/users/:userId(\d+)" render={props => <SingleUser {...props} />} />
+                            <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
+                            </CommentProvider>
                         </PostProvider>
                     </CategoryProvider>
                 </TagProvider>
             </UserProvider>
-            <CommentProvider>
-                <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
-            </CommentProvider>
         </main>
     </>
 }

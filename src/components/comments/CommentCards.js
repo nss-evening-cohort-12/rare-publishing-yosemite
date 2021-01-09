@@ -3,13 +3,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import { CommentContext } from "./CommentProvider"
 import { DeleteModal } from "./DeleteModal"
 import { EditModal } from "./EditModal"
+import { UserContext } from '../users/UserProvider'
 
 import "./PostComments.css"
 
 export const CommentCards = props => {
   const { comment, deleteComment, editComment } = props
+  const { getSingleUser, user } = useContext(UserContext)
   const [deleteShow, setDeleteShow ] = useState(false)
   const [editShow, setEditShow ] = useState(false)
+
+  const user_id = localStorage.getItem("user_id")
+
+  useEffect(() => {
+    getSingleUser(user_id)
+  })
 
   const handleSave = (content) => {
     setEditShow(false)
@@ -39,12 +47,13 @@ export const CommentCards = props => {
 
 
   const showOptions = () => {
-     const user_id = localStorage.getItem("user_id")
-     if (user_id == comment.author.id) {
-       return <div className="comment-options"><i className="fas fa-cog mr-1" onClick={handleEditShow}></i><i className="fas fa-trash-alt mr-3" onClick={handleDeleteShow}></i></div>
-     } else {
-       return ''
-     }
+    if(user && user.user) {
+      if (user.id === comment.author.id || user.user.is_staff) {
+        return <div className="comment-options"><i className="fas fa-cog mr-1" onClick={handleEditShow}></i><i className="fas fa-trash-alt mr-3" onClick={handleDeleteShow}></i></div>
+      }
+    } else {
+      return ''
+    }
   }
 
   return (  
