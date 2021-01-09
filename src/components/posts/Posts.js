@@ -6,60 +6,18 @@ import { CategoryContext } from "../categories/CategoryProvider";
 import { TagContext } from "../tags/TagProvider";
 import './Posts.css'
 import { UserContext } from "../users/UserProvider";
-import Emoji from 'a11y-react-emoji'
-import { Popover } from '@material-ui/core/Popover/Popover'
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+// import { ReactionSelector } from '../reactions/Reactions'
+import { ReactionContext } from '../reactions/ReactionProvider'
 
-
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
 
 export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users } = useContext(UserContext)
-  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [likes, setLikes] = useState(0)
-  const [dislikes, setDislikes] = useState(0)
-  const [laughs, setLaughs] = useState(0)
-  const [sad, setSad] = useState(0)
-  const [angry, setAngry] = useState(0)
-  const [love, setLove] = useState(0)
+  const {reactions, getReactions} = useContext(ReactionContext)
 
-  const handleLikes = (e) => {
-    e.preventDefault()
-
-    const addLike = likes + 1
-    setLikes(addLike)
-  };
-
-  const handleDislikes = () => {
-    
-  }
-
-  const handleLaughs = () => {
-    
-  }
-
-  const handleAngry = () => {
-    
-  }
-
-  const handleSad = () => {
-    
-  }
-
-  const handleLove = () => {
-    
-  }
   
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -89,6 +47,10 @@ export const Posts = props => {
     getTags()
   }, [])
 
+  useEffect(() => {
+    getReactions()
+  }, [])
+
   const searchByTag = (e) =>{
     e.preventDefault();
     const tagId = e.target.value
@@ -105,6 +67,8 @@ export const Posts = props => {
     const uid = e.target.value
     getPostsByUserId(uid)
   };
+
+  const reactionSelect = reactions && reactions.results ? reactions.results.map((reaction) => { return <option value={reaction.id} key={reaction.id}>{reaction.emoji}: {reaction.label}</option> }) :''
 
   const searchIcon = <i class="fas fa-search"></i>
   return (
@@ -193,12 +157,13 @@ export const Posts = props => {
               <td>{post.category.label}</td>
               <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
               <td>
-                <button className="btn button-react" onClick={handleLikes}><Emoji symbol="👍" label="like"/><p>{likes}</p></button>
-                <button className="btn button-react"><Emoji symbol="👎" label="dislike"/></button>
-                <button className="btn button-react"><Emoji symbol="🤣" label="laugh"/></button>
-                <button className="btn button-react"><Emoji symbol="💓" label="love"/></button>
-                <button className="btn button-react"><Emoji symbol="😢" label="sad"/></button>
-                <button className="btn button-react"><Emoji symbol="😠" label="angry"/></button>
+                <select
+                  id="reaction_id"
+                  name="reaction"
+                  className="reaction"
+                >
+                  {reactionSelect}
+                </select>
               </td>
             </tr>
             ) 
