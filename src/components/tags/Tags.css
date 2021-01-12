@@ -11,3 +11,7 @@
 .create {
   color: black !important;
 }
+
+ul {
+  list-style: none;
+}

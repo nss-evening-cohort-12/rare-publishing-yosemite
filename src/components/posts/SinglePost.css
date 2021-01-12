@@ -45,9 +45,9 @@
 }
 
 .single-img {
-  /* object-fit: cover; */
-  /* min-width: 100%;
-  max-height: 400px; */
+  object-fit: cover;
+  min-width: 100%;
+  max-height: 400px;
 }
 .single-img-container {
   text-align: center;

@@ -12,9 +12,14 @@ import { UserContext } from "../users/UserProvider";
 export const Posts = props => {
   const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
-  const { getUsers, users } = useContext(UserContext)
+  const { getUsers, users, getSingleUser, user } = useContext(UserContext)
   const { tags, getTags } = useContext(TagContext)
 
+  const userId = localStorage.getItem("user_id")
+
+  useEffect(() => {
+    getSingleUser(userId)
+  })
 
   useEffect(() => {
     getPosts()
@@ -69,8 +74,6 @@ export const Posts = props => {
         </div>
       <div className="sort-buttons ml-1 ">
         <div className="d-inline-flex">
-         
-          
           <h5 className=" mr-3 mb-2">Sort By Category: </h5>
           <select
           id="category_id"
@@ -109,7 +112,7 @@ export const Posts = props => {
       <Table bordered striped hover>
         <thead className="table-dark">
           <tr>
-            <th scope="col" className="text-center actions-column">Actions</th>
+            <th scope="col" className="text-center actions-column">Actions</th> 
             <th scope="col" className="text-center">#</th>
             <th scope="col" className="text-center">Title</th>
             <th scope="col" className="text-center">Date</th>
@@ -121,14 +124,20 @@ export const Posts = props => {
             posts && posts.results
             ? posts.results.map((post) => 
             <tr key={post.id}>
-              <th scope="row" className="actions-row">
-                <Link className=" ml-3 mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
-                <Link className="mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
-                <i className="fas fa-trash-alt mr-3 fa-lg" onClick={(e) => {
-                  e.preventDefault();
-                  deletePost(post.id)
-                }}></i>
-              </th>
+            {
+              user && user.user
+              ?  user.user.is_staff || post.user.id === user.id
+                  ? <th scope="row" className="actions-row">
+                      <Link className="ml-3 mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
+                      <Link className="mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
+                      <i className="fas fa-trash-alt mr-3 fa-lg" onClick={(e) => {
+                        e.preventDefault();
+                        deletePost(post.id)
+                      }}></i>
+                    </th> 
+                  : <th><Link className="ml-3 mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link></th>
+              : ''
+            }
               <td>{post.id}</td>
               <td>{post.title}</td>
               <td>{post.publication_date}</td>
