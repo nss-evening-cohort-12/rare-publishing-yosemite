@@ -74,6 +74,22 @@ export const PostForm = props => {
     </div>
   }) : ''
 
+  const getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(file);
+  }
+
+  const createHeaderImageString = (event) => {
+    event.preventDefault()
+    const newPostState = Object.assign({}, currentPost)
+    getBase64(event.target.files[0], (base64ImageString) => {
+      
+      newPostState['header_img_url'] = base64ImageString
+      setCurrentPost(newPostState)
+    })
+  }
+
 
   return (
     <div className="text-center">
@@ -136,16 +152,8 @@ export const PostForm = props => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor ="headerImg">Header Image</label>
-            <input
-            type="text"
-            className="form-control"
-            id="headerImg"
-            name="header_img_url"
-            defaultValue={currentPost.header_img_url}
-            placeholder="Select Image"
-            onChange={handleControlledInputChange}
-            />
+            <label htmlFor="header_image_url" className="mr-3">Upload Header Image: </label>
+            <input type="file" id="header_image_url" name="header_image_url" onChange={createHeaderImageString} />
           </div>
           <div className="form-group">
               {tagSelect}
@@ -172,7 +180,7 @@ export const PostForm = props => {
                 evt => {
                   evt.preventDefault()
                   createPost({
-                    user: userId,
+                    user: parseInt(userId),
                     title: currentPost.title,
                     content: currentPost.content,
                     category: parseInt(currentPost.category),
