@@ -152,7 +152,7 @@ export const PostForm = props => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="header_image_url">Image: </label>
+            <label htmlFor="header_image_url" className="mr-3">Upload Header Image: </label>
             <input type="file" id="header_image_url" name="header_image_url" onChange={createHeaderImageString} />
           </div>
           <div className="form-group">
