@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { PostContext } from './PostProvider'
 import { TagContext } from '../tags/TagProvider'
 import { UserContext } from '../users/UserProvider'
+import { SubscriptionContext } from '../subscriptions/SubscriptionProvider'
+import {Button} from 'react-bootstrap'
 // import tagData from '../utils/tagData'
 // import { TagCards } from '../tags/TagCards'
 
@@ -16,6 +18,48 @@ export const SinglePost = (props) => {
   const { getPostById, post } = useContext(PostContext)
   const { getTagsByPostId, tags } = useContext(TagContext)
   const { getSingleUser, user } = useContext(UserContext)
+  const {  getSub, subscriptions } = useContext(SubscriptionContext)
+
+  // const [ currentSubscription, setCurrentSubscription ] = useState({
+  //   follower_id: '',
+  //   author_id: ''
+  // })
+  const subUnsub = (e) => {
+    e.preventDefault()
+    const author_id = this.props.match.params.userId;
+    const follower_id = localStorage.getItem('user_id')
+    const { sub } = this.state
+    if (!sub) {
+      const new_sub = {
+        follower_id,
+        author_id,
+      }
+      fetch("http://127.0.0.1:8000/subscriptions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          new_sub
+        )
+      })
+        .then(res => res.json())
+        .then(res => {
+          this.getSub()
+        })
+    }
+    else {
+      return fetch(`http://localhost:8000/subscriptions/${sub.id}`, {
+      method: "DELETE",
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("rare_user_id")}`}
+    }).then(() => {
+      this.getSub()
+    })
+    }
+  }
+  
 
   const user_id = localStorage.getItem("user_id")
 
@@ -31,7 +75,7 @@ export const SinglePost = (props) => {
 
   useEffect(() => {
     getSingleUser(user_id)
-  })
+  }, []);
 
   const tagCards = tags && tags.results ? tags.results.map((tag) => {
     return <div>
@@ -56,6 +100,17 @@ export const SinglePost = (props) => {
   return (
     <div className="single-main-container">
         <div className="single-post-container">
+          <div>
+          {/* <button className="btn button btn-danger" type="submit" onClick={e => {
+                  e.preventDefault();
+                  const subscription = {
+                    follower_id: currentSubscription.follower_id,
+                    author_id: currentSubscription.author_id
+                  }
+                  createSubscription(subscription)
+                    .then(props.history.push({pathname: "/subscriptions"}))
+            }}>Create</button>          */}
+          </div>
             <div className="single-heading">
               { post && post.user ? showOptions() : ''}
               <div className="single-title">
@@ -84,7 +139,8 @@ export const SinglePost = (props) => {
         </div>
         <div className="single-tag-container mt-0">
           {tagCards}
-        </div>
+        </div>     
+        
     </div>
   )
 }

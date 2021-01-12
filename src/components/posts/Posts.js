@@ -19,7 +19,7 @@ export const Posts = props => {
 
   useEffect(() => {
     getSingleUser(userId)
-  })
+  }, []);
 
   useEffect(() => {
     getPosts()
