@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import postsData from '../utils/postsData'
 import commentData from '../utils/commentData'
 import { CommentCards } from '../comments/CommentCards'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { PostContext } from './PostProvider'
 import { TagContext } from '../tags/TagProvider'
 import { UserContext } from '../users/UserProvider'
-import { SubscriptionContext } from '../subscriptions/SubscriptionProvider'
 import {Button} from 'react-bootstrap'
+import decode from 'jwt-decode'
 // import tagData from '../utils/tagData'
 // import { TagCards } from '../tags/TagCards'
 
@@ -18,48 +18,65 @@ export const SinglePost = (props) => {
   const { getPostById, post } = useContext(PostContext)
   const { getTagsByPostId, tags } = useContext(TagContext)
   const { getSingleUser, user } = useContext(UserContext)
-  const {  getSub, subscriptions } = useContext(SubscriptionContext)
 
-  // const [ currentSubscription, setCurrentSubscription ] = useState({
-  //   follower_id: '',
-  //   author_id: ''
-  // })
-  const subUnsub = (e) => {
-    e.preventDefault()
-    const author_id = this.props.match.params.userId;
-    const follower_id = localStorage.getItem('user_id')
-    const { sub } = this.state
-    if (!sub) {
-      const new_sub = {
-        follower_id,
-        author_id,
-      }
-      fetch("http://127.0.0.1:8000/subscriptions", {
-        method: "POST",
-        headers: {
-            "Authorization": `Token ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          new_sub
-        )
-      })
-        .then(res => res.json())
-        .then(res => {
-          this.getSub()
-        })
-    }
-    else {
-      return fetch(`http://localhost:8000/subscriptions/${sub.id}`, {
-      method: "DELETE",
-        headers: {
-          "Authorization": `Token ${localStorage.getItem("rare_user_id")}`}
-    }).then(() => {
-      this.getSub()
-    })
-    }
-  }
   
+  // Start of Subcription
+  const {id} = props.match.params
+  const [follow_user, setUser] = useState({})
+
+  const [following, setFollowing] = useState(false)
+
+  const fetchUserData = () => {
+    fetch(`http://localhost:3000/subscriptions/${id}`)
+        .then(res => res.json())
+        .then(data => setUser(data))
+  }
+
+  useEffect(() => {
+      fetchUserData()
+  }, [])
+
+  const unFollow = () => {
+      fetch(`http://localhost:3000/subscriptions/${id}/unfollow`, {
+          method: "POST",
+          body:  JSON.stringify({
+              follower_id: user_id,
+              author_id: id
+          }),
+          headers: {
+              "Content-type": "application/json",
+              "Authorization": `Token ${localStorage.getItem('r_token')}`
+            },
+          
+          })
+          .then(res => res.json())
+          .then(data => console.log(data))
+          .then(() => setFollowing(false))
+              
+  }
+
+  const handleFollow = () => {
+    fetch(`http://localhost:3000/subscriptions/`, {
+        method: "POST",
+        body:  JSON.stringify({
+            follower_id: user_id,
+            followee_id: id
+        }),
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('r_token')}`
+          },
+        
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .then(() => setFollowing(true))
+            
+  }
+
+  const fButton = () => following ? unFollow() : handleFollow();
+
+  // end of subscription
 
   const user_id = localStorage.getItem("user_id")
 
@@ -100,17 +117,14 @@ export const SinglePost = (props) => {
   return (
     <div className="single-main-container">
         <div className="single-post-container">
+          {/* follow button */}
           <div>
-          {/* <button className="btn button btn-danger" type="submit" onClick={e => {
-                  e.preventDefault();
-                  const subscription = {
-                    follower_id: currentSubscription.follower_id,
-                    author_id: currentSubscription.author_id
-                  }
-                  createSubscription(subscription)
-                    .then(props.history.push({pathname: "/subscriptions"}))
-            }}>Create</button>          */}
+          <div>
+           {follow_user.username} 
+           <button onClick={fButton}>follow</button>
+        </div>
           </div>
+          {/* follow button end */}
             <div className="single-heading">
               { post && post.user ? showOptions() : ''}
               <div className="single-title">
