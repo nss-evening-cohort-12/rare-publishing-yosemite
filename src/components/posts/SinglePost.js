@@ -31,7 +31,7 @@ export const SinglePost = (props) => {
 
   useEffect(() => {
     getSingleUser(user_id)
-  })
+  }, [])
 
   const tagCards = tags && tags.results ? tags.results.map((tag) => {
     return <div>

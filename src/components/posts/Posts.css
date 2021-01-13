@@ -19,6 +19,14 @@
   color: black !important;
 }
 
+.button-react {
+  border: none;
+  width: 10px;
+}
+
+.button-react:hover {
+  border: none;
+}
 .search{
   width: 120px ;
   height: 23px ;

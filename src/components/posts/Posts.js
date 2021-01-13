@@ -6,12 +6,28 @@ import { CategoryContext } from "../categories/CategoryProvider";
 import { TagContext } from "../tags/TagProvider";
 import './Posts.css'
 import { UserContext } from "../users/UserProvider";
-
+// import { ReactionSelector } from '../reactions/Reactions'
+import { ReactionContext } from '../reactions/ReactionProvider'
 
 
 export const Posts = props => {
-  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag, updatePost, getPostById } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const {reactions, getReactions} = useContext(ReactionContext)
+  const [selectedReaction, setSelectedReaction] = useState({})
+
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
   const { getUsers, users, getSingleUser, user } = useContext(UserContext)
   const { tags, getTags } = useContext(TagContext)
 
@@ -19,7 +35,7 @@ export const Posts = props => {
 
   useEffect(() => {
     getSingleUser(userId)
-  })
+  }, [])
 
   useEffect(() => {
     getPosts()
@@ -35,6 +51,10 @@ export const Posts = props => {
 
   useEffect(() => {
     getTags()
+  }, [])
+
+  useEffect(() => {
+    getReactions()
   }, [])
 
   const searchByTag = (e) =>{
@@ -53,6 +73,14 @@ export const Posts = props => {
     const uid = e.target.value
     getPostsByUserId(uid)
   };
+
+  const handleReaction = (e) => {
+    e.preventDefault()
+    const reactionToDatabase = reactions.results.find(r => r.id === parseInt(e.target.value))
+    setSelectedReaction(reactionToDatabase)
+  }
+
+  const reactionSelect = reactions && reactions.results ? reactions.results.map((reaction) => { return <option value={reaction.id} key={reaction.id}>{reaction.emoji}: {reaction.label}</option> }) :''
 
   const searchIcon = <i class="fas fa-search"></i>
   return (
@@ -118,6 +146,7 @@ export const Posts = props => {
             <th scope="col" className="text-center">Date</th>
             <th scope="col" className="text-center">Category</th>
             <th scope="col" className="text-center">Tags</th>
+            <th scope="col" className="text-center">React</th>
           </tr>
         </thead>
         <tbody>{
@@ -143,6 +172,37 @@ export const Posts = props => {
               <td>{post.publication_date}</td>
               <td>{post.category.label}</td>
               <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
+              <td>
+               {post.reactions.map(reaction => <p>{reaction.emoji}</p>)}
+               <div className="form-group">
+                  <select
+                    id="reaction_id"
+                    name="reaction"
+                    className="form-control"
+                    onChange={handleReaction}
+                  >
+                    {reactionSelect}
+                  </select>
+                  <button className="btn btn-primary"
+                  onClick={evt => {
+                    evt.preventDefault()
+                    post.reactions.push(selectedReaction)
+                    updatePost ({
+                      id: post.id,
+                      user: parseInt(post.user.id),
+                      title: post.title,
+                      content: post.content,
+                      category: parseInt(post.category.id),
+                      publication_date: post.publication_date,
+                      header_img_url: post.header_img_url,
+                      tags: post.tags.map(tag => parseInt(tag)),
+                      reactions: post.reactions.map(reaction => parseInt(reaction.id))
+                    })
+                  }}>
+                    <p>Submit</p>
+                  </button>
+                </div>
+              </td>
             </tr>
             ) 
             :''
