@@ -155,7 +155,7 @@ export const Posts = props => {
             posts && posts.results
             ? posts.results.map((post) => 
             {
-              return post.approved || user.user.is_staff
+              return post.approved || (user && user.user.is_staff)
               ?  <tr key={post.id}>
               {
                 user && user.user
@@ -166,7 +166,18 @@ export const Posts = props => {
                               ? <div>
                                 <input type="checkbox" checked={post.approved} defaultValue={post.id} name="approved" onChange={e => {
                                   post.approved = !post.approved
-                                  updatePost(post)
+                                  updatePost({
+                                    id: post.id,
+                                    user: parseInt(post.user.id),
+                                    title: post.title,
+                                    content: post.content,
+                                    category: parseInt(post.category.id),
+                                    publication_date: post.publication_date,
+                                    header_img_url: post.header_img_url,
+                                    tags: post.tags.map(tag => parseInt(tag)),
+                                    approved: post.approved,
+                                    reactions: post.reactions.map(reaction => parseInt(reaction.id))
+                                  })
                                 }}/><label className="ml-2" htmlFor="approved">Approved</label>
                                 </div>
                               : ''
@@ -210,6 +221,7 @@ export const Posts = props => {
                         publication_date: post.publication_date,
                         header_img_url: post.header_img_url,
                         tags: post.tags.map(tag => parseInt(tag)),
+                        approved: post.approved,
                         reactions: post.reactions.map(reaction => parseInt(reaction.id))
                       })
                     }}>
