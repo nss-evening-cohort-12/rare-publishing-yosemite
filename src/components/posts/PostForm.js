@@ -32,18 +32,6 @@ export const PostForm = props => {
       getPostById(props.match.params.postId)
       .then(post => {
         setCurrentPost({
-<<<<<<< HEAD
-          user: userId,
-          title: post.title,
-          content: post.content,
-          category: post.category,
-          publication_date: post.publication_date,
-          header_img_url: post.header_img_url,
-          tags: post.tags
-        })
-      })
-    }
-=======
         user: userId,
         title: post.title,
         content: post.content,
@@ -56,7 +44,6 @@ export const PostForm = props => {
     })
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
->>>>>>> 3a4f131... added
   } , [props.match.params.postId])
 
 

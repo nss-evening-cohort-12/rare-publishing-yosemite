@@ -10,16 +10,18 @@ import { UserContext } from "../users/UserProvider";
 
 
 export const Posts = props => {
-  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag, getPostById, updatePost } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const { getUsers, users, getSingleUser, user } = useContext(UserContext)
   const { tags, getTags } = useContext(TagContext)
+  const [ isApproved, setIsApproved ] = useState(false)
+  const [post, setPost] = useState({})
 
   const userId = localStorage.getItem("user_id")
 
   useEffect(() => {
     getSingleUser(userId)
-  })
+  }, [])
 
   useEffect(() => {
     getPosts()
@@ -53,6 +55,11 @@ export const Posts = props => {
     const uid = e.target.value
     getPostsByUserId(uid)
   };
+
+  const approvePost = e => {
+
+
+  }
 
   const searchIcon = <i class="fas fa-search"></i>
   return (
@@ -128,6 +135,14 @@ export const Posts = props => {
               user && user.user
               ?  user.user.is_staff || post.user.id === user.id
                   ? <th scope="row" className="actions-row">
+                      {user.user.is_staff 
+                      ? <div>
+                        <input type="checkbox" checked={post.approved} defaultValue={post.id} name="approved" onChange={e => {
+                          post.approved = !post.approved
+                          updatePost(post)
+                        }}/><label className="ml-2" htmlFor="approved">Approved</label>
+                        </div>
+                      : ''}
                       <Link className="ml-3 mr-2" to={`posts/${post.id}`}><i className="fas fa-search-plus fa-lg"></i></Link>
                       <Link className="mr-2" to={`/posts/${post.id}/edit`}><i className="fas fa-cog fa-lg"></i></Link>
                       <i className="fas fa-trash-alt mr-3 fa-lg" onClick={(e) => {
