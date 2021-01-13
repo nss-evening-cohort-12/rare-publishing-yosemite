@@ -15,7 +15,7 @@ export const Posts = props => {
   const { categories, getCategories } = useContext(CategoryContext)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {reactions, getReactions} = useContext(ReactionContext)
-  const [editedPosts, setEditedPosts] = useState([])
+  const [selectedReaction, setSelectedReaction] = useState({})
 
   
   const handleClick = (event) => {
@@ -73,6 +73,12 @@ export const Posts = props => {
     const uid = e.target.value
     getPostsByUserId(uid)
   };
+
+  const handleReaction = (e) => {
+    e.preventDefault()
+    const reactionToDatabase = reactions.results.find(r => r.id === parseInt(e.target.value))
+    setSelectedReaction(reactionToDatabase)
+  }
 
   const reactionSelect = reactions && reactions.results ? reactions.results.map((reaction) => { return <option value={reaction.id} key={reaction.id}>{reaction.emoji}: {reaction.label}</option> }) :''
 
@@ -173,21 +179,23 @@ export const Posts = props => {
                     id="reaction_id"
                     name="reaction"
                     className="form-control"
+                    onChange={handleReaction}
                   >
                     {reactionSelect}
                   </select>
                   <button className="btn btn-primary"
                   onClick={evt => {
                     evt.preventDefault()
+                    post.reactions.push(selectedReaction)
                     updatePost ({
                       id: post.id,
-                      user: userId,
+                      user: parseInt(post.user.id),
                       title: post.title,
                       content: post.content,
                       category: parseInt(post.category.id),
                       publication_date: post.publication_date,
                       header_img_url: post.header_img_url,
-                      tags: post.tags.map(tag => parseInt(tag.id)),
+                      tags: post.tags.map(tag => parseInt(tag)),
                       reactions: post.reactions.map(reaction => parseInt(reaction.id))
                     })
                   }}>
