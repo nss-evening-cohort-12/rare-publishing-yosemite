@@ -24,7 +24,7 @@ export const UserProfiles = props => {
     }
   }
 
-  const UserEntries = users && users.results ?  users.results.map((user) => <UserTable key={user.id} user={user} />) : ''
+  const UserEntries = users && users.results ?  users.results.map((user) => <UserTable key={user.id} user={user} users={users}/>) : ''
 
   return (
     <article className="users">
