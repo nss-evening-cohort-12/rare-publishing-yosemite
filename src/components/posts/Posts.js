@@ -11,10 +11,11 @@ import { ReactionContext } from '../reactions/ReactionProvider'
 
 
 export const Posts = props => {
-  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag } = useContext(PostContext)
+  const { posts, getPosts, deletePost, getPostsByCat, getPostsByUserId, getPostsByTag, updatePost, getPostById } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {reactions, getReactions} = useContext(ReactionContext)
+  const [editedPosts, setEditedPosts] = useState([])
 
   
   const handleClick = (event) => {
@@ -34,7 +35,7 @@ export const Posts = props => {
 
   useEffect(() => {
     getSingleUser(userId)
-  })
+  }, [])
 
   useEffect(() => {
     getPosts()
@@ -166,13 +167,33 @@ export const Posts = props => {
               <td>{post.category.label}</td>
               <td><ul>{post.tags.map(tag => <li key={tag.id}>{tag.label}</li>)}</ul></td>
               <td>
-                <select
-                  id="reaction_id"
-                  name="reaction"
-                  className="reaction"
-                >
-                  {reactionSelect}
-                </select>
+               {post.reactions.map(reaction => <p>{reaction.emoji}</p>)}
+               <div className="form-group">
+                  <select
+                    id="reaction_id"
+                    name="reaction"
+                    className="form-control"
+                  >
+                    {reactionSelect}
+                  </select>
+                  <button className="btn btn-primary"
+                  onClick={evt => {
+                    evt.preventDefault()
+                    updatePost ({
+                      id: post.id,
+                      user: userId,
+                      title: post.title,
+                      content: post.content,
+                      category: parseInt(post.category.id),
+                      publication_date: post.publication_date,
+                      header_img_url: post.header_img_url,
+                      tags: post.tags.map(tag => parseInt(tag.id)),
+                      reactions: post.reactions.map(reaction => parseInt(reaction.id))
+                    })
+                  }}>
+                    <p>Submit</p>
+                  </button>
+                </div>
               </td>
             </tr>
             ) 
