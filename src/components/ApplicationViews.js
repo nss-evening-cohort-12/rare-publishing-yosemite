@@ -7,6 +7,8 @@ import { TagProvider } from './tags/TagProvider'
 import { Tags } from "./tags/Tags"
 import { TagForm } from './tags/TagForm'
 
+import { SubscriptionProvider } from './subscriptions/SubscriptionProvider'
+
 import { CommentProvider } from "./comments/CommentProvider"
 import { PostComments } from "./comments/PostComments"
 
@@ -37,7 +39,8 @@ export const ApplicationViews = () => {
                 <TagProvider>
                     <CategoryProvider>
                         <PostProvider>
-                            <CommentProvider>   
+                            <CommentProvider>  
+                            <SubscriptionProvider>
                             <Route render={props => <NavBar {...props} />}/>
                             <Route exact path="/allposts" render={props => <Posts {...props} />}/>
                             <Route exact path="/addPost" render={props => <PostForm {...props} />}/>
@@ -53,6 +56,7 @@ export const ApplicationViews = () => {
                             <Route exact path="/users" render={props => <UserProfiles {...props} />} />
                             <Route exact path="/users/:userId(\d+)" render={props => <SingleUser {...props} />} />
                             <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
+                            </SubscriptionProvider> 
                             </CommentProvider>
                         </PostProvider>
                     </CategoryProvider>
