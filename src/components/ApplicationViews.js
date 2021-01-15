@@ -21,6 +21,7 @@ import { UserProvider } from './users/UserProvider'
 import { SingleUser } from './users/SingleUser'
 
 import { ReactionProvider } from './reactions/ReactionProvider'
+import { NewReactions } from './reactions/NewReactions'
 import { NavBar } from './nav/NavBar'
 
 
@@ -55,6 +56,7 @@ export const ApplicationViews = () => {
                                     <Route exact path="/users" render={props => <UserProfiles {...props} />} />
                                     <Route exact path="/users/:userId(\d+)" render={props => <SingleUser {...props} />} />
                                     <Route exact path="/comments/:postId(\d+)" render={props => <PostComments {...props} />} />
+                                    <Route exact path="/addReaction" render={props => <NewReactions {...props} />}/>
                                 </ReactionProvider>  
                             </CommentProvider>
                         </PostProvider>

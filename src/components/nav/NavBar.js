@@ -31,6 +31,9 @@ export const NavBar = props => {
             <li className="navbar__item">
                 <Link className="navbar__link" to="/tags">Tag Manager</Link>
             </li>
+            <li className="navbar__item">
+                <Link className="navbar__link" to="/addReaction">New Ractions</Link>
+            </li>
             {
                 user && user.user
                 ?    user.user.is_staff ? <li className="navbar__item">
