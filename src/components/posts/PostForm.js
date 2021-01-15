@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import { TagContext } from '../tags/TagProvider';
 import { PostContext } from './PostProvider';
 
@@ -13,7 +12,8 @@ export const PostForm = props => {
     category: 1,
     publication_date: "",
     header_img_url: "",
-    tags: []
+    tags: [],
+    approved: false
   })
 
   useEffect(() => {
@@ -32,16 +32,18 @@ export const PostForm = props => {
       getPostById(props.match.params.postId)
       .then(post => {
         setCurrentPost({
-          user: userId,
-          title: post.title,
-          content: post.content,
-          category: post.category,
-          publication_date: post.publication_date,
-          header_img_url: post.header_img_url,
-          tags: post.tags
-        })
+        user: userId,
+        title: post.title,
+        content: post.content,
+        category: post.category,
+        publication_date: post.publication_date,
+        header_img_url: post.header_img_url,
+        tags: post.tags,
+        approved: post.approved
       })
-    }
+    })
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   } , [props.match.params.postId])
 
 
@@ -171,7 +173,8 @@ export const PostForm = props => {
                     category: parseInt(currentPost.category),
                     publication_date: currentPost.publication_date,
                     header_img_url: currentPost.header_img_url,
-                    tags: currentPost.tags.map(tag => parseInt(tag))
+                    tags: currentPost.tags.map(tag => parseInt(tag)),
+                    approved: currentPost.approved
                   })
                     .then(() => props.history.push("/allposts"))
                 }}
@@ -186,7 +189,8 @@ export const PostForm = props => {
                     category: parseInt(currentPost.category),
                     publication_date: currentPost.publication_date,
                     header_img_url: currentPost.header_img_url,
-                    tags: currentPost.tags.map(tag => parseInt(tag))
+                    tags: currentPost.tags.map(tag => parseInt(tag)),
+                    approved: currentPost.approved
                   })
                   .then(() => props.history.push("/allposts"))
                 }

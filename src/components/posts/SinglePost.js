@@ -16,10 +16,11 @@ import "./SinglePost.css"
 
 
 export const SinglePost = (props) => {
-  const { getPostById, post } = useContext(PostContext)
+  const { getPostById } = useContext(PostContext)
   const { getTagsByPostId, tags } = useContext(TagContext)
   const { getSingleUser, user } = useContext(UserContext)
   const { getSubs,subs} = useContext(SubscriptionContext)
+  const [ post, setPost ] = useState({})
 
   useEffect(() => {
     getSubs(author_id, follower_id)
@@ -28,6 +29,7 @@ export const SinglePost = (props) => {
   useEffect(() => {
     const { postId } = props.match.params
     getPostById(postId)
+    .then(post => setPost(post))
   }, [props.match.params.postId])
 
   useEffect(() => {
