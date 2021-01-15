@@ -88,6 +88,16 @@ export const PostProvider = props => {
         .then(setPosts)
     }
 
+    const getSubbedPosts = (userId) => {
+        return fetch(`http://localhost:8000/posts?subscribed=${userId}`,{
+            headers:{
+            "Authorization": `Token ${localStorage.getItem("r_token")}`
+            }
+        })
+            .then(response => response.json())
+            .then(setPosts)
+    }
+
     return (
         <PostContext.Provider value={{
             posts,
@@ -101,7 +111,8 @@ export const PostProvider = props => {
             getCategories,
             getPostsByCat,
             getPostsByUserId,
-            getPostsByTag
+            getPostsByTag,
+            getSubbedPosts
         }}>
             {props.children}
         </PostContext.Provider>
