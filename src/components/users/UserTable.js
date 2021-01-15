@@ -5,52 +5,45 @@ import { Form } from 'react-bootstrap'
 import { UserContext } from './UserProvider';
 
 export const UserTable = props => {	
-  const { user } = props;	
+  const { user, users } = props;	
   const { updateUser, getUsers } = useContext(UserContext);
   const [ isEditing, setIsEditing ] = useState(false)
   const [isActive, setIsActive] = useState(user.user.is_active)
   const [isStaff, setIsStaff] = useState(user.user.is_staff)
-  // const [currentUser, setCurrentUser] = useState({
-  //   active: user.active,
-  //   bio: user.bio,
-  //   created_on: user.created_on,
-  //   id: user.id,
-  //   profile_image: user.profile_image,
-  //   user: {
-  //     date_joined: user.user.date_joined,
-  //     email: user.user.email,
-  //     first_name: user.user.first_name,
-  //     groups: user.user.groups,
-  //     id: user.user.id,
-  //     is_active: user.user.is_active,
-  //     is_staff: user.user.is_staff,
-  //     is_superuser: user.user.is_superuser,
-  //     last_login: user.user.last_login,
-  //     last_name: user.user.last_name,
-  //     password: user.user.password,
-  //     user_permissions: user.user.user_permissions,
-  //     username: user.user.username
-    
-  //   }
-  // })
+  const invalidDialog = React.createRef()
+
 
 
   const editor = e => setIsEditing(!isEditing)
   
+  const userId = parseInt(localStorage.getItem('user_id'))
+
+  const adminCount = () => {
+    return users.results.filter(u => u.user.is_staff).length    
+  }
+
   const updateIsActive = e => setIsActive(!isActive)
   const updateIsStaff = e => setIsStaff(!isStaff)
 
   const editUser = e => {
-    user.user.is_active = isActive
-    user.user.is_staff = isStaff
-    console.log(user)
-    updateUser(user.user)
-    setIsEditing(!isEditing)
+    
+    if ( isStaff || (adminCount() > 0 && user.id !== userId)) {
+      user.user.is_active = isActive
+      user.user.is_staff = isStaff
+      updateUser(user.user)
+      setIsEditing(!isEditing)
+    } else {
+      invalidDialog.current.showModal()
+    }
   }
   
 
   return (
-            <tbody>            
+            <tbody>
+              <dialog className="dialog dialog--auth" ref={invalidDialog}>
+                <div>Must be at least one administrator</div>
+                <button className="button--close" onClick={e => invalidDialog.current.close()}>Close</button>
+            </dialog>            
               {
               isEditing 
               ?
@@ -82,8 +75,8 @@ export const UserTable = props => {
               <tr key={user.user.id}>
                 <td><button className="btn" onClick={editor}><i className="fas fa-cog fa-lg"></i></button></td>
                 <td><Link to={`/users/${user.id}`}>{user.user.username}</Link></td>
-                <td>{isActive ? 'Active' : 'Inactive'}</td>
-                <td>{isStaff ? 'Admin' : 'Author'}</td>
+                <td>{user.user.is_active ? 'Active' : 'Inactive'}</td>
+                <td>{user.user.is_staff ? 'Admin' : 'Author'}</td>
               </tr>
             }
           </tbody>

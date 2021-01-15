@@ -13,15 +13,17 @@ import "./SinglePost.css"
 
 
 export const SinglePost = (props) => {
-  const { getPostById, post } = useContext(PostContext)
+  const { getPostById } = useContext(PostContext)
   const { getTagsByPostId, tags } = useContext(TagContext)
   const { getSingleUser, user } = useContext(UserContext)
+  const [ post, setPost ] = useState({})
 
   const user_id = localStorage.getItem("user_id")
 
   useEffect(() => {
     const { postId } = props.match.params
     getPostById(postId)
+    .then(post => setPost(post))
   }, [props.match.params.postId])
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export const SinglePost = (props) => {
 
   useEffect(() => {
     getSingleUser(user_id)
-  })
+  }, [])
 
   const tagCards = tags && tags.results ? tags.results.map((tag) => {
     return <div>
