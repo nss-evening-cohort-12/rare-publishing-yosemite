@@ -19,12 +19,10 @@ export const SinglePost = (props) => {
   const { getPostById } = useContext(PostContext)
   const { getTagsByPostId, tags } = useContext(TagContext)
   const { getSingleUser, user } = useContext(UserContext)
-  const { getSubs,subs} = useContext(SubscriptionContext)
+  const { getSubs,subs, subscribe, unsubscribe } = useContext(SubscriptionContext)
   const [ post, setPost ] = useState({})
 
-  useEffect(() => {
-    getSubs(author_id, follower_id)
-  }, [])
+  
 
   useEffect(() => {
     const { postId } = props.match.params
@@ -41,40 +39,38 @@ export const SinglePost = (props) => {
     getSingleUser(user_id)
   }, []);
 
-  const author_id = post.user.id;
-  const follower_id = localStorage.getItem('user_id')
+  useEffect(() => {
+    getSubs(author_id, follower_id)
+  }, [])
+  
+  const author_id = post && post.user ? post.user.id : '';
+  
+  const follower_id = parseInt(localStorage.getItem('user_id'))
   // start of Subscription
-  const subUnsub = (e) => {
-    e.preventDefault()
-    
-    if (!subs) {
-      const new_sub = {
-        follower_id,
-        author_id,
-      }
-      fetch("http://127.0.0.1:8000/subscriptions", {
-        method: "POST",
-        headers: {
-            "Authorization": `Token ${localStorage.getItem("r_token")}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          new_sub
-        )
-      })
-        .then(res => res.json())
-        .then(getSubs)
+  const subUnsub = () => {
+    console.log(author_id)
+    const new_sub = {
+      follower_id,
+      author_id
     }
-    else {
-      return fetch(`http://localhost:8000/subscriptions/${subs.id}`, {
-      method: "DELETE",
-        headers: {
-          "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
-        }
-    })
-    .then(getSubs)
+    console.log(new_sub)
+    if (subs && subs.results) {
+      if (subs.results.some(sub => user_id === sub.follower_id) ){
+        subscribe(new_sub)
+      } else {
+        subs.results.map(sub => {
+           if (user_id === sub.follower_id){
+             unsubscribe(sub.id) 
+          }
+        })
+      }
     }
   }
+    // else {
+    //   const subId = subs && subs.results ? subs.results.id : '';
+    //   unsubscribe(subId)
+    // }
+  
   // end of subscription
 
   const user_id = localStorage.getItem("user_id")
@@ -100,22 +96,29 @@ export const SinglePost = (props) => {
       return <p></p>
     }
 }
+  const subButton = subs && subs.results 
+  ? subs.results.some(sub => user_id === sub.follower_id) 
+    ? <button className="btn" onClick={subUnsub}>Unsubscribe</button>
+    : <button className="btn" onClick={subUnsub}> Subscribe</button>
+  : '';
 
+  
   return (
     <div className="single-main-container">
         <div className="single-post-container">
           {/* follow button */}
           <div>
           <div className="subscribed mr-auto">{
-            <button 
-                className="btn" 
-                onClick={(e) => {subUnsub()}}>Unsubscribe
-                </button> 
+            // <button 
+            //     className="btn" 
+            //     onClick={(e) => {subUnsub()}}>Unsubscribe
+            //     </button> 
                 // <button 
                 // className="btn" 
                 // onClick={(e) => console.log('noooooo')}> Subscribe
                 // </button>}</div>
           /* <div className="subscribed mr-auto">{subs && subs.id ? <button className="btn" onClick={(e) => console.log('hello')}>Unsubscribe</button> : <button className="btn" onClick={(e) => console.log('noooooo')}> Subscribe</button>}</div> */}
+          <div className="subscribed mr-auto">{subButton}</div> 
           </div>
           </div>
           {/* follow button end */}
